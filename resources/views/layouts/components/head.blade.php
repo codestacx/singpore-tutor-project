@@ -8,9 +8,9 @@
 <title>@yield('title')</title>
 
 <!-- Favicon -->
-<link rel="icon" href="img/core-img/favicon.ico">
+<link rel="icon" href="{{asset('img/core-img/favicon.ico')}}">
 
 <!-- Stylesheet -->
 <link rel="stylesheet" href="{{asset('style.css')}}">
 
-@yield('links');
+@yield('links')

@@ -1287,6 +1287,7 @@ textarea:focus {
 
 /* :: 9.0 Register Now */
 .register-now {
+
   position: relative;
   z-index: 1;
   background-repeat: repeat;
@@ -1306,6 +1307,8 @@ textarea:focus {
     height: 100%;
     z-index: -1; }
   .register-now .register-contact-form {
+
+
     -webkit-box-flex: 0;
     -ms-flex: 0 0 45%;
     flex: 0 0 45%;
@@ -1875,7 +1878,7 @@ textarea:focus {
   position: relative;
   z-index: 1;
   background-color: #252525;
-  padding: 40px 0;
+  padding: 10px 0;
   text-align: center;
   border-bottom: 1px solid #4c4c4c; }
   .top-footer-area .footer-logo {

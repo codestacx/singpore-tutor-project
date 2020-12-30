@@ -5,8 +5,8 @@
     <div class="top-header-area d-flex justify-content-between align-items-center">
         <!-- Contact Info -->
         <div class="contact-info">
-            <a href="#"><span>Phone:</span> +44 300 303 0266</a>
-            <a href="#"><span>Email:</span> info@clever.com</a>
+            <a href="#"><span>Phone:</span> +92 302 444 7090</a>
+            <a href="#"><span>Email:</span> codestackx@gmail.com</a>
         </div>
         <!-- Follow Us -->
         <div class="follow-us">
@@ -24,7 +24,7 @@
             <nav class="classy-navbar justify-content-between" id="cleverNav">
 
                 <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <a class="nav-brand" href="index.html"><img src="{{asset('img/core-img/logo.png')}}" alt=""></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
