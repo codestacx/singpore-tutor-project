@@ -19,30 +19,37 @@
                         <div class="col-12">
                             <div class="forms">
 
-                                <form action="#" method="post">
+                                <form class="tutor_free_request_form" action="#" method="post">
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="text" placeholder="First Name">
+                                                <input type="text" name="fname" class="form-control" id="text" placeholder="First Name">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="email" placeholder="Last Name">
+                                                <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="phone" placeholder="Phone">
+                                                <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone">
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="site" placeholder="Site">
+                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <select class="form-control" name="level_grade">
+                                                    <option selected disabled>Choose Grade</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn clever-btn w-100">Send Message</button>
+                                            <button class="btn clever-btn w-100">Find Tutor</button>
                                         </div>
                                     </div>
                                 </form>

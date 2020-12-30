@@ -1,11 +1,11 @@
 
 <!-- ##### Footer Area Start ##### -->
-<footer class="footer-area">
+<footer class="footer-area" style="margin-top: 40px" >
     <!-- Top Footer Area -->
 
 
     <!-- Bottom Footer Area -->
-    <div class="bottom-footer-area d-flex justify-content-between align-items-center">
+    <div class="bottom-footer-area d-flex justify-content-between align-items-center " >
         <!-- Contact Info -->
         <div class="contact-info">
             <a href="#"><span>Phone:</span> +44 300 303 0266</a>

@@ -1965,3 +1965,26 @@ textarea:focus {
         color: #ffffff; }
 
 /*# sourceMappingURL=style.css.map */
+
+.tutionrates td,th{
+
+    text-align: center;
+    font-size: inherit;
+}
+
+.tutionrates #level{
+    background-color: coral;
+    color: aliceblue;
+}
+
+.tutionrates #level_{
+    background-color: gainsboro;
+    color: black;
+}
+
+.content-steps > div {
+    margin: 10px;
+    padding: 5px;
+
+
+}
