@@ -1,4 +1,9 @@
-
+<style>
+    .list-group-item:hover{
+        background-color: #e0a800;
+        color: #f7fafc;
+    }
+</style>
 <div class="container">
     <div class="bar"></div>
     <div class="row" id="benifits-wrapper">

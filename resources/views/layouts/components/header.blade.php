@@ -42,21 +42,10 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
+
                             <li><a href="index.html">Home</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="courses.html">Courses</a></li>
-                                    <li><a href="single-course.html">Single Courses</a></li>
-                                    <li><a href="instructors.html">Instructors</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="blog-details.html">Single Blog</a></li>
-                                    <li><a href="regular-page.html">Regular Page</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="courses.html">Courses</a></li>
-                            <li><a href="instructors.html">Instructors</a></li>
+                            <li><a href="courses.html">Tution Rates</a></li>
+                            <li><a href="single-course.html">FAQ's</a></li>
                             <li><a href="blog.html">Blog</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>

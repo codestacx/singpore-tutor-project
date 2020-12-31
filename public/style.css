@@ -1973,12 +1973,12 @@ textarea:focus {
 }
 
 .tutionrates #level{
-    background-color: coral;
+    background-color: cadetblue;
     color: aliceblue;
 }
 
 .tutionrates #level_{
-    background-color: gainsboro;
+    background-color: #edf2f7;
     color: black;
 }
 
