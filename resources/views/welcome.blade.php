@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Site | Home')
 @section('content')
 
     <!-- import modal at the top -->

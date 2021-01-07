@@ -12,7 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\AuthController;
+Route::get('/testing',function(){
+   $data = \App\Models\Grade::with(['level'])->get();
+   dd($data);
 });
+
+
+
+Route::prefix('/')->name('site.')->group(function(){
+
+    Route::get('',[HomeController::class,'index'])->name('home');
+    Route::get('faqs',[HomeController::class,'faqs'])->name('faqs');
+    Route::match(['get','post'],'contact',[HomeController::class,'contact'])->name('contact');
+    Route::match(['get','post'],'tutor/register',[AuthController::class,'register'])->name('tutor.register');
+});
+

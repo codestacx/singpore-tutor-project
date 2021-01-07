@@ -1,3 +1,7 @@
+<!-- Preloader -->
+<div id="preloader">
+    <div class="spinner"></div>
+</div>
 <!-- ##### Header Area Start ##### -->
 <header class="header-area">
 
@@ -43,11 +47,11 @@
                     <div class="classynav">
                         <ul>
 
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{route('site.home')}}">Home</a></li>
                             <li><a href="courses.html">Tution Rates</a></li>
-                            <li><a href="single-course.html">FAQ's</a></li>
+                            <li><a  href="{{route('site.faqs')}}">FAQ's</a></li>
                             <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{route('site.contact')}}">Contact</a></li>
                         </ul>
 
                         <!-- Search Button -->
@@ -60,8 +64,8 @@
 
                         <!-- Register / Login -->
                         <div class="register-login-area">
-                            <a href="#" class="btn">Register</a>
-                            <a href="index-login.html" class="btn active">Login</a>
+                            <a href="{{route('site.tutor.register')}}">Register as Tutor</a>
+                            <a href="index-login.html" class="btn">Member Login</a>
                         </div>
 
                     </div>

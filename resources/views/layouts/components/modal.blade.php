@@ -43,6 +43,12 @@
                                         </div>
                                         <div class="col-sm-12 col-lg-12 col-md-12">
                                             <div class="form-group">
+                                                <textarea class="form-control"  placeholder="Enter Requirement Message (optional)"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                            <div class="form-group">
                                                 <select class="form-control" name="level_grade">
                                                     <option selected disabled>Choose Grade</option>
                                                 </select>
