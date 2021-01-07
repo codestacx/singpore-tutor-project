@@ -6,7 +6,7 @@
 
     <div class="container">
 
-    
+
         <!-- Sign up form -->
         <section class="signup">
             <div class="container" style="">
