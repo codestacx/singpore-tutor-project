@@ -5,7 +5,7 @@
 
     <!-- ##### Google Maps ##### -->
     <div class="map-area">
-        <div id="googleMap"></div>
+        {{-- <div id="googleMap"></div> --}}
     </div>
 
     <!-- ##### Contact Area Start ##### -->
@@ -39,21 +39,21 @@
 
                 <!-- Contact Form -->
                 <div class="col-12 col-lg-6">
-                    <?php generateFlashMessage(); ?>
+
                     <div class="contact-form">
                         <h4>Get In Touch</h4>
-
+                        <?php generateFlashMessage(); ?>
                         <form action="{{route('site.contact')}}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="text" placeholder="Name">
+                                        <input type="text" name="c_name" class="form-control" id="text" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                        <input type="email" name="c_email" class="form-control" id="email" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-12">
