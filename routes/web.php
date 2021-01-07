@@ -34,6 +34,7 @@ Route::prefix('/')->name('site.')->group(function(){
 Route::prefix('superadmin')->name('admin.')->group(function(){
     Route::get('',[AdminController::class,'welcome'])->name('home');
     Route::match(['get','post'],'grades/{action?}/{grade?}',[AdminController::class,'grades'])->name('grades');
+    Route::match(['get','post'],'levels/{action?}/{levels?}',[AdminController::class,'levels'])->name('levels');
 
 });
 
