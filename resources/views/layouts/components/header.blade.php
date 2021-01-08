@@ -48,7 +48,7 @@
                         <ul>
 
                             <li><a href="{{route('site.home')}}">Home</a></li>
-                            <li><a href="courses.html">Tution Rates</a></li>
+                            <li><a href="{{route('site.tution_rates')}}">Tution Rates</a></li>
                             <li><a  href="{{route('site.faqs')}}">FAQ's</a></li>
                             <li><a href="blog.html">Blog</a></li>
                             <li><a href="{{route('site.contact')}}">Contact</a></li>

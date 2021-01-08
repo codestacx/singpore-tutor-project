@@ -37,7 +37,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab--4" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="true">T&C - Tutors</a>
                                 </li>
-
                             </ul>
 
                             <div class="tab-content" id="myTabContent">
@@ -51,55 +50,29 @@
 
                                             <div class="accordions" id="accordion" role="tablist" aria-multiselectable="true">
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Can I just enroll in a single course? I'm not interested in the entire Specialization?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a></h6>
-                                                    <div id="collapseOne" class="accordion-content collapse show">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-                                                    </div>
-                                                </div>
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">What is the refund policy?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseTwo" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                            @foreach($faqs as $faq)
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What background knowledge is necessary?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseThree" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                                    @if($faq->faq_cat_id == 1 )
+                                                        <!-- Single Accordian Area -->
+                                                            <div class="panel single-accordion">
+                                                                <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{$faq->question }} ?
+                                                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                                    </a></h6>
+                                                                <div id="collapseOne" class="accordion-content collapse show">
+                                                                    <p>
+                                                                        {{$faq->answer}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseFour" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">Do i need to take the courses in a specific order?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseFour" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                                    @endif
+
+
+                                            @endforeach
+
+
                                             </div>
 
                                         </div>
@@ -115,55 +88,23 @@
 
                                            <div class="accordions" id="accordion" role="tablist" aria-multiselectable="true">
 
-                                               <!-- Single Accordian Area -->
-                                               <div class="panel single-accordion">
-                                                   <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Can I just enroll in a single course? I'm not interested in the entire Specialization?
-                                                           <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                           <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                       </a></h6>
-                                                   <div id="collapseOne" class="accordion-content collapse show">
-                                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-                                                   </div>
-                                               </div>
+                                           @foreach($faqs as $faq)
+                                               @if($faq->faq_cat_id == 2 )
+                                                   <!-- Single Accordian Area -->
+                                                       <div class="panel single-accordion">
+                                                           <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{$faq->question }} ?
+                                                                   <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                                   <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                               </a></h6>
+                                                           <div id="collapseOne" class="accordion-content collapse show">
+                                                               <p>
+                                                                   {{$faq->answer}}
+                                                               </p>
+                                                           </div>
+                                                       </div>
 
-                                               <!-- Single Accordian Area -->
-                                               <div class="panel single-accordion">
-                                                   <h6>
-                                                       <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">What is the refund policy?
-                                                           <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                           <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                       </a>
-                                                   </h6>
-                                                   <div id="collapseTwo" class="accordion-content collapse">
-                                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                   </div>
-                                               </div>
-
-                                               <!-- Single Accordian Area -->
-                                               <div class="panel single-accordion">
-                                                   <h6>
-                                                       <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What background knowledge is necessary?
-                                                           <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                           <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                       </a>
-                                                   </h6>
-                                                   <div id="collapseThree" class="accordion-content collapse">
-                                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                   </div>
-                                               </div>
-
-                                               <!-- Single Accordian Area -->
-                                               <div class="panel single-accordion">
-                                                   <h6>
-                                                       <a role="button" aria-expanded="true" aria-controls="collapseFour" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">Do i need to take the courses in a specific order?
-                                                           <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                           <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                       </a>
-                                                   </h6>
-                                                   <div id="collapseFour" class="accordion-content collapse">
-                                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                   </div>
-                                               </div>
+                                                   @endif
+                                               @endforeach
                                            </div>
 
                                        </div>
@@ -179,55 +120,25 @@
 
                                             <div class="accordions" id="accordion" role="tablist" aria-multiselectable="true">
 
+                                            @foreach($faqs as $faq)
                                                 <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Can I just enroll in a single course? I'm not interested in the entire Specialization?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a></h6>
-                                                    <div id="collapseOne" class="accordion-content collapse show">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-                                                    </div>
-                                                </div>
+                                                @if($faq->faq_cat_id == 4 )
+                                                    <!-- Single Accordian Area -->
+                                                        <div class="panel single-accordion">
+                                                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{$faq->question }} ?
+                                                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                                </a></h6>
+                                                            <div id="collapseOne" class="accordion-content collapse show">
+                                                                <p>
+                                                                    {{$faq->answer}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">What is the refund policy?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseTwo" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                                    @endif
 
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What background knowledge is necessary?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseThree" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseFour" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">Do i need to take the courses in a specific order?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseFour" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
 
                                         </div>
@@ -242,55 +153,23 @@
 
                                             <div class="accordions" id="accordion" role="tablist" aria-multiselectable="true">
 
+                                            @foreach($faqs as $faq)
                                                 <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Can I just enroll in a single course? I'm not interested in the entire Specialization?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a></h6>
-                                                    <div id="collapseOne" class="accordion-content collapse show">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">What is the refund policy?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseTwo" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What background knowledge is necessary?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseThree" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Single Accordian Area -->
-                                                <div class="panel single-accordion">
-                                                    <h6>
-                                                        <a role="button" aria-expanded="true" aria-controls="collapseFour" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">Do i need to take the courses in a specific order?
-                                                            <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                            <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h6>
-                                                    <div id="collapseFour" class="accordion-content collapse">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
-                                                    </div>
-                                                </div>
+                                                @if($faq->faq_cat_id == 3 )
+                                                    <!-- Single Accordian Area -->
+                                                        <div class="panel single-accordion">
+                                                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{$faq->question }} ?
+                                                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                                </a></h6>
+                                                            <div id="collapseOne" class="accordion-content collapse show">
+                                                                <p>
+                                                                    {{$faq->answer}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
                                             </div>
 
                                         </div>

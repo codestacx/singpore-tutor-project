@@ -2028,3 +2028,18 @@ textarea:focus {
     height: 5px;
     background-color: #0c5460;
 }
+
+.tutionratestable > thead > tr > th > img {
+    width: 100px;
+    height: 100px;
+}
+
+#circle {
+
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+
+
