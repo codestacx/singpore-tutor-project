@@ -35,6 +35,7 @@ class HomeController extends Controller
             );
 
             return redirect()->back()->with('success','Your request has been dispatched successfully');
+
         }
         return view('pages.contact.index');
     }
