@@ -39,6 +39,18 @@ function generateFlashMessage(){
     echo ob_get_clean();
 
 }
+
+
+
+function getFormDataObject($request){
+    $formData = [];
+    foreach ($request as $key=>$value){
+        $formData[$key] = isset($value) ? $value:'';
+    }
+
+    return $formData;
+
+}
 ?>
 
 

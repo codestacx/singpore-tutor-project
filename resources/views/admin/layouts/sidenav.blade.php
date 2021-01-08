@@ -22,6 +22,13 @@
 
                     </ul>
                 </li>
+                <li><a href="#faqs" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>FAQ's </a>
+                    <ul id="faqs" class="collapse list-unstyled ">
+                        <li><a href="{{route('admin.faqs')}}">View All </a></li>
+                        <li><a href="{{route('admin.faqs',['action'=>'create'])}}">Add FAQ</a></li>
+
+                    </ul>
+                </li>
                 <li><a href="#chartsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bar-chart"></i>Charts </a>
                     <ul id="chartsDropdown" class="collapse list-unstyled ">
                         <li><a href="charts.html">Charts</a></li>

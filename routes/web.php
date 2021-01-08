@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\AdminController;
-Route::get('/testing',function(){
-   $data = \App\Models\Grade::with(['level'])->get();
-   dd($data);
-});
+
 
 
 
@@ -35,5 +32,6 @@ Route::prefix('superadmin')->name('admin.')->group(function(){
     Route::get('',[AdminController::class,'welcome'])->name('home');
     Route::match(['get','post'],'grades/{action?}/{grade?}',[AdminController::class,'grades'])->name('grades');
 
+    Route::match(['get','post'],'faqs/{action?}/{faq?}',[AdminController::class,'faqs'])->name('faqs');
 });
 

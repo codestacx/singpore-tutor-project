@@ -69,4 +69,59 @@ class AdminController extends Controller
 
 
     }
+
+    public function faqs(Request $request, $action = null, $faq = null){
+        $table = DB::table('faqs');
+        $categories = DB::table('faqs_categories')->get();
+        if($request->method() == 'POST'){
+
+
+            $formData = [
+                'question'=>$request->question,
+                'answer'=>$request->question,
+                'faq_cat_id'=>$request->faq_cat_id
+            ];
+
+            if(isset($request->faq)){
+
+                $table->where('id',$request->faq)->update($formData);
+                return redirect()->route('admin.faqs')->with('success','FAQ updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.faqs')->with('success','FAQ Added Successfully');
+
+            //request is hit either from post or update form
+
+        }
+
+
+        if(!is_null($faq)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('id',$faq)->delete();
+                return redirect()->back()->with('success','Grade Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $faq = $table->where('id',$faq)->first();
+
+                return view('admin.faqs.create',compact('faq','categories'));
+            }
+
+        }
+
+
+        if($action == 'create'){
+            return view('admin.faqs.create',compact('categories'));
+        }
+
+        $faqs = $table->join('faqs_categories','faqs_categories.id','=','faqs.faq_cat_id')->get();
+
+        return view('admin.faqs.index',compact('faqs','categories'));
+
+    }
 }
