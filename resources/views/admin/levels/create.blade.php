@@ -34,7 +34,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Level Staus</label>
-                                    <input type="checkbox" class="form-control" style="float: right;" value="1" name="is_active" {{isset($level_edit) ? ($level_edit->active == "1" ? "checked" : ""):''}} checked>
+                                    <select name="is_active" class="form-control">
+                                        <option value="1" {{isset($level_edit) ? ($level_edit->active == "1" ? "selected" : ""):''}}>Active</option>
+                                        <option value="0" {{isset($level_edit) ? ($level_edit->active == "0" ? "selected" : ""):''}}>In Active</option>
+                                    </select>
+                                    {{-- <input type="checkbox" class="form-control" style="float: right;" value="1" name="is_active"  checked> --}}
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="{{isset($level_edit) ? 'Update':'Submit'}}" class="btn btn-primary">
