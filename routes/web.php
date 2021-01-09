@@ -18,6 +18,7 @@ use \App\Http\Controllers\AdminController;
 
 use \App\Http\Controllers\AdminAuthController;
 
+use App\Http\Controllers\TutorController;
 
 Route::prefix('/')->name('site.')->group(function(){
 
@@ -26,8 +27,9 @@ Route::prefix('/')->name('site.')->group(function(){
     Route::match(['get','post'],'contact',[HomeController::class,'contact'])->name('contact');
     Route::match(['get','post'],'tutor/register',[AuthController::class,'register'])->name('tutor.register');
 
-
     Route::get('tution-rates',[HomeController::class,'tutionrates'])->name('tution_rates');
+
+    Route::get('update-info',[TutorController::class,'registerationForm'])->name('update_info');
 });
 
 

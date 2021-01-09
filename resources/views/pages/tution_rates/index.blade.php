@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Site | Home')
 @section('links')
-
+<link rel="stylesheet" href="{{asset('style/pattern.css')}}"/>
 @endsection
 @section('content')
 
@@ -116,7 +116,8 @@ position: absolute;right:0px;"></div>
     </div>
 
 
-    <div class="container container-fluid">
+
+    <div class="container container-fluid pattern-dots-lg bg-blue white">
 
         <div class="card" style="background-color: linen;">
             <div style="background: deepskyblue;
@@ -145,9 +146,10 @@ position: absolute;right:0px;"></div>
 
             </div>
 
+            <br/>
             <div class="bg-light">
                 <table class="table table-hover tutionratestable"   style="width: 100%;margin-top: 10px">
-                    <thead>
+                    <thead CLASS="pattern-diagonal-lines-md bg-warning" style="color: #ffffff">
                     <tr>
 
                         <th>
@@ -163,8 +165,8 @@ position: absolute;right:0px;"></div>
                             <div style="background: turquoise;border-radius: 50%;width: 20px;height: 20px;"></div>
 
                         </th>
-
                     </tr>
+
                     </thead>
                     <thead>
                     <tr style="font-family: cursive;background-color: lightcoral;color: floralwhite;font-size: 16px;">
@@ -180,7 +182,8 @@ position: absolute;right:0px;"></div>
                     <tbody>
                     <tr style="text-align: center;font-size: 16px;">
 
-                        <td>Around 1 to 3 <br/>
+                        <td>
+                            Around 1 to 3 <br/>
                             Years of Experience</td>
                         <td>More Than 5 <br/>
                             Years of Experience</td>
@@ -225,15 +228,95 @@ position: absolute;right:0px;"></div>
             </div>
 
 
-        </div></div>
-
-
-
-
-
-
-
+        </div>
     </div>
+    </div>
+
+
+    <br/>
+    <div class="container pattern-cross-dots-md bg-warning" style="color: #b21f2d;border-radius: 15px;background-image: url({{asset('img/dark-bg.webp')}})">
+
+        <div style="text-align: center;text-transform: uppercase">
+            <h6 style="font-size: 14px;
+font-weight: 800;
+text-transform: uppercase;
+color: #ff9000;padding: 16px;"> Finding The Right Home Tutor</h6>
+            <h3 style="font-size: 20px;
+color: black;">Important Qualities to Look For In A Home Tutor</h3>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8" style="margin: auto">
+        <div class="accordions" id="accordion" role="tablist" aria-multiselectable="true">
+
+            <!-- Single Accordian Area -->
+            <div class="panel single-accordion rates-faqs-section">
+                <h6><a style="  background: #ff9000;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px !important;" role="button" class="collapsed" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Can I just enroll in a single course? I'm not interested in the entire Specialization?
+                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                    </a></h6>
+                <div id="collapseOne" class="accordion-content collapse show">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
+                </div>
+            </div>
+
+            <!-- Single Accordian Area -->
+            <div class="panel single-accordion ">
+                <h6>
+                    <a  role="button" style="  background: #ff9000;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px !important;" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">What is the refund policy?
+                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                    </a>
+                </h6>
+                <div id="collapseTwo" class="accordion-content collapse">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
+                </div>
+            </div>
+
+            <!-- Single Accordian Area -->
+            <div class="panel single-accordion rates-faqs-section">
+                <h6>
+                    <a role="button" style="  background: #ff9000;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px !important;" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What background knowledge is necessary?
+                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                    </a>
+                </h6>
+                <div id="collapseThree" class="accordion-content collapse">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
+                </div>
+            </div>
+
+            <!-- Single Accordian Area -->
+            <div class="panel single-accordion rates-faqs-section">
+                <h6>
+                    <a style="  background: #ff9000;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px !important;" role="button" aria-expanded="true" aria-controls="collapseFour" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseFour">Do i need to take the courses in a specific order?
+                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                    </a>
+                </h6>
+                <div id="collapseFour" class="accordion-content collapse">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel lectus eu felis semper finibus ac eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate id justo quis facilisis.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <br/>
+    </div>
+
 
 
 
