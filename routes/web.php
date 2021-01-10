@@ -17,8 +17,9 @@ use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\AdminController;
 
 use \App\Http\Controllers\AdminAuthController;
-
 use App\Http\Controllers\TutorController;
+
+
 
 Route::prefix('/')->name('site.')->group(function(){
 
@@ -31,6 +32,8 @@ Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('update-info',[TutorController::class,'registerationForm'])->name('update_info');
 });
+
+Route::get('/update-info/load-card',[TutorController::class,'loadCard'])->name('load-card');
 
 
 Route::prefix('superadmin')->group(function(){
@@ -46,4 +49,9 @@ Route::prefix('superadmin')
     Route::match(['get','post'],'levels/{action?}/{levels?}',[AdminController::class,'levels'])->name('levels');
     Route::match(['get','post'],'faqs/{action?}/{faq?}',[AdminController::class,'faqs'])->name('faqs');
 });
+
+
+populateRoutes([
+    'card.load'=>url('/update-info/load-card'),
+]);
 

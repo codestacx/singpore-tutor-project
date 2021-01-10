@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/switch.css')}}"/>
 
+
 @endsection
 @section('content')
 
@@ -103,13 +104,11 @@
                                                                 </div>
                                                                  <div class="col-sm col-md-7 col-lg-7">
                                                                      <div class="form-group">
-                                                                         <label for="student_status" class="mt-4">Please Specify</label>
-                                                                         <select name="student_status" id="student_status" class="custom-select custom-select-sm">
-                                                                             <option value="Current Poly Student">Current Poly Student</option>
-                                                                             <option value="Current Undergraduate">Current Undergraduate</option>
-                                                                             <option value="Current Postgraduate">Current Postgraduate</option>
-                                                                             <option value="Others">NIE Trainee</option>
-                                                                             <option value="Others">Others</option>
+                                                                         <label for="highest_qualification" class="mt-4">What's your highest qualification attained</label>
+                                                                         <select name="highest_qualification" id="highest_qualification" class="custom-select custom-select-sm">
+                                                                             @foreach($qualifications as $qualification)
+                                                                                 <option value="{{$qualification->qu_id}}">{{$qualification->qualification}}</option>
+                                                                                 @endforeach
                                                                          </select>
                                                                      </div>
                                                                  </div>
@@ -126,7 +125,44 @@
 
                                                     </div>
 
-                                                   
+
+                                                    <div class="col-sm-12 col-lg-12 col-md-12 col-12" id="content_cards" >
+                                                        <div class="accordion" id="accordionExample">
+                                                            <div class="card">
+                                                                <!-- Visible portion in collapsed state -->
+                                                                <div class="card-header" id="headingOne">
+                                                                    <h2 class="mb-0">
+                                                                        <!-- no data-toggle, data-target,
+                                                                            aria-expanded, aria-controls
+                                                                            attributes are used -->
+                                                                        <!-- The toggling functionality is lost -->
+                                                                        <button class="btn btn-link" type="button">
+                                                                            Collapsible Item 1
+                                                                        </button>
+                                                                    </h2>
+                                                                </div>
+
+                                                                <!-- Content to be displayed in open state -->
+                                                                <!-- data-parent attribute removed so that
+                                                                    the cards are not dependent on each other -->
+                                                                <div id="collapseOne" class="collapse show"
+                                                                     aria-labelledby="headingOne">
+                                                                    <div class="card-body">
+                                                                        <input type="text" value="atif"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div onclick="commonServer.addCollapseSection('accordionExample')" class="col-sm-8 col-lg-6 col-md-6" style="margin: 20px;cursor: pointer">
+                                                        <span style="font-size: 15px;"> <i style="color: red;font-size: 15px;" class="fa fa-plus 2x"></i> Add a new School/Course record</span>
+                                                    </div>
+
+
 
                                                 </div>
                                             </div>

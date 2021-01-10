@@ -269,3 +269,10 @@ main {
 
 .burger:focus {
   outline: none; }
+
+
+
+#subject_grade_tbody  input {
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
+
