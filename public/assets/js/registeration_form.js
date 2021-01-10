@@ -2,6 +2,57 @@ var ids = [];
 var index = 0;
 var commonServer = {
 
+    removeMajorCourse:(e)=>{
+        if(e.target ){
+            (e.target.parentNode.parentNode.parentNode.remove())
+        }else{
+            (e.parentNode.parentNode).remove();
+        }
+    },
+    addCourseMajor:(e)=>{
+
+
+
+        const parent = document.getElementById(e);
+
+        const tr = document.createElement('tr');
+
+        var td;
+        var input;
+
+        td = document.createElement('td');
+
+        input = document.createElement('input');
+        input.classList.add("form-control");
+        input.placeholder="Course/Major Title";
+        input.name="course_name[]";
+
+
+        td.appendChild(input);
+        tr.appendChild(td);
+
+//<span onclick="this.parentNode.parentNode.remove()"> <i  class="fa fa-trash" style="color: #b21f2d;cursor: pointer"></i> </span>
+
+        td = document.createElement('td')
+        const i = document.createElement('i');
+        i.classList.add("fa","fa-trash");
+        i.style.color='#b21f2d';
+        i.style.cursor='pointer';
+
+
+        const span = document.createElement('span')
+        span.addEventListener('click',commonServer.removeMajorCourse.bind(this));
+
+        span.appendChild(i);
+
+        td.appendChild(span);
+
+        tr.appendChild(td);
+
+        parent.appendChild(tr);
+
+
+    },
     removeSubjectAndGradeRow:(e)=>{
         if(e.target ){
             (e.target.parentNode.parentNode.parentNode.remove())
@@ -40,12 +91,14 @@ var commonServer = {
 
             var id =Math.random().toString(36).slice(2);
             var pr =Math.random().toString(36).slice(2);
+            var span = Math.random().toString(36).slice(2);
 
-            const find = ids.find(e=>e.parent === pr && e.cardid === id)
+            const find = ids.find(e=>e.parent === pr && e.cardid === id && span === e.span)
             if( !find ){
                 ids.push({
                     parent:pr,
-                    cardid:id
+                    cardid:id,
+                    span:span
                 })
                 break;
             }
@@ -57,7 +110,11 @@ var commonServer = {
             data:{cardid:obj.cardid,parent:obj.parent,index:index},
             dataType:'html',
             success:function (response) {
-                document.getElementById(parent).innerHTML+=response
+                const spn = document.createElement('span');
+                spn.id = obj.span;
+
+                document.getElementById(parent).appendChild(spn);
+                document.getElementById(spn.id).innerHTML = response;
             }
         })
 
@@ -66,6 +123,17 @@ var commonServer = {
 
 
 
+    },
+
+    testi:()=>{
+        $.ajax({
+            url:config['card.load'],
+            data:{cardid:obj.cardid,parent:obj.parent,index:index},
+            dataType:'html',
+            success:function (response) {
+                document.getElementById(parent).innerHTML+=response
+            }
+        })
     },
 
     removeCollapseSection:(current)=>{

@@ -271,8 +271,11 @@ main {
   outline: none; }
 
 
+.course_major_table_tbody  input {
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
 
-#subject_grade_tbody  input {
+#subject_grade_tbody input {
     height: 30px;border-top: none;border-right: none;border-left: none;
 }
 
