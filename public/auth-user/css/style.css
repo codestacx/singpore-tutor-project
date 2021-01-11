@@ -316,6 +316,9 @@ main {
 #music_experience_table input {
     height: 30px;border-top: none;border-right: none;border-left: none;
 }
+#rates_per_hour_table input{
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
 
 
 #music_experience_table th{

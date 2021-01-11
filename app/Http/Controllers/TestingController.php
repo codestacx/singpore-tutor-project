@@ -10,6 +10,6 @@ class TestingController extends Controller
     public function testing(Request $request){
 
 
-        return Helper::loadMusicExperienceCard();
+        return Helper::loadPreferencePage();
     }
 }

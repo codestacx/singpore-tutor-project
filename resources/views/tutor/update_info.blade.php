@@ -32,12 +32,12 @@
             <section>
                 <div class="content-wrapper">
                     <div class="row" style="margin-top: 10px;padding: 20px;">
+
                         <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                             <div class="contact-form-wizard">
 
                                 <div class="card" >
                                     <div class="card-body">
-
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
@@ -935,13 +935,21 @@
                 </h3>
                 <section>
                   <div class="content-wrapper">
-                    <h4 class="section-heading mb-5">Accept agreement and Submit</h4>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
-                        I hereby declare that I had read all the <a href="#!">terms and conditions</a>  and all the details provided my me in this form are true.
-                      </label>
-                    </div>
+                      <div class="row" style="margin-top: 10px;padding: 20px;">
+                          <div class="col-sm-12 col-md-12 col-lg-12 "  style="margin: auto" >
+                              <div class="contact-form-wizard">
+
+                                  <div class="card" >
+                                      <div class="card-body">
+                                       <span id="render_content_here">
+                                            <?php \App\Helpers\Helper::loadPreferencePage(); ?>
+                                       </span>
+
+                                      </div>
+                                  </div>
+                              </div>
+                          </div >
+                      </div>
                   </div>
                 </section>
               </div>

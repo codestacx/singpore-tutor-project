@@ -561,4 +561,230 @@ class Helper {
 
         echo ob_get_clean();
     }
+
+
+
+    public static function loadPreferencePage(){
+        ob_start();
+        ?>
+        <h6> I am available to take tuition at...  <code>*</code></h6>
+        <div class="row">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="student_house" value="option1">
+                <label class="form-check-label" for="student_house">Student House</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="own_house" value="option2">
+                <label class="form-check-label" for="own_house">My Own House or Centre</label>
+            </div>
+        </div>
+
+
+        <hr/>
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <label>My Postal Code</label>
+
+                <input type="text" class="form-control" placeholder="Enter location postal code" style="height: 30px"/>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <label>What can students expect for classes at my location:</label>
+                <textarea class="form-control"></textarea>
+                <small>e.g. Group size? Material cost? Are trial lessons free/chargeable? Classroom with whiteboard? etc</small>
+            </div>
+        </div>
+
+        <hr/>
+
+
+        <span> I would like to teach in these locations... * </span>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-8 col-lg-8">
+               <span style="font-size: 16px;font-weight: normal;margin:10px;"> <strong style="font-size: 16px;font-weight: normal;margin:10px;">Central</strong></span>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                    <label class="form-check-label" for="check1">
+                        Cecil, Chinatown, Marina, People's Park, Raffles Place
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                    <label class="form-check-label" for="check1">
+                        Cecil, Chinatown, Marina, People's Park, Raffles Place
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                    <label class="form-check-label" for="check1">
+                        Cecil, Chinatown, Marina, People's Park, Raffles Place
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <hr/>
+
+        <div  style="margin: 10px">
+            <span> I would like to teach these levels and subjects </span>
+        </div>
+
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <br/>
+            <li class="nav-item">
+                <a class="nav-link active" id="primary-tab" data-toggle="tab" href="#primary" role="tab" aria-controls="primary" aria-selected="true">Primary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="secondary-tab" data-toggle="tab" href="#secondary" role="tab" aria-controls="secondary" aria-selected="false">Secondary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="jc-tab" data-toggle="tab" href="#jc" role="tab" aria-controls="jc" aria-selected="false">JC</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="others-tab" data-toggle="tab" href="#others" role="tab" aria-controls="others" aria-selected="false">Others & Foreign Languages</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="primary" role="tabpanel" aria-labelledby="primary-tab">
+                <div class="row">
+                    <div class="col">
+                        <br/>
+                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
+                        <hr/>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil, Chinat
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                        <br/>
+                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
+                        <hr/>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil, Chinat
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                        <br/>
+                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
+                        <hr/>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check1">
+                            <label class="form-check-label" for="check1">
+                                Cecil, Chinat
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="secondary" role="tabpanel" aria-labelledby="secondary-tab">akram</div>
+            <div class="tab-pane fade" id="jc" role="tabpanel" aria-labelledby="jc-tab">bhatii</div>
+            <div class="tab-pane fade" id="others" role="tabpanel" aria-labelledby="others-tab">others</div>
+
+        </div>
+
+        <hr/>
+        <br/>
+
+        <div class="row">
+          <div>
+              <h6> I charge these hourly rates...</h6>
+              <small>Leave this section blank if you're open to quotes.</small>
+          </div>
+
+            <div class="col-sm-12 col-md-10 col-lg-10">
+                <table class="table " id="rates_per_hour_table">
+                    <thead>
+                    <tr>
+                        <th> #</th>
+                        <th>Level</th>
+                        <th>Rate/hr</th>
+                    </tr>
+
+                    <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td>Lower Primary</td>
+                        <td><input type="text" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                        <td> 2 </td>
+                        <td>Upper Primary</td>
+                        <td><input type="text" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                        <td> 3 </td>
+                        <td>Lower Secondary</td>
+                        <td><input type="text" class="form-control"/></td>
+                    </tr>
+                    <tr>
+                        <td> 4 </td>
+                        <td>Uper Secondary</td>
+                        <td><input type="text" class="form-control"/></td>
+                    </tr>
+
+                    <tr>
+                        <td> 5 </td>
+                        <td>JC</td>
+                        <td><input type="text" class="form-control"/></td>
+                    </tr>
+
+                    </tbody>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
+
+        <hr/>
+        <div class="row">
+            <div class="form-group">
+                <label>
+                    Please provide a short description about yourself, to differentiate yourself from the other tutors. *
+                   <br/>
+                    <code>
+                        <small>
+                            E.g. your strong points and qualities (e.g. teaching style, track record), anything else that can help us recommend you to the parent.
+
+                        </small>
+
+                    </code> </label>
+                <textarea class="form-control"></textarea>
+            </div>
+        </div>
+        <?php
+
+        echo ob_get_clean();
+    }
 }
