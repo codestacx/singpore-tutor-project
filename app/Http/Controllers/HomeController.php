@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use \Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -14,7 +14,11 @@ class HomeController extends Controller
 
 
     public function faqs(Request $request){
-        return view('pages.faqs.index');
+
+        $faqs = DB::table('faqs')->join('faqs_categories','faqs_categories.id','=','faqs.faq_cat_id')->get();
+
+        $categories = DB::table('faqs_categories')->get();
+        return view('pages.faqs.index',compact('faqs','categories'));
     }
 
     public function contact(Request $request){
@@ -38,5 +42,11 @@ class HomeController extends Controller
 
         }
         return view('pages.contact.index');
+    }
+
+
+    public function tutionrates(Request $request){
+
+        return view('pages.tution_rates.index');
     }
 }

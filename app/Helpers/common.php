@@ -1,6 +1,18 @@
- <?php
+<script>
+    var config = {};
+</script>
+<?php
 
 use \Illuminate\Support\Facades\Session;
+function populateRoutes($routes){
+    foreach ($routes as $name=>$route){
+        ?>
+            <script>
+                config['<?=$name?>'] = '<?=$route?>'
+            </script>
+        <?php
+    }
+}
 function uploadFile($files,$path){
     $path = ltrim($path,'/');
     $uploads = array();
@@ -15,10 +27,6 @@ function uploadFile($files,$path){
 
     return $uploads;
 }
-
-
-
-
 function generateFlashMessage(){
 
     $status = Session::has('success') || Session::has('error') ? true:false;
@@ -39,9 +47,6 @@ function generateFlashMessage(){
     echo ob_get_clean();
 
 }
-
-
-
 function getFormDataObject($request){
     $formData = [];
     foreach ($request as $key=>$value){

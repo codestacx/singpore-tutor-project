@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    public function index(Request $request){
+        return view('auths.welcome');
+    }
     public function register(Request $request){
-        return view('auths.register');
+        return view('auths.pages.register');
     }
 }

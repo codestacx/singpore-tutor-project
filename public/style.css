@@ -1852,6 +1852,48 @@ textarea:focus {
       width: 100%;
       height: 130px; }
 
+    /* contact form v2 */
+.contact-form-wizard {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.15);
+    padding: 35px 50px;
+    border-radius: 6px;
+
+    background-color: #ffffff; }
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .contact-form-wizard {
+        margin-bottom: 50px; } }
+@media only screen and (max-width: 767px) {
+    .contact-form-wizard {
+        margin-bottom: 50px;
+        padding: 30px; } }
+.contact-form-wizard h4 {
+    margin-bottom: 25px;
+    display: block;
+    font-size: 24px; }
+.contact-form-wizard form {
+    position: relative;
+    z-index: 1; }
+.contact-form-wizard form .form-control {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ebebeb;
+    height: 40px;
+    padding: 15px 20px;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block; }
+.contact-form-wizard form textarea,
+.contact-form-wizard form textarea.form-control {
+    width: 100%;
+    height: 130px; }
+
+
+/* ending here */
+
 #googleMap {
   width: 100%;
   height: 400px; }
@@ -2028,3 +2070,25 @@ textarea:focus {
     height: 5px;
     background-color: #0c5460;
 }
+
+.tutionratestable > thead > tr > th > img {
+    width: 100px;
+    height: 100px;
+}
+
+#circle {
+
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.rates-faqs-section > h6 > a {
+    background: #ff9000;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px !important;
+}
+
+
