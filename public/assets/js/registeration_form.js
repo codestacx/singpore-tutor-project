@@ -75,10 +75,14 @@ var commonServer = {
     displayRelatedSection:(parent,section)=>{
 
         const e = document.getElementById(parent);
-        e.querySelectorAll('div:not([id='+section+'])').forEach(v=>{
+        const elements = e.querySelectorAll(':scope > div:not([id='+section+'])');
+       
+        elements.forEach(v=>{
+            console.log(v.id);
             v.style.display = 'none'
         })
 
+        console.log(section);
         e.querySelector('#'+section).style.display = '';
     },
 
@@ -205,7 +209,7 @@ var Education = {
 
 jQuery(document).ready(function(){
 
-    console.log(config)
+
     jQuery('input[type=radio][name=tutorrole]').on('change',(e)=>{
         commonServer.displayRelatedSection('related_sections',e.target.id);
     })
