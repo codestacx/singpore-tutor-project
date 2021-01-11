@@ -787,4 +787,141 @@ class Helper {
 
         echo ob_get_clean();
     }
+
+
+    public static function loadDocumentPage(){
+
+        ob_start();
+        ?>
+
+        <div class="row" style="margin: 10px;padding: 15px">
+
+            <span style="color: orangered"><i class="fa fa-star"></i>  &nbsp; All documents are for internal use only & are not released to clients, except recent photo.</span>
+            <br/>
+            <span>  <i class="fa fa-star"></i>  &nbsp;  Please provide the following for verification check.</span>
+            <span style="color: #00d69f"> <i class="fa fa-star"></i>  &nbsp;  Verified tutors will have priority in assignments. Please cover your NRIC number, for your own privacy.</span>
+
+        </div>
+
+
+
+        <div class="row " style="margin: 20px">
+            <div>
+                <h6> Academic Certificates </h6>
+            </div>
+            <table class="table table-striped" id="academic_certificates_table">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="file" class="form-control"/>
+                    </td>
+                    <td>
+                        Empty
+                    </td>
+                    <td>
+                         <i onclick="this.parentNode.parentNode.remove()" class="fa fa-trash" style="color: #b21f2d;cursor:pointer;"></i>
+                    </td>
+
+                    <td>
+                        <span> <i onclick="Document.addCerticateFieldRow('academic_certificates_table')" class="fa fa-plus" style="cursor: pointer;color: #00d69f"></i> </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div >
+        <hr/>
+        <div class="row " style="margin: 20px">
+            <div>
+                <h6> Proof of Citizenship</h6>
+                <small>
+                    Only Singapore citizens, PRs, Student Pass holders can be matched. Will be removed after verification.
+                </small><br/>
+                <code>
+                    (Note: you can also show first 3 digits of NRIC in an official document)
+                </code>
+            </div>
+            <table class="table table-striped" id="">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="file" class="form-control"/>
+                    </td>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div class="row " style="margin: 20px">
+            <div>
+                <h6> Photo ID showing Photo & Name</h6>
+                <small>
+                    To confirm your identity. Will be removed after verification.
+                </small><br/>
+                <code>
+                    (e.g. nric, driver's licence, student card, office pass, concession card, etc)
+                </code>
+            </div>
+            <table class="table table-striped" id="">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="file" class="form-control"/>
+                    </td>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div >
+        <hr/>
+        <div class="row " style="margin: 20px">
+            <div>
+                <h6> Recent Photo</h6>
+                <small>
+                    Will be released to client after assignment is matched. Selfie is ok, so long as it's clear.
+                </small>
+            </div>
+            <table class="table table-striped" id="">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="file" class="form-control"/>
+                    </td>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div class="row " style="margin: 20px">
+            <div>
+                <h6> Any Additional Supported Documents </h6>
+            </div>
+            <table class="table table-striped" id="additional_documents_table">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="file" class="form-control"/>
+                    </td>
+                    <td>
+                        Empty
+                    </td>
+                    <td>
+                        <i onclick="this.parentNode.parentNode.remove()" class="fa fa-trash" style="color: #b21f2d;cursor:pointer;"></i>
+                    </td>
+
+                    <td>
+                        <span> <i onclick="Document.addAdditionalDocumentRow('additional_documents_table')" class="fa fa-plus" style="cursor: pointer;color: #00d69f"></i> </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <?php
+       echo  ob_get_clean();
+    }
 }

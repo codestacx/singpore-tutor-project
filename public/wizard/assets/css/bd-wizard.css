@@ -23,8 +23,8 @@
           justify-content: space-between;
   margin-bottom: 0; }
   .wizard .steps > ul li {
-    width: 270px;
-    max-width: calc(25% - 6px); }
+
+  }
     .wizard .steps > ul li a {
       display: inline-block;
       width: 100%;

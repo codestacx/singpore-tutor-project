@@ -19,7 +19,7 @@
   <div class="site-section">
     <div class="container">
       <br/>
-      <form>
+
         <div id="wizard">
           <h3>
             <div class="media">
@@ -38,6 +38,10 @@
 
                                 <div class="card" >
                                     <div class="card-body">
+
+
+
+
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
@@ -525,10 +529,11 @@
               </div>
             </h3>
             <section>
+
                 <div class="content-wrapper">
                     <div class="row" style="margin-top: 10px;padding: 20px;">
                         <div class="col-sm-12 col-md-12 col-lg-12 "  style="margin: auto" >
-                            <button type="button" onclick="renderContent()">render </button>
+
                             <div class="contact-form-wizard">
 
                                 <div class="accordion" id="educationExperienceCards">
@@ -923,7 +928,8 @@
 
 
                 </div>
-                </section>
+
+            </section>
                 <h3>
                   <div class="media">
                     <div class="bd-wizard-step-icon"><i class="mdi mdi-emoticon-outline"></i></div>
@@ -952,8 +958,37 @@
                       </div>
                   </div>
                 </section>
+
+            <h3>
+                <div class="media">
+                    <div class="bd-wizard-step-icon"><i class="mdi mdi-emoticon-outline"></i></div>
+                    <div class="media-body">
+                        <div class="bd-wizard-step-title">Submit</div>
+
+                    </div>
+                </div>
+            </h3>
+            <section>
+                <div class="content-wrapper">
+                    <div class="row" style="margin-top: 10px;padding: 20px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12 "  style="margin: auto" >
+                            <div class="contact-form-wizard">
+
+                                <div class="card" >
+                                    <div class="card-body">
+                                       <form>
+                                           <?php \App\Helpers\Helper::loadDocumentPage();?>
+                                       </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div >
+                    </div>
+                </div>
+            </section>
               </div>
-            </form>
+
           </div>
         </div>
       </main>
