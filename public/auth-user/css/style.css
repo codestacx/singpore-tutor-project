@@ -279,3 +279,54 @@ main {
     height: 30px;border-top: none;border-right: none;border-left: none;
 }
 
+
+#moe_school_teaching_experience_table input {
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
+
+
+.moe-experience-add-more{
+    font-size: 15px;
+    color: coral;
+    margin: 20px;
+    padding: 5px;
+}
+.private-experience-add-more{
+    font-size: 15px;
+    color: coral;
+    margin: 20px;
+    padding: 5px;
+}
+#moe_school_teaching_experience_table   th {
+    font-size:12px;
+    color: #1abc9c;
+}
+
+#private_school_teaching_experience_table th {
+    font-size:12px;
+    color: #1abc9c;
+}
+
+#private_school_teaching_experience_table input {
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
+
+
+
+#music_experience_table input {
+    height: 30px;border-top: none;border-right: none;border-left: none;
+}
+
+
+#music_experience_table th{
+    font-size:12px;
+    color: #1abc9c;
+}
+
+#educationExperienceCards  div.card {
+    margin:20px
+}
+
+#educationExperienceCards button.collapsed{
+    height: 25px;line-height: 0px;
+}

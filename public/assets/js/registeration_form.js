@@ -11,17 +11,13 @@ var commonServer = {
     },
     addCourseMajor:(e)=>{
 
-
-
         const parent = document.getElementById(e);
-
         const tr = document.createElement('tr');
 
         var td;
         var input;
 
         td = document.createElement('td');
-
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Course/Major Title";
@@ -76,7 +72,7 @@ var commonServer = {
 
         const e = document.getElementById(parent);
         const elements = e.querySelectorAll(':scope > div:not([id='+section+'])');
-       
+
         elements.forEach(v=>{
             console.log(v.id);
             v.style.display = 'none'
@@ -177,10 +173,6 @@ var commonServer = {
         td.appendChild(input);
         tr.appendChild(td);
 
-        // <td>
-        //                                 <span onclick="commonServer.removeSubjectAndGradeRow(this)"> <i class="fa fa-trash"   style="color: #b21f2d;cursor: pointer"></i> </span>
-        //                             </td>
-
 
         td = document.createElement('td');
         const i = document.createElement('i');
@@ -206,6 +198,74 @@ var Education = {
 
 }
 
+
+var Experience = {
+    addAnotherMoeExperienceLevelRow:(e)=>{
+        const element = document.getElementById(e);
+
+        const html ='    <tr>\n' +
+            '                        <td>\n' +
+            '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
+            '                                <option disabled selected> Level</option>\n' +
+            '                            </select>\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '                        <td>\n' +
+            '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
+            '                        </td>\n' +
+            '                    </tr>';
+
+        element.querySelector('tbody tr').insertAdjacentHTML('afterend',html)
+    },
+    addAnotherPrivateExperienceLevelRow:(e)=>{
+        const element = document.getElementById(e);
+        const html ='    <tr>\n' +
+            '                        <td>\n' +
+            '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
+            '                                <option disabled selected> Level</option>\n' +
+            '                            </select>\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '\n' +
+            '\n' +
+            '                        <td>\n' +
+            '                            <input type="text" class="form-control" name="" id="" />\n' +
+            '                        </td>\n' +
+            '                        <td>\n' +
+            '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
+            '                        </td>\n' +
+            '                    </tr>';
+
+        element.querySelector('tbody tr').insertAdjacentHTML('afterend',html)
+    }
+}
 
 jQuery(document).ready(function(){
 

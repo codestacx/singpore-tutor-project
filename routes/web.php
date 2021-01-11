@@ -55,3 +55,6 @@ populateRoutes([
     'card.load'=>url('/update-info/load-card'),
 ]);
 
+
+Route::get('testing',[\App\Http\Controllers\TestingController::class,'testing'])->name('testing');
+
