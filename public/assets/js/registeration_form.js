@@ -197,10 +197,10 @@ var commonServer = {
 
 var BasicInfo = {
     submitFormData:()=>{
-        console.log('basic info submitted')
+        var form = document.querySelector('form#basic_info_form');
+        var formData = new FormData(form);
     }
 }
-
 
 var Education = {
 
@@ -326,5 +326,10 @@ jQuery(document).ready(function(){
         commonServer.displayRelatedSection('related_sections',e.target.id);
     })
 
+
+
+    jQuery('#btnb').on('click',(e)=>{
+
+    })
 
 })

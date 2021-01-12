@@ -36,13 +36,9 @@
                         <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                             <div class="contact-form-wizard">
 
-                                <form id="basic_info_form">
+                                <form id="basic_info_form" method="POST">
                                 <div class="card" >
                                     <div class="card-body">
-
-
-
-
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
