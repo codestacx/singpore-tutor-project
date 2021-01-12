@@ -194,6 +194,14 @@ var commonServer = {
     }
 }
 
+
+var BasicInfo = {
+    submitFormData:()=>{
+        console.log('basic info submitted')
+    }
+}
+
+
 var Education = {
 
 }

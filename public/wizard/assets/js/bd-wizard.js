@@ -3,11 +3,26 @@
 $("#wizard").steps({
     headerTag: "h3",
     bodyTag: "section",
-    transitionEffect: "fade",
+
+    transitionEffect: $.fn.steps.transitionEffect.fade,
+    transitionEffectSpeed: 200,
     titleTemplate: '#title#',
     buttonText:{
         next:'Save & Continue'
-    }
+    },
+    labels:{
+        loading: "Loading ..."
+    },
+
+    onStepChanged: function (event, currentIndex, priorIndex) {
+        if(priorIndex === 0){
+            BasicInfo.submitFormData()
+        }
+
+    },
+    onFinished: function (event, currentIndex) {
+        console.log(currentIndex)
+    },
 });
 
 //Form control

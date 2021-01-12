@@ -36,6 +36,7 @@
                         <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                             <div class="contact-form-wizard">
 
+                                <form id="basic_info_form">
                                 <div class="card" >
                                     <div class="card-body">
 
@@ -52,8 +53,8 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="gender"> Choose Gender</label>
-                                                    <select class="form-control" id="gender" name="gender">
-
+                                                    <select class="custom-select custom-select-md" id="gender" name="gender">
+                                                        <option value="" selected disabled style="">Choose Gender</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
@@ -72,8 +73,8 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="birth_year"> Birth Year <code><small> YYY format (e.g. 1980).</small></code></label>
-                                                    <select class="form-control" name="birth_year" id="birth_year">
-
+                                                    <select class="custom-select custom-select-md" name="birth_year" id="birth_year">
+                                                        <option selected disabled>Select Year</option>
                                                         @php
                                                             $year = 2020;
                                                             for(;$year > 1960; $year--){
@@ -97,7 +98,8 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="race">Choose Race</label>
-                                                    <select class="form-control" id="race" name="race">
+                                                    <select class="custom-select custom-select-md" id="race" name="race">
+                                                        <option selected disabled>Choose Race</option>
                                                         @foreach($races as $race)
                                                             <option value="{{$race->title}}">{{$race->title}}</option>
                                                         @endforeach
@@ -112,7 +114,7 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="birth_year">Birth Country </label>
-                                                    <select class="form-control" id="birth_year" name="country">
+                                                    <select class="custom-select custom-select-md" id="birth_year" name="country">
                                                         <option disabled selected>  Birth Country</option>
                                                         <option value="Afganistan">Afghanistan</option>
                                                         <option value="Albania">Albania</option>
@@ -366,7 +368,8 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="citizenship">Choose Citizenship</label>
-                                                    <select class="form-control" name="citizenship" id="citizenship">
+                                                    <select class="custom-select custom-select-md" name="citizenship" id="citizenship">
+                                                        <option selected disabled>Citizenship</option>
                                                         @foreach($citizenships as $citizenship)
                                                             <option value="{{$citizenship->name}}">{{$citizenship->name}}</option>
                                                         @endforeach
@@ -379,6 +382,8 @@
 
                                     </div>
                                 </div>
+                                </form>
+
                             </div>
                         </div >
 
@@ -539,12 +544,12 @@
                                 <div class="accordion" id="educationExperienceCards">
 
                                     <div class="card">
-                                        <div class="card-header" id="MoeExperienceCard">
+                                        <div class="card-header" id="MoeExperienceCard" style="background-color: cadetblue">
                                   <span class="mb-0">
-                                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#moeExperienceCollapse" aria-expanded="false" aria-controls="moeExperienceCollapse">
+                                      <span style="cursor: pointer;color:#ffffff" class="collapsed"   data-toggle="collapse" data-target="#moeExperienceCollapse" aria-expanded="false" aria-controls="moeExperienceCollapse">
 
-                                          <strong>Academic</strong> <code>(E.g. Primary, Secondary, JC, University)</code>
-                                      </button>
+                                          <strong>Academic</strong> <span >(E.g. Primary, Secondary, JC, University)</span>
+                                      </span>
                                   </span>
                                         </div>
                                         <div id="moeExperienceCollapse" class="collapse" aria-labelledby="MoeExperienceCard" data-parent="#accordionExample">
@@ -554,13 +559,14 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="card">
-                                        <div class="card-header" id="MusicExperienceCard">
-                                            <h2 class="mb-0">
-                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#MusicExperienceCardCollapse" aria-expanded="false" aria-controls="MusicExperienceCardCollapse">
-                                                    <strong>Music</strong> <code>(E.g. Piano, Flute, Clarinet)</code>
-                                                </button>
-                                            </h2>
+                                        <div class="card-header" id="MusicExperienceCard" style="background-color: chocolate">
+                                            <span class="mb-0">
+                                                <span style="cursor: pointer;color:#ffffff"  data-toggle="collapse" data-target="#MusicExperienceCardCollapse" aria-expanded="false" aria-controls="MusicExperienceCardCollapse">
+                                                    <strong>Music</strong> <span>(E.g. Piano, Flute, Clarinet)</span>
+                                                </span>
+                                            </span>
                                         </div>
                                         <div id="MusicExperienceCardCollapse" class="collapse" aria-labelledby="MusicExperienceCard" data-parent="#accordionExample">
                                             <div class="card-body">
