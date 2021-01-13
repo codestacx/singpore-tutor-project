@@ -34,6 +34,8 @@ Route::prefix('/')->name('site.')->group(function(){
 
 });
 
+Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
+
 
 
 Route::prefix('dashboard')
@@ -44,10 +46,34 @@ Route::prefix('dashboard')
         Route::get('logout',[TutorController::class,'logout'])->name('logout');
 });
 
-Route::get('/testing',function(){
-//   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
-    return view('auths.pages.login');
+
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/google',function(){
+
+    //return 'love';
+ $user = Socialite::driver('google')->stateless()->user();
+ return view('auths.pages.register',compact('user'));
+
+ //  print_r($user);
 });
+
+// Route::get('/auth/callback', function () {
+//     return $user = Socialite::driver('google')->stateless()->user();
+
+//     // $user->token
+// });
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+
+Route::get('/testing',function(){
+    //   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
+        return view('auths.pages.login');
+    });
 
 
 Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){
