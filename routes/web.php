@@ -20,7 +20,6 @@ use \App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\TutorController;
 
 
-
 Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('',[HomeController::class,'index'])->name('home');
@@ -30,18 +29,42 @@ Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('tution-rates',[HomeController::class,'tutionrates'])->name('tution_rates');
 
-    Route::get('update-info',[TutorController::class,'registerationForm'])->name('update_info');
+    Route::match(['get','post'],'update-info/{action?}',[TutorController::class,'registerationForm'])->name('update_info');
+    Route::match(['get','post'],'tutor/login/',[AuthController::class,'login'])->name('user.login');
+
 });
+
+
+
+Route::prefix('dashboard')
+    ->name('tutor.')->middleware('tutor')->group(function(){
+
+        Route::get('',[TutorController::class,'index'])->name('dashboard');
+        Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
+        Route::get('logout',[TutorController::class,'logout'])->name('logout');
+});
+
+Route::get('/testing',function(){
+//   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
+    return view('auths.pages.login');
+});
+
+
+Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){
+    dd('working');
+})->name('tutor.email-verification');
+
 
 Route::get('/update-info/load-card',[TutorController::class,'loadCard'])->name('load-card');
 
 
+
+
+/* Admin Routes */
 Route::prefix('superadmin')->group(function(){
     Route::get('/login',[AdminAuthController::class,'login'])->name('admin.login');
 });
-Route::prefix('superadmin')
-    ->middleware('admin_guard')
-    ->name('admin.')->group(function(){
+Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(function(){
 
     Route::get('',[AdminController::class,'welcome'])->name('home');
 
@@ -53,8 +76,9 @@ Route::prefix('superadmin')
 
 populateRoutes([
     'card.load'=>url('/update-info/load-card'),
+    'update-info'=>url('/dashboard/update-info')
 ]);
 
 
-Route::get('testing',[\App\Http\Controllers\TestingController::class,'testing'])->name('testing');
+
 

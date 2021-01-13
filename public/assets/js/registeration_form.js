@@ -105,6 +105,7 @@ var commonServer = {
         }
 
         const obj = ids[ids.length-1];
+
         $.ajax({
             url:config['card.load'],
             data:{cardid:obj.cardid,parent:obj.parent,index:index},
@@ -199,6 +200,30 @@ var BasicInfo = {
     submitFormData:()=>{
         var form = document.querySelector('form#basic_info_form');
         var formData = new FormData(form);
+
+        formData.append('action','basic-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
     }
 }
 

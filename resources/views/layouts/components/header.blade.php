@@ -62,11 +62,21 @@
                             </form>
                         </div>
 
+
+                        @if(!session('tutor_logged'))
                         <!-- Register / Login -->
                         <div class="register-login-area">
                             <a href="{{route('site.tutor.register')}}">Register as Tutor</a>
-                            <a href="index-login.html" class="btn">Member Login</a>
+                            <a href="{{route('site.user.login')}}" class="btn">Member Login</a>
                         </div>
+
+                            @else
+                                <div class="register-login-area">
+                                    <a href="{{route('tutor.dashboard')}}">Dashboard</a>
+                                    <a href="{{route('tutor.logout')}}">Logout</a>
+                                </div>
+                            @endif
+
 
                     </div>
                     <!-- Nav End -->

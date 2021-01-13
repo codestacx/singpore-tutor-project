@@ -8,8 +8,8 @@
 
         <div class="profile">
             <img src="{{asset('auth-user/images/person_4.jpg')}}" alt="Image" class="img-fluid">
-            <h3 class="name">Craig David</h3>
-            <span class="country">Web Designer</span>
+            <h3 class="name">{{session('tutor_name')}}</h3>
+            <span class="country">Tutor</span>
         </div>
 
 

@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="{{asset('assets/css/switch.css')}}"/>
 
-
+<meta name="_token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
 
@@ -37,22 +37,25 @@
                             <div class="contact-form-wizard">
 
                                 <form id="basic_info_form" method="POST">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                                 <div class="card" >
                                     <div class="card-body">
                                         <div class="row">
+
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="fullname">Full Name</label>
-                                                    <input type="text" name="fullname" class="form-control" id="fullname"   placeholder="e.g Muhammad Atif Akram">
+                                                    <input type="text" name="fullname" value="<?=$user->name?>" class="form-control" id="fullname"   placeholder="e.g Muhammad Atif Akram">
                                                 </div>
                                             </div>
+
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="gender"> Choose Gender</label>
                                                     <select class="custom-select custom-select-md" id="gender" name="gender">
                                                         <option value="" selected disabled style="">Choose Gender</option>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
+                                                        <option <?=isset($basicInfo) && $basicInfo->gender == "Male" ? 'selected':'' ?> value="Male">Male</option>
+                                                        <option  <?=isset($basicInfo) && $basicInfo->gender == "Female" ? 'selected':'' ?> value="Female">Female</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -63,7 +66,7 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="mobile">Mobile # <code><small> ( to get SMS when matched to assignments )</small></code></label>
-                                                    <input type="tel" name="mobile" class="form-control"  id="mobile"  placeholder="+65 xxx xxx xxxx">
+                                                    <input type="tel" value="<?=@$basicInfo->mobile?>" name="mobile" class="form-control"  id="mobile"  placeholder="+65 xxx xxx xxxx">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-6">
@@ -75,7 +78,7 @@
                                                             $year = 2020;
                                                             for(;$year > 1960; $year--){
                                                         @endphp
-                                                        <option value="{{$year}}">{{$year}}</option>
+                                                        <option <?=isset($basicInfo) && $basicInfo->year == $year ? 'selected':'' ?> value="{{$year}}">{{$year}}</option>
                                                         @php
                                                             }
                                                         @endphp
@@ -88,7 +91,7 @@
                                             <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label for="postal_code"> Postal Code <code><small> (Must be valid to get notification )</small></code></label>
-                                                    <input type="tel" id="postal_code" name="postal_code" class="form-control"   placeholder="Postal Code ">
+                                                    <input type="tel" value="<?=@$basicInfo->postal_code?>" id="postal_code" name="postal_code" class="form-control"   placeholder="Postal Code ">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-6">
@@ -97,7 +100,7 @@
                                                     <select class="custom-select custom-select-md" id="race" name="race">
                                                         <option selected disabled>Choose Race</option>
                                                         @foreach($races as $race)
-                                                            <option value="{{$race->title}}">{{$race->title}}</option>
+                                                            <option <?=isset($basicInfo) && $basicInfo->race == $race->id ? 'selected':'' ?> value="{{$race->id}}">{{$race->title}}</option>
                                                         @endforeach
 
                                                     </select>
@@ -111,7 +114,12 @@
                                                 <div class="form-group">
                                                     <label for="birth_year">Birth Country </label>
                                                     <select class="custom-select custom-select-md" id="birth_year" name="country">
-                                                        <option disabled selected>  Birth Country</option>
+                                                        @isset($basicInfo)
+                                                            <option value="{{$basicInfo->country}}" selected>{{$basicInfo->country}}</option>
+                                                        @else
+                                                            <option disabled selected>  Birth Country</option>
+                                                        @endisset
+
                                                         <option value="Afganistan">Afghanistan</option>
                                                         <option value="Albania">Albania</option>
                                                         <option value="Algeria">Algeria</option>
@@ -367,9 +375,9 @@
                                                     <select class="custom-select custom-select-md" name="citizenship" id="citizenship">
                                                         <option selected disabled>Citizenship</option>
                                                         @foreach($citizenships as $citizenship)
-                                                            <option value="{{$citizenship->name}}">{{$citizenship->name}}</option>
+                                                            <option <?= isset($basicInfo) && $basicInfo->citizenship == $citizenship->id ? 'selected':''?> value="{{$citizenship->id}}">{{$citizenship->name}}</option>
                                                         @endforeach
-                                                        <option value="Others">Others</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -395,9 +403,9 @@
             </section>
           <h3>
             <div class="media">
-              <div class="bd-wizard-step-icon"><i class="mdi mdi-bank"></i></div>
+              <div class="bd-wizard-step-icon"><i class="mdi mdi-school"></i></div>
               <div class="media-body">
-                <div class="bd-wizard-step-title">Employ Details</div>
+                <div class="bd-wizard-step-title">Education</div>
                 <div class="bd-wizard-step-subtitle">Step 2</div>
               </div>
             </div>
@@ -410,10 +418,7 @@
 
                     <div class="card" >
                       <div class="card-body">
-
                         <div class="row">
-
-
                           <div class="col-md-12 col-sm-12 col-lg-12" style="text-align: center">
                             <h5 style="color: cadetblue;font-family: fantasy;padding: 5px 5px 1px 1px;text-align: center"> What status belongs you ? </h5>
                           </div>
@@ -467,13 +472,32 @@
 
                             </div>
 
-                            <div class="row" id="moeschoolteacher" style="display: none">
-                              moe
+                            <div class="row" id="moeschoolteacher" style="display: none;margin-top:15px">
+                                <br/>
+                                <div class="col-sm-12 col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>MOE/School Email Address *</label>
+                                        <input type="text" class="form-control" style="height: 30px"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Please Specifiy</label>
+                                        <select class="custom-select custom-select-sm" name="moe_specification">
+
+                                            @foreach($moespecs as $spec)
+                                                <option value="{{$spec->id}}">{{$spec->specification}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="row" id="fulltimetutor" style="display: none">full time tu</div>
+                            <div class="row" id="fulltimetutor" style="display: none"></div>
 
-                            <div class="row" id="parttimetutor" style="display: none">part tut</div>
+                            <div class="row" id="parttimetutor" style="display: none"></div>
 
                           </div>
 
@@ -484,9 +508,19 @@
                                       <div class="form-group codestacx">
                                           <label> Are you NIE-trained ? </label>
                                           <br/>
+                                          <script>
+                                              function changeNIE(){
+                                                  const element = document.getElementById('nie_trained');
+                                                  if(element.value === '0'){
+                                                      element.value = '1'
+                                                  }else{
+                                                      element.value = '0'
+                                                  }
+                                              }
+                                          </script>
                                           <label class="codestacx-switch switch-left-right">
-                                              <input class="switch-input" type="checkbox">
-                                              <span class="switch-label" data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
+                                              <input onchange="alert(this.value)" value="0" id="nie_trained" class="switch-input" name="is_nie_trained" type="checkbox">
+                                              <span class="switch-label" onclick="changeNIE()"  data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
                                       </div>
                                   </div>
                                   <div class="col-sm col-md-7 col-lg-7">
@@ -1001,14 +1035,6 @@
       <script src="{{asset('wizard/assets/js/bd-wizard.js')}}"></script>
       <script src="{{asset('assets/js/registeration_form.js')}}"></script>
           <script>
-              function renderContent(){
-                  $.ajax({
-                      url:'{{route('testing')}}',
-                      dataType:'html',
-                      success:function(response){
-                          $('#render_content_here').html(response)
-                      }
-                  })
-              }
+
           </script>
       @endsection

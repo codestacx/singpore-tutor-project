@@ -40,4 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function isEmailAlreadyRegistered($email){
+        $count = User::where(['email'=>$email])->count();
+        return $count == 0 ? false:true;
+    }
 }
