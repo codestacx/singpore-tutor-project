@@ -225,7 +225,7 @@ class Helper {
         <div class="col-12 col-lg-12" >
             <div class="form-group col-md-10 col-lg-10">
                 <label for="is_taught">Have you taught in an MOE school before?</label>
-                <select class="custom-select custom-select-sm" name="is_taught" id="is_taught">
+                <select onchange="commonServer.toggleExperienceForm(this)" class="custom-select custom-select-sm" name="is_taught" id="is_taught">
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
@@ -233,32 +233,31 @@ class Helper {
         </div>
 
 
-        <div class="col-12 col-lg-12">
-            <div class="form-group col-md-6 col-lg-6 col-sm-12" style="margin-left: 10px">
-                <br/>
-                <h6 style="margin-left: 10px;color: cadetblue;font-family: Sans;"> Your MOE School Teaching Experience </h6>
-                <label >
-                    Number of years teaching in MOE schools ?
-                </label>
-                <input type="text" class="form-control" style="height: 30px" placeholder="Years"/>
+        <div class="row" id="moe_school_experience">
+            <div class="col-12 col-lg-12">
+                <div class="form-group col-md-6 col-lg-6 col-sm-12" style="margin-left: 10px">
+                    <br/>
+                    <h6 style="margin-left: 10px;color: cadetblue;font-family: Sans;"> Your MOE School Teaching Experience </h6>
+                    <label >
+                        Number of years teaching in MOE schools ?
+                    </label>
+                    <input type="text" class="form-control" style="height: 30px" placeholder="Years"/>
+                </div>
             </div>
-        </div>
-
-
-        <div class="row">
-            <table class="table table-borderless" id="moe_school_teaching_experience_table">
-                <thead>
-                <caption> <a class="moe-experience-add-more" href="javascript:;" onclick="Experience.addAnotherMoeExperienceLevelRow('moe_school_teaching_experience_table')"> <i class="fa fa-plus"></i> Add More </a> </caption>
-                <tr>
-                    <th>Level</th>
-                    <th>Subject</th>
-                    <th>School</th>
-                    <th>Years Taught</th>
-                    <th>Last Taught</th>
-                    <th style="color: #b21f2d">Trash</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="row">
+                <table class="table table-borderless" id="moe_school_teaching_experience_table">
+                    <thead>
+                    <caption> <a class="moe-experience-add-more" href="javascript:;" onclick="Experience.addAnotherMoeExperienceLevelRow('moe_school_teaching_experience_table')"> <i class="fa fa-plus"></i> Add More </a> </caption>
+                    <tr>
+                        <th>Level</th>
+                        <th>Subject</th>
+                        <th>School</th>
+                        <th>Years Taught</th>
+                        <th>Last Taught</th>
+                        <th style="color: #b21f2d">Trash</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <tr>
                         <td>
                             <select name="" id="" class="custom-select custom-select-sm">
@@ -283,12 +282,14 @@ class Helper {
                             <input type="text" class="form-control" name="" id="" />
                         </td>
                         <td>
-                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
+                            <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
 
 
         <div class="col-12 col-lg-12">

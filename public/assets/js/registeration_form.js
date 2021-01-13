@@ -1,6 +1,14 @@
 var ids = [];
 var index = 0;
 var commonServer = {
+    toggleExperienceForm:(e)=>{
+        const el = document.getElementById('moe_school_experience');
+        if(e.value === 'No'){
+            el.style.display = 'none'
+        }else{
+            el.style.display = ''
+        }
+    },
 
     removeMajorCourse:(e)=>{
         if(e.target ){
