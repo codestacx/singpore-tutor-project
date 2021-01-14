@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Citizenship;
+use App\Models\EducationInfo;
 use App\Models\MoeTutorSpecification;
 use App\Models\Qualification;
 use App\Models\Race;
@@ -40,7 +41,8 @@ class TutorController extends Controller
                     $this->updateBasicInfo($request);
                     break;
                 case 'educational-info':
-                    $this->updateEducationInformation($request);
+
+                    $this->updateEducationInformation($request,$request->school_level);
                     break;
             }
 
@@ -64,11 +66,14 @@ class TutorController extends Controller
 
 
 
-    public function updateEducationInformation($request){
+    public function updateEducationInformation($request,$levels){
 
 
+        $user = session('tutor_id');
         $category = $request->tutorrole;
         $formData = [
+
+            'user_id'=>$user,
             'category'=>$category,
             'is_nie_trained'=>$request->is_nie_trained,
             'highest_qualification'=>$request->highest_qualification,
@@ -84,14 +89,15 @@ class TutorController extends Controller
 
 
 
-        DB::table('education_infos')->insert([
-                $formData
-        ]);
+
+        $educationInfo = EducationInfo::create($formData);
 
 
-        dd(DB::lastInsertId());
+
 
         $school_level = $request->school_level;   //array of school level
+
+
         $school_name = $request->school_name;    // array of school name
 
         $start_month = $request->start_month;
@@ -103,40 +109,53 @@ class TutorController extends Controller
         $achievements = $request->achievements;   //achievements
 
 
+        for($index = 0;$index < count($levels);$index++){
 
-        for($index = 0;$index < count($school_level);$index++){
+            $formData = [
+                'education_id' =>$educationInfo->id,
+                'user_id'=>$user,
+                'school_level'=>$levels[$index],
+                'school_name'=>$school_name[$index],
+                'start_month'=>$request->start_month[$index],
+                'start_year'=>$request->start_year[$index],
+                'end_month'=> $request->end_month[$index],
+                'end_year'=>$request->end_year[$index]
+            ];
 
-            $school_level = $school_level[$index];
-            $school_name  = $school_level[$index];
 
-            $start_month  = $request->start_month[$index];
-            $end_month    = $request->end_month[$index];
-
-            $start_year  =  $request->start_year[$index];
-            $end_year    =  $request->end_year[$index];
+//            $school_name  = $school_level[$index];
+//
+//            $start_month  = $request->start_month[$index];
+//            $end_month    = $request->end_month[$index];
+//
+//            $start_year  =  $request->start_year[$index];
+//            $end_year    =  $request->end_year[$index];
 
             $deploma_degree_others = [6,7,8];
 
-            if(in_array($school_level,$deploma_degree_others)){
-                $data = $request->course_name[$index];
+            if(in_array($levels[$index],$deploma_degree_others)){
+
+                $formData['subjects_and_grades'] = json_encode($request->course_name[$index]);
+
             }else{
                 $subjects = $request->subject[$index];
                 $grades = $request->grade[$index];
                 $data = array();
-                for($iterator = 0;$iterator < count($subjects); $iterator++){
-                    $data[$iterator] = (object)['subject'=>$subjects[$index],'grade'=>$grades[$index]];
+                for($iterator = 0;$iterator < count((array)$subjects); $iterator++){
+                    $data[$iterator] = (object)['subject'=>$subjects[$iterator],'grade'=>$grades[$iterator]];
                 }
+
+                $formData['subjects_and_grades'] = json_encode($data);
+
             }
-            $data = json_encode($data);
+
+            DB::table('tutor_school_courses')->insert($formData);
+
         }
 
-        //check on the base of school level
 
 
-
-
-
-
+        return response()->json(['status'=>true,'message'=>'data submitted']);
 
 
 
