@@ -57,7 +57,7 @@ Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){
 
 Route::get('/education/load-card',[TutorController::class,'loadCard'])->name('load-card');
 
-
+Route::get('/experience/getrow',[TutorController::class,'getAcademicExperienceRow'])->name('get-experience-row');
 
 
 /* Admin Routes */
@@ -76,7 +76,8 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
 
 populateRoutes([
     'card.load'=>url('/education/load-card'),
-    'update-info'=>url('/dashboard/update-info')
+    'update-info'=>url('/dashboard/update-info'),
+    'get-experience-row'=>url('/experience/getrow')
 ]);
 
 

@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\Citizenship;
 use App\Models\EducationInfo;
+use App\Models\Level;
 use App\Models\MoeTutorSpecification;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
 use App\Models\StudentCategory;
+use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use function GuzzleHttp\json_encode;
 
 class TutorController extends Controller
 {
@@ -38,11 +41,14 @@ class TutorController extends Controller
             $action = $request->action;
             switch ($action){
                 case 'basic-info':
-                    $this->updateBasicInfo($request);
+                   // $this->updateBasicInfo($request);
                     break;
                 case 'educational-info':
 
-                    $this->updateEducationInformation($request,$request->school_level);
+                   // $this->updateEducationInformation($request,$request->school_level);
+                    break;
+                case 'experience-info':
+                   $this->experienceInformation($request);
                     break;
             }
 
@@ -51,6 +57,14 @@ class TutorController extends Controller
 
         $whereClause = ['user_id'=>session('tutor_id')];
         $basicInfo = DB::table('basic_infos')->where($whereClause)->first();
+        $educationInfo = DB::table('education_infos')->where($whereClause)->first();
+
+
+        $educationInfoCourses = isset($educationInfo) ?
+         DB::table('tutor_school_courses')->where(['education_id'=>$educationInfo->education_id])->get():
+            [];
+
+
         $templateData = [
             'races'=>Race::all(),
             'citizenships'=>Citizenship::all(),
@@ -59,12 +73,146 @@ class TutorController extends Controller
             'basicInfo'=>$basicInfo,
             'user'=>User::find(session('tutor_id')),
             'moespecs'=>MoeTutorSpecification::all(),
-            'student_categories'=>StudentCategory::all()
+            'student_categories'=>StudentCategory::all(),
+            'education'=>$educationInfo,
+            'educationInfoCourses'=>$educationInfoCourses
         ];
+
         return view('tutor.update_info',$templateData);
     }
 
 
+
+
+    public function getAcademicExperienceRow(Request $request){
+
+        $levels = Level::all();
+        $subjects = Subject::all();
+        ob_start();
+        ?>
+
+        <link rel="stylesheet" href="<?= public_path('dist/css/bootstrap-select.css') ?>">
+
+        <?php if($request->row != 'private'):?>
+        <tr>
+            <td>
+                <select name="level[]" id="" class="custom-select custom-select-sm">
+                    <?php foreach($levels as $level):?>
+                        <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
+
+                    <?php endforeach;?>
+                </select>
+            </td>
+
+            <td>
+                <select name="subjects[<?=$request->index?>][]"  class="selectpicker show-menu-arrow" multiple >
+                    <?php foreach($subjects as $subject):?>
+                        <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
+                    <?php endforeach;?>
+                </select>
+            </td>
+
+            <td>
+                <input type="text"  class="form-control" name="school[]" id="" />
+            </td>
+
+            <td>
+                <input type="text" class="form-control" name="years_taught[]" id="" />
+            </td>
+
+
+            <td>
+                <input type="text" class="form-control" name="last_taught[]" id="" />
+            </td>
+            <td>
+                <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
+            </td>
+        </tr>
+        <?php else:?>
+            <tr>
+                <td>
+                    <select name="private_level[]" id="" class="custom-select custom-select-sm">
+                        <?php foreach($levels as $level):?>
+                            <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
+
+                        <?php endforeach;?>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="private_subjects[<?=$request->index?>][]"  class="selectpicker show-menu-arrow" multiple >
+                        <?php foreach($subjects as $subject):?>
+                            <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
+                        <?php endforeach;?>
+                    </select>
+                </td>
+
+                <td>
+                    <input type="text"  class="form-control" name="private_school[]" id="" />
+                </td>
+
+                <td>
+                    <input type="text" class="form-control" name="private_years_taught[]" id="" />
+                </td>
+
+
+                <td>
+                    <input type="text" class="form-control" name="private_last_taught[]" id="" />
+                </td>
+                <td>
+                    <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
+                </td>
+            </tr>
+        <?php endif;?>
+        <?php
+        return ob_get_clean();
+    }
+
+    private function experienceInformation($request){
+        $formData = [
+            'is_taught_in_moe'=>$request->is_taught_in_moe,
+            'user_id'=>session('tutor_id')
+        ];
+
+        if($request->is_taught_in_moe){
+            $formData['moe_number_experience'] = $request->moe_number_experience;
+
+            $data = array();
+            for($iterator = 0;$iterator < count($request->level);$iterator++){
+                $data[$iterator] = (object)[
+                    'level'=>$request->level[$iterator],
+                    'subject'=>json_encode($request->subjects[$iterator]),
+                    'school'=>$request->school[$iterator],
+                    'years_taught'=>$request->years_taught[$iterator],
+                    'last_taught'=>$request->last_taught
+                ];
+
+            }
+
+            $formData['moe_experiences'] = json_encode($data);
+        }
+
+        $formData['private_number_experience'] = $request->private_number_experience;
+        $data = array();
+        for($iterator = 0;$iterator < count($request->private_level);$iterator++){
+            $data[$iterator] = (object)[
+                'level'=>$request->private_level[$iterator],
+                'subject'=>json_encode($request->private_subjects[$iterator]),
+                'school'=>$request->private_school[$iterator],
+                'years_taught'=>$request->private_years_taught[$iterator],
+                'last_taught'=>$request->private_last_taught
+            ];
+
+        }
+
+
+        $formData['private_experiences'] = json_encode($data);
+        $formData['students_taught'] = json_encode($request->students_taught);
+
+        DB::table('academic_experiences')->insert($formData);
+        dd(DB::getPdo()->lastInsertId());
+
+    }
 
     public function updateEducationInformation($request,$levels){
 
@@ -90,6 +238,16 @@ class TutorController extends Controller
 
 
 
+        $isAlreadyUp = DB::table('education_infos')->where([
+            'user_id'=>$user
+        ])->first();
+
+        if($isAlreadyUp){
+            DB::table('education_infos')->where([
+                'user_id'=>$user
+            ])->delete();
+        }
+
         $educationInfo = EducationInfo::create($formData);
 
 
@@ -108,6 +266,8 @@ class TutorController extends Controller
 
         $achievements = $request->achievements;   //achievements
 
+       // dd($request);
+
 
         for($index = 0;$index < count($levels);$index++){
 
@@ -119,25 +279,21 @@ class TutorController extends Controller
                 'start_month'=>$request->start_month[$index],
                 'start_year'=>$request->start_year[$index],
                 'end_month'=> $request->end_month[$index],
-                'end_year'=>$request->end_year[$index]
+                'end_year'=>$request->end_year[$index],
+                'achievements'=>$request->achievements[$index]
             ];
-
-
-//            $school_name  = $school_level[$index];
-//
-//            $start_month  = $request->start_month[$index];
-//            $end_month    = $request->end_month[$index];
-//
-//            $start_year  =  $request->start_year[$index];
-//            $end_year    =  $request->end_year[$index];
-
             $deploma_degree_others = [6,7,8];
+
+
 
             if(in_array($levels[$index],$deploma_degree_others)){
 
-                $formData['subjects_and_grades'] = json_encode($request->course_name[$index]);
+                $formData['subjects_or_majors'] = json_encode($request->course_name[$index]);
 
             }else{
+
+
+
                 $subjects = $request->subject[$index];
                 $grades = $request->grade[$index];
                 $data = array();
@@ -153,12 +309,7 @@ class TutorController extends Controller
 
         }
 
-
-
         return response()->json(['status'=>true,'message'=>'data submitted']);
-
-
-
     }
 
 

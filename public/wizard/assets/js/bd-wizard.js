@@ -23,6 +23,10 @@ $("#wizard").steps({
             Education.submitFormData();
         }
 
+        if(priorIndex === 2){
+            Experience.submitFormData();
+        }
+
     },
     onFinished: function (event, currentIndex) {
         console.log(currentIndex)

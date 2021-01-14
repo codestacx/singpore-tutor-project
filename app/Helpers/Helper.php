@@ -5,10 +5,14 @@ namespace App\Helpers;
 
 
 use App\Models\Citizenship;
+use App\Models\Level;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
+use App\Models\Subject;
 use Illuminate\Support\Str;
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 class Helper {
 
@@ -180,7 +184,7 @@ class Helper {
                     <span id="course_major_table" style="display: none">
                         <table class="table table-borderless" >
                             <thead>
-                              <caption class="caption"><a onclick="commonServer.addCourseMajor('<?="course_major_table_tbody".$cardid?>')" href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b"></i> Add another Major or Minor </span></a> </caption>
+                              <caption class="caption"><a onclick="commonServer.addCourseMajor('<?="course_major_table_tbody".$cardid?>',<?=$input_index?>)" href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b"></i> Add another Major or Minor </span></a> </caption>
 
                              <td>
                            <h6 style="color: coral;font-family: fantasy;margin-top: 20px;">Course Name or Major Name *</h6>
@@ -219,16 +223,236 @@ class Helper {
         return ob_get_clean();
     }
 
+    public static function preparedCard($data,$input_index){
+
+        $parent = Str::random();
+        $cardid = Str::random(34);
+        $schooltypes    = SchoolType::all();
+        ob_start();
+        ?>
+        <div class="card" id="<?=$parent ?>">
+            <div style="margin: 10px;border-radius: 30px;"  class="card-header bg-info text-white">
+                <span><i onclick="commonServer.removeCollapseSection('<?=$parent ?>')" style="cursor: pointer" class="fa fa-times float-right"></i> </span>
+                <a class="text-white" href="javascript:;" data-parent="accordian" data-toggle="collapse" data-target="<?='#'.$cardid ?>" aria-expanded="false" aria-controls="<?=$cardid ?>">
+                    <span class="card-title">
+                    <span>
+                        <i class="fa fa-diamond" style="color: cornsilk"></i>
+                    </span> School/Course
+                    </span>
+                </a>
+            </div>
+            <div id="<?=$cardid ?>" class="panel-collapse collapse">
+                <div class="card-body">
+
+                    <div class="row">
+
+
+                        <div class="col-sm-12 col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="level_type">School Level</label>
+                                <select class="custom-select custom-select-sm" name="school_level[]" onchange="commonServer.onChangeSchoolLevel(this,'<?=$parent?>')" id="level_type">
+                                    <?php
+                                    foreach ($schooltypes as $school){
+                                        ?>
+                                        <option <?php echo $school->id == $data->school_level ? 'selected':'' ?>  value="<?=$school->id?>"><?=$school->type?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 col-md-6">
+
+                            <div class="form-group">
+                                <label for="school_name">School Name</label> <br/>
+                                <input type="text" value="<?=$data->school_name?>" class="form-control" style="height: 30px" name="school_name[]" id="school_name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+
+                        <div class="form-row col-sm-6 col-lg-6 col-md-6">
+                            <div class="col">
+                                <label for="level_type">Start Month</label>
+                                <select class="custom-select custom-select-sm" name="start_month[]" id="level_type">
+                                    <option selected value="<?=$data->start_month?>"><?=$data->start_month?></option>
+
+                                    <option value="January">January</option>
+                                    <option value="Febuary">Febuary</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="level_type">Start Year</label>
+                                <select class="custom-select custom-select-sm" name="start_year[]" id="level_type">
+                                    <?php
+                                    $year = 2020;
+                                    for(;$year > 1960; $year--){
+                                        ?>
+                                        <option <?php echo $year == $data->start_year ? 'selected':'' ?>  value="<?=$year?>"><?=$year?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row col-sm-6 col-lg-6 col-md-6">
+                            <div class="col">
+                                <label for="level_type">End Month</label>
+                                <select class="custom-select custom-select-sm" name="end_month[]" id="level_type">
+                                    <option selected value="<?=$data->end_month?>"><?=$data->end_month?></option>
+
+                                    <option value="January">January</option>
+                                    <option value="Febuary">Febuary</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="level_type">End Year</label>
+                                <select class="custom-select custom-select-sm" name="end_year[]" id="level_type">
+                                    <?php
+                                    $year = 2020;
+                                    for(;$year > 1960; $year--){
+                                        ?>
+                                        <option <?php echo $year == $data->end_year ? 'selected':'' ?>  value="<?=$year?>"><?=$year?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <span id="table_subjectgrade">
+                        <table class="table table-borderless">
+
+                            <caption class="caption"><a href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b;cursor: pointer;" onclick="commonServer.addSubjectAndGrade('<?=$parent?>',<?=$input_index?>)"></i> Add Another  </span></a> </caption>
+
+                            <tbody id="subject_grade_tbody">
+
+                            <tr>
+
+                                <h5 style="color: coral;font-family: fantasy;margin-top: 20px;" >Add Subject & Grade </h5>
+
+                            </tr>
+
+                            <?php if(!in_array($data->school_level,[6,7,8])): ?>
+
+                            <?php foreach (json_decode($data->subjects_and_grades) as $sub): ?>
+                            <tr>
+
+                                <td>
+
+                                    <input type="text" style="" value="<?=$sub->subject?>" placeholder="Subject" name="subject[<?=$input_index?>][]" class="form-control">
+
+                                </td>
+
+                                <td>
+                                    <input type="text" style="" value="<?=$sub->grade?>" placeholder="Grade" name="grade[<?=$input_index?>][]" class="form-control">
+
+                                </td>
+
+                                <td>
+
+                                    <span onclick="commonServer.removeSubjectAndGradeRow(this)"> <i class="fa fa-trash"   style="color: #b21f2d;cursor: pointer"></i> </span>
+
+                                </td>
+
+                            </tr>
+                                <?php endforeach;?>
+
+                            <?php endif; ?>
+                      </tbody>
+                    </table>
+                   </span>
+
+                    <span id="course_major_table" style="display: <?=  in_array($data->school_level,[6,7,8]) ? '':'none'?>">
+                        <table class="table table-borderless" >
+                            <thead>
+                              <caption class="caption"><a onclick="commonServer.addCourseMajor('<?="course_major_table_tbody".$cardid?>')" href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b"></i> Add another Major or Minor </span></a> </caption>
+
+                             <td>
+                           <h6 style="color: coral;font-family: fantasy;margin-top: 20px;">Course Name or Major Name *</h6>
+                       </td>
+                            </thead>
+                       <tbody class="course_major_table_tbody" id="<?="course_major_table_tbody".$cardid?>">
+
+                            <?php if(in_array($data->school_level,[6,7,8])):?>
+                                <?php foreach (json_decode($data->subjects_or_majors) as $sub): ?>
+                                    <tr>
+                                                       <td>
+                                                           <input type="text" value="<?=$sub?>"  placeholder="Course/Major Title" name="course_name[<?=$input_index?>][]" class="form-control" style="height: 30px;border-top: none;border-right: none;border-left: none">
+                                                       </td>
+                                                       <td>
+                                                           <span onclick="this.parentNode.parentNode.remove()"> <i  class="fa fa-trash" style="color: #b21f2d;cursor: pointer"></i> </span>
+                                                       </td>
+                                                   </tr>
+                                <?php endforeach;?>
+
+                            <?php endif;?>
+
+                       </tbody>
+
+                    </table>
+                    </span>
+
+
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="achievments"><strong>Achievements e.g.</strong> <small>Final GPA, Book Prize, Honours attained, Dean's List, etc.</small></label>
+                            <textarea class="form-control" placeholder="Achievements .." name="achievements[]" id="achievements"><?php echo $data->achievements;?></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <?php
+        return ob_get_clean();
+
+    }
 
     public static function loadExperienceCard(){
 
+        $levels = Level::all();
+
+        $data_levels = array_map(function($level){
+            return (object)[
+                'level_id'=>$level['id'],'level_title'=>$level['level_title']
+            ];
+        },$levels->toArray());
+
+        $subjects = Subject::all();
         ob_start();
         ?>
 
         <div class="col-12 col-lg-12" >
             <div class="form-group col-md-10 col-lg-10">
                 <label for="is_taught">Have you taught in an MOE school before?</label>
-                <select onchange="commonServer.toggleExperienceForm(this)" class="custom-select custom-select-sm" name="is_taught" id="is_taught">
+                <select onchange="commonServer.toggleExperienceForm(this)" class="custom-select custom-select-sm" name="is_taught_in_moe" id="is_taught">
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
@@ -244,13 +468,13 @@ class Helper {
                     <label >
                         Number of years teaching in MOE schools ?
                     </label>
-                    <input type="text" class="form-control" style="height: 30px" placeholder="Years"/>
+                    <input type="text" class="form-control" style="height: 30px" name="moe_number_experience" placeholder="Years"/>
                 </div>
             </div>
             <div class="row">
                 <table class="table table-borderless" id="moe_school_teaching_experience_table">
                     <thead>
-                    <caption> <a class="moe-experience-add-more" href="javascript:;" onclick="Experience.addAnotherMoeExperienceLevelRow('moe_school_teaching_experience_table')"> <i class="fa fa-plus"></i> Add More </a> </caption>
+                    <caption > <a class="moe-experience-add-more" href="javascript:;" onclick="Experience.addAnotherMoeExperienceLevelRow('moe_school_teaching_experience_table')"> <i class="fa fa-plus"></i> Add More </a> </caption>
                     <tr>
                         <th>Level</th>
                         <th>Subject</th>
@@ -263,31 +487,40 @@ class Helper {
                     <tbody>
                     <tr>
                         <td>
-                            <select name="" id="" class="custom-select custom-select-sm">
-                                <option disabled selected> Level</option>
+                            <select name="level[]" id="" class="custom-select custom-select-sm">
+                              <?php foreach($levels as $level):?>
+                                <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
+
+                                <?php endforeach;?>
                             </select>
                         </td>
 
                         <td>
-                            <input type="text" class="form-control" name="Subject level to see Subjects"/>
+                            <select name="subjects[0][]"  class="selectpicker show-menu-arrow" multiple >
+                                <?php foreach($subjects as $subject):?>
+                                    <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
+                                <?php endforeach;?>
+                            </select>
                         </td>
 
                         <td>
-                            <input type="text" class="form-control" name="" id="" />
+                            <input type="text"  class="form-control" name="school[]" id="" />
                         </td>
 
                         <td>
-                            <input type="text" class="form-control" name="" id="" />
+                            <input type="text" class="form-control" name="years_taught[]" id="" />
                         </td>
 
 
                         <td>
-                            <input type="text" class="form-control" name="" id="" />
+                            <input type="text" class="form-control" name="last_taught[]" id="" />
                         </td>
                         <td>
                             <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
                         </td>
                     </tr>
+
+
                     </tbody>
                 </table>
             </div>
@@ -302,7 +535,7 @@ class Helper {
                 <label >
                     Number of years teaching in Private schools ?
                 </label>
-                <input type="text" class="form-control" style="height: 30px" placeholder="Years"/>
+                <input type="text" name="private_number_experience" class="form-control" style="height: 30px" placeholder="Years"/>
             </div>
         </div>
 
@@ -322,26 +555,33 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <select name="" id="" class="custom-select custom-select-sm">
-                            <option disabled selected> Level</option>
+                        <select name="private_level[]" id="" class="custom-select custom-select-sm">
+                            <?php foreach($levels as $level):?>
+                                <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
+
+                            <?php endforeach;?>
                         </select>
                     </td>
 
                     <td>
-                        <input type="text" class="form-control" name="Subject level to see Subjects"/>
+                        <select name="private_subjects[0][]"  class="selectpicker show-menu-arrow" multiple >
+                            <?php foreach($subjects as $subject):?>
+                                <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
+                            <?php endforeach;?>
+                        </select>
                     </td>
 
                     <td>
-                        <input type="text" class="form-control" name="" id="" />
+                        <input type="text"  class="form-control" name="private_school[]" id="" />
                     </td>
 
                     <td>
-                        <input type="text" class="form-control" name="" id="" />
+                        <input type="text" class="form-control" name="private_years_taught[]" id="" />
                     </td>
 
 
                     <td>
-                        <input type="text" class="form-control" name="" id="" />
+                        <input type="text" class="form-control" name="private_last_taught[]" id="" />
                     </td>
                     <td>
                         <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
@@ -357,36 +597,33 @@ class Helper {
             <div class="col-sm-12 col-lg-12 col-md-12">
 
 
+
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="iptrack" value="option1">
-                    <label class="form-check-label" for="iptrack">IP track</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="ib" value="option2">
+                    <input class="form-check-input" type="checkbox" id="ib" value="IB" name="students_taught[]">
                     <label class="form-check-label" for="ib">IB</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="igcse" value="option3" >
+                    <input class="form-check-input" type="checkbox" id="igcse" value="IGCSE"  name="students_taught[]">
                     <label class="form-check-label" for="igcse">IGCSE</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="moe_gifted" value="option3" >
+                    <input class="form-check-input" type="checkbox" id="moe_gifted" value="MOE Gifted Programme" name="students_taught[]">
                     <label class="form-check-label" for="moe_gifted"> MOE Gifted Programme</label>
                 </div>
 
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="with_adhd" value="option2">
+                    <input class="form-check-input" type="checkbox" id="with_adhd" value="With ADHD" name="students_taught[]">
                     <label class="form-check-label" for="with_adhd">With ADHD</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Autistic" value="option3" >
+                    <input class="form-check-input" type="checkbox" id="Autistic" value="Autistic" name="students_taught[]">
                     <label class="form-check-label" for="Autistic">Autistic</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Dyslexic" value="option3" >
+                    <input class="form-check-input" type="checkbox" id="Dyslexic" value="Dyslexic" name="students_taught[]">
                     <label class="form-check-label" for="Dyslexic"> Dyslexic</label>
                 </div>
 

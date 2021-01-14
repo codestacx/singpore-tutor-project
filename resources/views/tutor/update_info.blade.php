@@ -10,6 +10,9 @@
 
 <link rel="stylesheet" href="{{asset('assets/css/switch.css')}}"/>
 
+
+<link rel="stylesheet" href="{{asset('dist/css/bootstrap-select.css')}}">
+
 <meta name="_token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
@@ -42,7 +45,9 @@
                                     <div class="card-body">
                                         <div class="row">
 
+
                                             <div class="col-12 col-lg-6">
+
                                                 <div class="form-group">
                                                     <label for="fullname">Full Name</label>
                                                     <input type="text" name="fullname" value="<?=$user->name?>" class="form-control" id="fullname"   placeholder="e.g Muhammad Atif Akram">
@@ -400,6 +405,7 @@
 
 
                 </div>
+
             </section>
           <h3>
             <div class="media">
@@ -427,26 +433,26 @@
                                    <div class="col-lg-12" style="margin: auto;text-align: center">
 
                                        <div class="form-check form-check-inline">
-                                           <input class="form-check-input" checked type="radio" name="tutorrole" id="fulltimestudent" value="Full Time Student">
+                                           <input class="form-check-input" checked type="radio" name="tutorrole" id="fulltimestudent" <?php echo isset($education) && ($education->category == "Full Time Student") ? 'checked':'' ?> value="Full Time Student">
                                            <label class="form-check-label" for="fulltimestudent">
                                                Full Time Student
                                            </label>
                                        </div>
                                        <div class="form-check form-check-inline">
-                                           <input class="form-check-input" type="radio" name="tutorrole" id="moeschoolteacher" value="MOE School Teacher">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="moeschoolteacher" <?php echo isset($education) && ($education->category == "MOE School Teacher") ? 'checked':'' ?> value="MOE School Teacher">
                                            <label class="form-check-label" for="moeschoolteacher">
                                                MOE School Teacher
                                            </label>
                                        </div>
                                        <div class="form-check form-check-inline">
-                                           <input class="form-check-input" type="radio" name="tutorrole" id="fulltimetutor" value="Full Time">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="fulltimetutor" <?php echo isset($education) && ($education->category == "Full Time") ? 'checked':'' ?>  value="Full Time">
                                            <label class="form-check-label" for="fulltimetutor">
                                                Full Time Tutor
                                            </label>
                                        </div>
 
                                        <div class="form-check form-check-inline">
-                                           <input class="form-check-input" type="radio" name="tutorrole" id="parttimetutor" value="Part Time">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="parttimetutor" <?php echo isset($education) && ($education->category == "Part Time") ? 'checked':'' ?> value="Part Time">
                                            <label class="form-check-label" for="parttimetutor">
                                                Part Time Tutor
                                            </label>
@@ -463,7 +469,7 @@
                                                <label for="student_status" class="mt-4">Please Specify</label>
                                                <select name="sub_category_students" id="student_status" class="custom-select custom-select-sm">
                                                   @foreach($student_categories as $student)
-                                                      <option value="{{$student->student_categories_id}}">{{$student->category}}</option>
+                                                      <option <?= isset($education) && ($education->category == "Full Time Student") &&   $education->sub_category == $student->student_categories_id ? 'selected':'' ?> value="{{$student->student_categories_id}}">{{$student->category}}</option>
                                                    @endforeach
                                                </select>
                                            </div>
@@ -477,7 +483,7 @@
                                        <div class="col-sm-12 col-lg-6 col-md-6">
                                            <div class="form-group">
                                                <label>MOE/School Email Address *</label>
-                                               <input type="text" name="moe_email" class="form-control" style="height: 30px"/>
+                                               <input type="text" value="<?=isset($education) ? $education->moe_email:''?>" name="moe_email" class="form-control" style="height: 30px"/>
                                            </div>
 
                                        </div>
@@ -488,7 +494,7 @@
                                                <select class="custom-select custom-select-sm" name="sub_category_students_moe">
 
                                                    @foreach($moespecs as $spec)
-                                                       <option value="{{$spec->id}}">{{$spec->specification}}</option>
+                                                       <option <?= isset($education) && ($education->category == "MOE School Teacher") &&   $education->sub_category == $student->student_categories_id ? 'selected':'' ?>  value="{{$spec->id}}">{{$spec->specification}}</option>
                                                    @endforeach
                                                </select>
                                            </div>
@@ -509,18 +515,31 @@
                                                <label> Are you NIE-trained ? </label>
                                                <br/>
                                                <script>
-                                                   function changeNIE(){
-                                                       const element = document.getElementById('is_nie_trained');
-                                                       if(element.value === '0'){
-                                                           element.value = '1'
+                                                   function changeNIE(value = null){
+                                                       if(value !=null){
+                                                           document.getElementById('switcher').click()
                                                        }else{
-                                                           element.value = '0'
+                                                           const element = document.getElementById('is_nie_trained');
+
+                                                           if(element.value === '0'){
+                                                               element.value = '1'
+                                                           }else{
+                                                               element.value = '0'
+                                                           }
                                                        }
+
                                                    }
                                                </script>
+
                                                <label class="codestacx-switch switch-left-right">
-                                                   <input onchange="alert(this.value)" value="0" id="is_nie_trained" class="switch-input" name="is_nie_trained" type="checkbox">
-                                                   <span class="switch-label" onclick="changeNIE()"  data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
+
+                                                   <input onchange=""   id="is_nie_trained" class="switch-input" name="is_nie_trained" value="0" type="checkbox">
+                                                    <?php if(isset($education)): ?>
+{{--                                                            <script>--}}
+{{--                                                               // changeNIE(<?=$education->is_nie_trained?>);--}}
+{{--                                                            </script>--}}
+                                                   <?php endif;?>
+                                                   <span class="switch-label" id="switcher" onclick="changeNIE()"  data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
                                            </div>
                                        </div>
                                        <div class="col-sm col-md-7 col-lg-7">
@@ -528,19 +547,37 @@
                                                <label for="highest_qualification" class="mt-4">What's your highest qualification attained</label>
                                                <select name="highest_qualification" id="highest_qualification" class="custom-select custom-select-sm">
                                                    @foreach($qualifications as $qualification)
-                                                       <option value="{{$qualification->qu_id}}">{{$qualification->qualification}}</option>
+                                                       <option <?= isset($education) && ($education->highest_qualification == $qualification->qu_id) ? 'selected':'' ?>  value="{{$qualification->qu_id}}">{{$qualification->qualification}}</option>
                                                    @endforeach
                                                </select>
                                            </div>
                                        </div>
                                    </div>
                                    <div class="accordion" id="accordian">
-                                       <?php echo \App\Helpers\Helper::loadCard()  ?>
-                                   </div>
+                                       <?php
+                                        $index = 0;
+                                       ?>
+                                       @isset($education)
+                                           @foreach($educationInfoCourses as $iteration => $info)
+                                               @php
+                                                echo \App\Helpers\Helper::preparedCard($info,($iteration));
+                                               @endphp
+                                           @endforeach
+                                           @php
+                                                $index = count($educationInfoCourses);
+                                           @endphp
+                                       @else
+                                           @php
+                                               echo \App\Helpers\Helper::loadCard();
+                                           @endphp
+                                       @endisset
+
+
+                                        </div>
 
                                </div>
 
-                               <div onclick="commonServer.addCollapseSection('accordian')" class="col-sm-8 col-lg-6 col-md-6" style="margin: 20px;cursor: pointer">
+                               <div onclick="commonServer.addCollapseSection('accordian','<?=$index?>')" class="col-sm-8 col-lg-6 col-md-6" style="margin: 20px;cursor: pointer">
                                    <span style="font-size: 15px;"> <i style="color: red;font-size: 15px;" class="fa fa-plus 2x"></i> Add a new School/Course record</span>
                                </div>
 
@@ -574,37 +611,39 @@
 
                                 <div class="accordion" id="educationExperienceCards">
 
-                                    <div class="card">
-                                        <div class="card-header" id="MoeExperienceCard" style="background-color: cadetblue">
+                                    <form id="experience_form">
+                                        <div class="card">
+                                            <div class="card-header" id="MoeExperienceCard" style="background-color: cadetblue">
                                   <span class="mb-0">
                                       <span style="cursor: pointer;color:#ffffff" class="collapsed"   data-toggle="collapse" data-target="#moeExperienceCollapse" aria-expanded="false" aria-controls="moeExperienceCollapse">
 
                                           <strong>Academic</strong> <span >(E.g. Primary, Secondary, JC, University)</span>
                                       </span>
                                   </span>
-                                        </div>
-                                        <div id="moeExperienceCollapse" class="collapse" aria-labelledby="MoeExperienceCard" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <?php \App\Helpers\Helper::loadExperienceCard(); ?>
+                                            </div>
+                                            <div id="moeExperienceCollapse" class="collapse" aria-labelledby="MoeExperienceCard" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <?php \App\Helpers\Helper::loadExperienceCard(); ?>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="card">
-                                        <div class="card-header" id="MusicExperienceCard" style="background-color: chocolate">
+                                        <div class="card">
+                                            <div class="card-header" id="MusicExperienceCard" style="background-color: chocolate">
                                             <span class="mb-0">
                                                 <span style="cursor: pointer;color:#ffffff"  data-toggle="collapse" data-target="#MusicExperienceCardCollapse" aria-expanded="false" aria-controls="MusicExperienceCardCollapse">
                                                     <strong>Music</strong> <span>(E.g. Piano, Flute, Clarinet)</span>
                                                 </span>
                                             </span>
-                                        </div>
-                                        <div id="MusicExperienceCardCollapse" class="collapse" aria-labelledby="MusicExperienceCard" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <?php \App\Helpers\Helper::loadMusicExperienceCard(); ?>
+                                            </div>
+                                            <div id="MusicExperienceCardCollapse" class="collapse" aria-labelledby="MusicExperienceCard" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <?php \App\Helpers\Helper::loadMusicExperienceCard(); ?>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
 
 
                                 </div>
@@ -1031,11 +1070,16 @@
       </main>
       @endsection
       @section('scripts')
-      <script src="{{asset('auth-user/js/main.js')}}"></script>
+
+
+          <script src="{{asset('auth-user/js/main.js')}}"></script>
       <script src="{{asset('wizard/assets/js/jquery.steps.min.js')}}"></script>
       <script src="{{asset('wizard/assets/js/bd-wizard.js')}}"></script>
       <script src="{{asset('assets/js/registeration_form.js')}}"></script>
-          <script>
+          <!-- Latest compiled and minified JavaScript -->
+          <script src="{{asset('dist/js/bootstrap-select.js')}}"></script>
 
-          </script>
+          <script type="text/javascript">
+
+      </script>
       @endsection
