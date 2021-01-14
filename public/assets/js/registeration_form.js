@@ -116,7 +116,7 @@ var commonServer = {
 
         $.ajax({
             url:config['card.load'],
-            data:{cardid:obj.cardid,parent:obj.parent,index:index},
+            data:{cardid:obj.cardid,parent:obj.parent,index:index,input_index:commonServer.subject_and_grade},
             dataType:'html',
             success:function (response) {
                 const spn = document.createElement('span');
@@ -128,6 +128,7 @@ var commonServer = {
         })
 
         index+=1;
+        commonServer.subject_and_grade+=1;
 
 
 
@@ -153,7 +154,8 @@ var commonServer = {
         const td = document.createElement('td');
 
     },
-    addSubjectAndGrade:(e)=>{
+    subject_and_grade:1,
+    addSubjectAndGrade:(e,index)=>{
         const parent = document.getElementById(e);
 
         const tr = document.createElement('tr');
@@ -166,7 +168,7 @@ var commonServer = {
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Subject";
-        input.name="subject[]";
+        input.name="subject["+index+"][]";
 
 
         td.appendChild(input);
@@ -177,7 +179,7 @@ var commonServer = {
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Grade";
-        input.name="grade[]";
+        input.name="grade["+index+"][]";
 
         td.appendChild(input);
         tr.appendChild(td);

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TutorSchoolCourse extends Model
+class Subject extends Model
 {
     use HasFactory;
-
-    protected $casts = [
-        'subjects_and_grades'=>'array',
-        'subjects_or_majors'=>'array'
-    ];
 }

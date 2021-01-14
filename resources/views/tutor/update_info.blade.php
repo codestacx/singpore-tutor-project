@@ -416,138 +416,139 @@
                 <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                   <div class="contact-form-wizard">
 
-                    <div class="card" >
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-12 col-sm-12 col-lg-12" style="text-align: center">
-                            <h5 style="color: cadetblue;font-family: fantasy;padding: 5px 5px 1px 1px;text-align: center"> What status belongs you ? </h5>
-                          </div>
-                          <div class="col-lg-12" style="margin: auto;text-align: center">
+                   <form method="POST">
+                       <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                       <div class="card" >
+                           <div class="card-body">
+                               <div class="row">
+                                   <div class="col-md-12 col-sm-12 col-lg-12" style="text-align: center">
+                                       <h5 style="color: cadetblue;font-family: fantasy;padding: 5px 5px 1px 1px;text-align: center"> What status belongs you ? </h5>
+                                   </div>
+                                   <div class="col-lg-12" style="margin: auto;text-align: center">
 
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" checked type="radio" name="tutorrole" id="fulltimestudent" value="Full Time Student">
-                              <label class="form-check-label" for="fulltimestudent">
-                                Full Time Student
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="tutorrole" id="moeschoolteacher" value="MOE School Teacher">
-                              <label class="form-check-label" for="moeschoolteacher">
-                                MOE School Teacher
-                              </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="tutorrole" id="fulltimetutor" value="Full Time">
-                              <label class="form-check-label" for="fulltimetutor">
-                                Full Time Tutor
-                              </label>
-                            </div>
+                                       <div class="form-check form-check-inline">
+                                           <input class="form-check-input" checked type="radio" name="tutorrole" id="fulltimestudent" value="Full Time Student">
+                                           <label class="form-check-label" for="fulltimestudent">
+                                               Full Time Student
+                                           </label>
+                                       </div>
+                                       <div class="form-check form-check-inline">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="moeschoolteacher" value="MOE School Teacher">
+                                           <label class="form-check-label" for="moeschoolteacher">
+                                               MOE School Teacher
+                                           </label>
+                                       </div>
+                                       <div class="form-check form-check-inline">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="fulltimetutor" value="Full Time">
+                                           <label class="form-check-label" for="fulltimetutor">
+                                               Full Time Tutor
+                                           </label>
+                                       </div>
 
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="tutorrole" id="parttimetutor" value="Part Time">
-                              <label class="form-check-label" for="parttimetutor">
-                                Part Time Tutor
-                              </label>
-                            </div>
-                          </div>
+                                       <div class="form-check form-check-inline">
+                                           <input class="form-check-input" type="radio" name="tutorrole" id="parttimetutor" value="Part Time">
+                                           <label class="form-check-label" for="parttimetutor">
+                                               Part Time Tutor
+                                           </label>
+                                       </div>
+                                   </div>
 
-                        </div>
+                               </div>
 
-                        <div class="col-12" id="related_sections">
+                               <div class="col-12" id="related_sections">
 
-                          <div  id="fulltimestudent" style="">
-                            <div class="col-md-6 col-lg-12 col-sm-12">
-                              <div class="form-group">
-                                <label for="student_status" class="mt-4">Please Specify</label>
-                                <select name="student_status" id="student_status" class="custom-select custom-select-sm">
-                                  <option value="Current Poly Student">Current Poly Student</option>
-                                  <option value="Current Undergraduate">Current Undergraduate</option>
-                                  <option value="Current Postgraduate">Current Postgraduate</option>
-                                  <option value="Others">NIE Trainee</option>
-                                  <option value="Others">Others</option>
-                                </select>
-                              </div>
-                            </div>
-
-
-                            </div>
-
-                            <div class="row" id="moeschoolteacher" style="display: none;margin-top:15px">
-                                <br/>
-                                <div class="col-sm-12 col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>MOE/School Email Address *</label>
-                                        <input type="text" class="form-control" style="height: 30px"/>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Please Specifiy</label>
-                                        <select class="custom-select custom-select-sm" name="moe_specification">
-
-                                            @foreach($moespecs as $spec)
-                                                <option value="{{$spec->id}}">{{$spec->specification}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row" id="fulltimetutor" style="display: none"></div>
-
-                            <div class="row" id="parttimetutor" style="display: none"></div>
-
-                          </div>
+                                   <div  id="fulltimestudent" style="">
+                                       <div class="col-md-6 col-lg-12 col-sm-12">
+                                           <div class="form-group">
+                                               <label for="student_status" class="mt-4">Please Specify</label>
+                                               <select name="sub_category_students" id="student_status" class="custom-select custom-select-sm">
+                                                  @foreach($student_categories as $student)
+                                                      <option value="{{$student->student_categories_id}}">{{$student->category}}</option>
+                                                   @endforeach
+                                               </select>
+                                           </div>
+                                       </div>
 
 
-                          <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-                              <div class="row">
-                                  <div class="col-lg-4 col-md-4 ml-15">
-                                      <div class="form-group codestacx">
-                                          <label> Are you NIE-trained ? </label>
-                                          <br/>
-                                          <script>
-                                              function changeNIE(){
-                                                  const element = document.getElementById('nie_trained');
-                                                  if(element.value === '0'){
-                                                      element.value = '1'
-                                                  }else{
-                                                      element.value = '0'
-                                                  }
-                                              }
-                                          </script>
-                                          <label class="codestacx-switch switch-left-right">
-                                              <input onchange="alert(this.value)" value="0" id="nie_trained" class="switch-input" name="is_nie_trained" type="checkbox">
-                                              <span class="switch-label" onclick="changeNIE()"  data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
-                                      </div>
-                                  </div>
-                                  <div class="col-sm col-md-7 col-lg-7">
-                                      <div class="form-group">
-                                          <label for="highest_qualification" class="mt-4">What's your highest qualification attained</label>
-                                          <select name="highest_qualification" id="highest_qualification" class="custom-select custom-select-sm">
-                                              @foreach($qualifications as $qualification)
-                                                  <option value="{{$qualification->qu_id}}">{{$qualification->qualification}}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-                              </div>
-                            <div class="accordion" id="accordian">
-                              <?php echo \App\Helpers\Helper::loadCard()  ?>
-                            </div>
+                                   </div>
 
-                          </div>
+                                   <div class="row" id="moeschoolteacher" style="display: none;margin-top:15px">
+                                       <br/>
+                                       <div class="col-sm-12 col-lg-6 col-md-6">
+                                           <div class="form-group">
+                                               <label>MOE/School Email Address *</label>
+                                               <input type="text" name="moe_email" class="form-control" style="height: 30px"/>
+                                           </div>
 
-                          <div onclick="commonServer.addCollapseSection('accordian')" class="col-sm-8 col-lg-6 col-md-6" style="margin: 20px;cursor: pointer">
-                            <span style="font-size: 15px;"> <i style="color: red;font-size: 15px;" class="fa fa-plus 2x"></i> Add a new School/Course record</span>
-                          </div>
+                                       </div>
+
+                                       <div class="col-md-6 col-lg-6">
+                                           <div class="form-group">
+                                               <label>Please Specifiy</label>
+                                               <select class="custom-select custom-select-sm" name="sub_category_students_moe">
+
+                                                   @foreach($moespecs as $spec)
+                                                       <option value="{{$spec->id}}">{{$spec->specification}}</option>
+                                                   @endforeach
+                                               </select>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="row" id="fulltimetutor" style="display: none"></div>
+
+                                   <div class="row" id="parttimetutor" style="display: none"></div>
+
+                               </div>
 
 
+                               <div class="col-sm-12 col-lg-12 col-md-12 col-12">
+                                   <div class="row">
+                                       <div class="col-lg-4 col-md-4 ml-15">
+                                           <div class="form-group codestacx">
+                                               <label> Are you NIE-trained ? </label>
+                                               <br/>
+                                               <script>
+                                                   function changeNIE(){
+                                                       const element = document.getElementById('nie_trained');
+                                                       if(element.value === '0'){
+                                                           element.value = '1'
+                                                       }else{
+                                                           element.value = '0'
+                                                       }
+                                                   }
+                                               </script>
+                                               <label class="codestacx-switch switch-left-right">
+                                                   <input onchange="alert(this.value)" value="0" id="is_nie_trained" class="switch-input" name="is_nie_trained" type="checkbox">
+                                                   <span class="switch-label" onclick="changeNIE()"  data-on="No" data-off="Yes"></span> <span class="switch-handle"></span> </label>
+                                           </div>
+                                       </div>
+                                       <div class="col-sm col-md-7 col-lg-7">
+                                           <div class="form-group">
+                                               <label for="highest_qualification" class="mt-4">What's your highest qualification attained</label>
+                                               <select name="highest_qualification" id="highest_qualification" class="custom-select custom-select-sm">
+                                                   @foreach($qualifications as $qualification)
+                                                       <option value="{{$qualification->qu_id}}">{{$qualification->qualification}}</option>
+                                                   @endforeach
+                                               </select>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="accordion" id="accordian">
+                                       <?php echo \App\Helpers\Helper::loadCard()  ?>
+                                   </div>
 
-                        </div>
-                      </div>
+                               </div>
+
+                               <div onclick="commonServer.addCollapseSection('accordian')" class="col-sm-8 col-lg-6 col-md-6" style="margin: 20px;cursor: pointer">
+                                   <span style="font-size: 15px;"> <i style="color: red;font-size: 15px;" class="fa fa-plus 2x"></i> Add a new School/Course record</span>
+                               </div>
+
+
+
+                           </div>
+                       </div>
+                   </form>
                     </div>
                   </div >
 

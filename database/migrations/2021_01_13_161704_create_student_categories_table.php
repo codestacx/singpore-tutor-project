@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTutorExperiencesTable extends Migration
+class CreateStudentCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateTutorExperiencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tutor_experiences', function (Blueprint $table) {
-            $table->id();
+        Schema::create('student_categories', function (Blueprint $table) {
+            $table->id('student_categories_id');
+            $table->string('category');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateTutorExperiencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tutor_experiences');
+        Schema::dropIfExists('student_categories');
     }
 }

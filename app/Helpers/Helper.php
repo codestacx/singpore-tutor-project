@@ -13,12 +13,14 @@ use Illuminate\Support\Str;
 class Helper {
 
 
-    public static function loadCard($atts = null){
+    public static function loadCard($atts = null,$input_index = false){
         $schooltypes    = SchoolType::all();
         ob_start();
 
         $cardid = is_null($atts) ? Str::random():$atts['cardid'];
         $parent = is_null($atts) ? Str::random():$atts['parent'];
+
+        $input_index = !$input_index ? 0:$input_index;
 
 
         ?>
@@ -44,7 +46,7 @@ class Helper {
                         <div class="col-sm-12 col-lg-6 col-md-6">
                             <div class="form-group">
                                 <label for="level_type">School Level</label>
-                                <select class="custom-select custom-select-sm" name="level_type" onchange="commonServer.onChangeSchoolLevel(this,'<?=$parent?>')" id="level_type">
+                                <select class="custom-select custom-select-sm" name="school_level[]" onchange="commonServer.onChangeSchoolLevel(this,'<?=$parent?>')" id="level_type">
                                     <?php
                                     foreach ($schooltypes as $school){
                                         ?>
@@ -59,7 +61,7 @@ class Helper {
 
                             <div class="form-group">
                                 <label for="school_name">School Name</label> <br/>
-                                <input type="text" class="form-control" style="height: 30px" name="school_name" id="school_name"/>
+                                <input type="text" class="form-control" style="height: 30px" name="school_name[]" id="school_name"/>
                             </div>
                         </div>
                     </div>
@@ -70,7 +72,7 @@ class Helper {
                         <div class="form-row col-sm-6 col-lg-6 col-md-6">
                             <div class="col">
                                 <label for="level_type">Start Month</label>
-                                <select class="custom-select custom-select-sm" name="level_type" id="level_type">
+                                <select class="custom-select custom-select-sm" name="start_month[]" id="level_type">
                                     <option>- Month -</option>
                                     <option value="January">January</option>
                                     <option value="Febuary">Febuary</option>
@@ -88,7 +90,7 @@ class Helper {
                             </div>
                             <div class="col">
                                 <label for="level_type">Start Year</label>
-                                <select class="custom-select custom-select-sm" name="level_type" id="level_type">
+                                <select class="custom-select custom-select-sm" name="start_year[]" id="level_type">
                                     <?php
                                     $year = 2020;
                                     for(;$year > 1960; $year--){
@@ -103,7 +105,7 @@ class Helper {
                         <div class="form-row col-sm-6 col-lg-6 col-md-6">
                             <div class="col">
                                 <label for="level_type">End Month</label>
-                                <select class="custom-select custom-select-sm" name="level_type" id="level_type">
+                                <select class="custom-select custom-select-sm" name="end_month[]" id="level_type">
                                     <option>- Month -</option>
                                     <option value="January">January</option>
                                     <option value="Febuary">Febuary</option>
@@ -121,7 +123,7 @@ class Helper {
                             </div>
                             <div class="col">
                                 <label for="level_type">End Year</label>
-                                <select class="custom-select custom-select-sm" name="level_type" id="level_type">
+                                <select class="custom-select custom-select-sm" name="end_year[]" id="level_type">
                                     <?php
                                     $year = 2020;
                                     for(;$year > 1960; $year--){
@@ -139,7 +141,7 @@ class Helper {
                     <span id="table_subjectgrade">
                         <table class="table table-borderless">
 
-                            <caption class="caption"><a href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b;cursor: pointer;" onclick="commonServer.addSubjectAndGrade('<?=$parent?>')"></i> Add Another  </span></a> </caption>
+                            <caption class="caption"><a href="javascript:;"><span><i class="fa fa-plus" style="color: #2cdd9b;cursor: pointer;" onclick="commonServer.addSubjectAndGrade('<?=$parent?>',<?=$input_index?>)"></i> Add Another  </span></a> </caption>
 
                             <tbody id="subject_grade_tbody">
 
@@ -153,13 +155,12 @@ class Helper {
 
                                 <td>
 
-                                    <input type="text" style="" placeholder="Subject" name="subject[]" class="form-control">
+                                    <input type="text" style="" placeholder="Subject" name="subject[<?=$input_index?>][]" class="form-control">
 
                                 </td>
 
                                 <td>
-
-                                    <input type="text" style="" placeholder="Grade" name="grade[]" class="form-control">
+                                    <input type="text" style="" placeholder="Grade" name="grade[<?=$input_index?>][]" class="form-control">
 
                                 </td>
 
@@ -188,7 +189,7 @@ class Helper {
 
                        <tr>
                            <td>
-                               <input type="text"  placeholder="Course/Major Title" name="course_name[]" class="form-control" style="height: 30px;border-top: none;border-right: none;border-left: none">
+                               <input type="text"  placeholder="Course/Major Title" name="course_name[<?=$input_index?>][]" class="form-control" style="height: 30px;border-top: none;border-right: none;border-left: none">
                            </td>
                            <td>
                                <span onclick="this.parentNode.parentNode.remove()"> <i  class="fa fa-trash" style="color: #b21f2d;cursor: pointer"></i> </span>
@@ -203,7 +204,7 @@ class Helper {
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="achievments"><strong>Achievements e.g.</strong> <small>Final GPA, Book Prize, Honours attained, Dean's List, etc.</small></label>
-                            <textarea class="form-control" placeholder="Achievements .." name="achievements" id="achievements"></textarea>
+                            <textarea class="form-control" placeholder="Achievements .." name="achievements[]" id="achievements"></textarea>
                         </div>
                     </div>
                 </div>

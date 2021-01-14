@@ -8,6 +8,7 @@ use App\Models\MoeTutorSpecification;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
+use App\Models\StudentCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -55,9 +56,44 @@ class TutorController extends Controller
             'qualifications'=>Qualification::all(),
             'basicInfo'=>$basicInfo,
             'user'=>User::find(session('tutor_id')),
-            'moespecs'=>MoeTutorSpecification::all()
+            'moespecs'=>MoeTutorSpecification::all(),
+            'student_categories'=>StudentCategory::all()
         ];
         return view('tutor.update_info',$templateData);
+    }
+
+
+
+    public function updateEducationInformation($request){
+        $category = $request->tutorrole;
+        $formData = [
+            'category'=>$category,
+            'is_nie_trained'=>$request->is_nie_trained,
+            'highest_qualification'=>$request->highest_qualification,
+
+        ];
+
+        if($category == "Full Time Student"){
+            $formData['sub_category'] = $request->sub_category_students;
+        }else{
+            $formData['sub_category'] = $request->sub_category_students_moe;
+            $formData['moe_email'] = $request->moe_email;
+        }
+
+        $school_level = $request->school_level;
+        $school_name = $request->school_name;
+
+        $start_month = $request->start_month;
+        $start_year = $request->start_year;
+
+        $end_month = $request->end_month;
+        $end_year = $request->end_year;
+
+
+
+
+
+
     }
 
 
@@ -106,11 +142,26 @@ class TutorController extends Controller
     private function updateEmployeInfo($request){
 
     }
+    public function registerationForm(Request $request){
 
+        $templateData = [
+            'races'=>Race::all(),
+            'citizenships'=>Citizenship::all(),
+            'schooltypes'=>SchoolType::all(),
+            'qualifications'=>Qualification::all(),
+             
+            'user'=>User::find(session('tutor_id')),
+            'moespecs'=>MoeTutorSpecification::all(),
+            'student_categories'=>StudentCategory::all()
+        ];
+
+        return view('tutor.update_info',$templateData);
+    }
 
     public function loadCard(Request $request){
         $id = $request;
-        return Helper::loadCard($id);
+        $input_index = $request->input_index;
+        return Helper::loadCard($id,$input_index);
     }
 
 
