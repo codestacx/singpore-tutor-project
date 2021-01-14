@@ -119,6 +119,7 @@ var commonServer = {
             data:{cardid:obj.cardid,parent:obj.parent,index:index,input_index:commonServer.subject_and_grade},
             dataType:'html',
             success:function (response) {
+                console.log(response)
                 const spn = document.createElement('span');
                 spn.id = obj.span;
 

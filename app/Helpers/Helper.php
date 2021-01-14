@@ -14,7 +14,9 @@ class Helper {
 
 
     public static function loadCard($atts = null,$input_index = false){
-        $schooltypes    = SchoolType::all();
+
+        return '<h1>hello</h1>';
+        $schoo  ltypes    = SchoolType::all();
         ob_start();
 
         $cardid = is_null($atts) ? Str::random():$atts['cardid'];

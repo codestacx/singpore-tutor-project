@@ -416,7 +416,7 @@
                 <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                   <div class="contact-form-wizard">
 
-                   <form method="POST">
+                   <form method="POST" onsubmit="return false">
                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                        <div class="card" >
                            <div class="card-body">
