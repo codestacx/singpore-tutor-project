@@ -39,8 +39,8 @@ class TutorController extends Controller
                 case 'basic-info':
                     $this->updateBasicInfo($request);
                     break;
-                case 'employee-details':
-                    $this->updateEmployeInfo($request);
+                case 'educational-info':
+                    $this->updateEducationInformation($request);
                     break;
             }
 
@@ -65,6 +65,8 @@ class TutorController extends Controller
 
 
     public function updateEducationInformation($request){
+
+
         $category = $request->tutorrole;
         $formData = [
             'category'=>$category,
@@ -80,14 +82,58 @@ class TutorController extends Controller
             $formData['moe_email'] = $request->moe_email;
         }
 
-        $school_level = $request->school_level;
-        $school_name = $request->school_name;
+
+
+        DB::table('education_infos')->insert([
+                $formData
+        ]);
+
+
+        dd(DB::lastInsertId());
+
+        $school_level = $request->school_level;   //array of school level
+        $school_name = $request->school_name;    // array of school name
 
         $start_month = $request->start_month;
         $start_year = $request->start_year;
 
         $end_month = $request->end_month;
         $end_year = $request->end_year;
+
+        $achievements = $request->achievements;   //achievements
+
+
+
+        for($index = 0;$index < count($school_level);$index++){
+
+            $school_level = $school_level[$index];
+            $school_name  = $school_level[$index];
+
+            $start_month  = $request->start_month[$index];
+            $end_month    = $request->end_month[$index];
+
+            $start_year  =  $request->start_year[$index];
+            $end_year    =  $request->end_year[$index];
+
+            $deploma_degree_others = [6,7,8];
+
+            if(in_array($school_level,$deploma_degree_others)){
+                $data = $request->course_name[$index];
+            }else{
+                $subjects = $request->subject[$index];
+                $grades = $request->grade[$index];
+                $data = array();
+                for($iterator = 0;$iterator < count($subjects); $iterator++){
+                    $data[$iterator] = (object)['subject'=>$subjects[$index],'grade'=>$grades[$index]];
+                }
+            }
+            $data = json_encode($data);
+        }
+
+        //check on the base of school level
+
+
+
 
 
 
@@ -149,7 +195,7 @@ class TutorController extends Controller
             'citizenships'=>Citizenship::all(),
             'schooltypes'=>SchoolType::all(),
             'qualifications'=>Qualification::all(),
-             
+
             'user'=>User::find(session('tutor_id')),
             'moespecs'=>MoeTutorSpecification::all(),
             'student_categories'=>StudentCategory::all()
@@ -159,9 +205,9 @@ class TutorController extends Controller
     }
 
     public function loadCard(Request $request){
+
         $id = $request;
-        $input_index = $request->input_index;
-        return Helper::loadCard($id,$input_index);
+        return Helper::loadCard($id);
     }
 
 

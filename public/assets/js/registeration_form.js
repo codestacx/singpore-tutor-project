@@ -1,5 +1,6 @@
 var ids = [];
-var index = 0;
+var index = 1;
+var subject_and_grade = 0;
 var commonServer = {
     toggleExperienceForm:(e)=>{
         const el = document.getElementById('moe_school_experience');
@@ -116,7 +117,7 @@ var commonServer = {
 
         $.ajax({
             url:config['card.load'],
-            data:{cardid:obj.cardid,parent:obj.parent,index:index,input_index:commonServer.subject_and_grade},
+            data:{cardid:obj.cardid,parent:obj.parent,index:index},
             dataType:'html',
             success:function (response) {
                 console.log(response)
@@ -129,7 +130,7 @@ var commonServer = {
         })
 
         index+=1;
-        commonServer.subject_and_grade+=1;
+        subject_and_grade+=1;
 
 
 
@@ -239,7 +240,34 @@ var BasicInfo = {
 }
 
 var Education = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#education_form');
+        var formData = new FormData(form);
 
+        formData.append('action','educational-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    }
 }
 
 

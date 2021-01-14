@@ -416,7 +416,7 @@
                 <div class="col-sm-12 col-md-10 col-lg-10 "  style="margin: auto" >
                   <div class="contact-form-wizard">
 
-                   <form method="POST" onsubmit="return false">
+                   <form id="education_form" onsubmit="return false">
                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                        <div class="card" >
                            <div class="card-body">
@@ -510,7 +510,7 @@
                                                <br/>
                                                <script>
                                                    function changeNIE(){
-                                                       const element = document.getElementById('nie_trained');
+                                                       const element = document.getElementById('is_nie_trained');
                                                        if(element.value === '0'){
                                                            element.value = '1'
                                                        }else{

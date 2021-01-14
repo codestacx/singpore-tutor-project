@@ -13,16 +13,16 @@ use Illuminate\Support\Str;
 class Helper {
 
 
-    public static function loadCard($atts = null,$input_index = false){
+    public static function loadCard($atts = null){
 
-        return '<h1>hello</h1>';
-        $schoo  ltypes    = SchoolType::all();
+
+        $schooltypes    = SchoolType::all();
         ob_start();
 
         $cardid = is_null($atts) ? Str::random():$atts['cardid'];
         $parent = is_null($atts) ? Str::random():$atts['parent'];
 
-        $input_index = !$input_index ? 0:$input_index;
+        $input_index = is_null($atts) ?   0:$atts['index'];
 
 
         ?>

@@ -19,6 +19,10 @@ $("#wizard").steps({
             BasicInfo.submitFormData()
         }
 
+        if(priorIndex === 1){
+            Education.submitFormData();
+        }
+
     },
     onFinished: function (event, currentIndex) {
         console.log(currentIndex)
