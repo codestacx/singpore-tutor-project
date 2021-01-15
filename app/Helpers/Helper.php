@@ -5,11 +5,14 @@ namespace App\Helpers;
 
 
 use App\Models\Citizenship;
+use App\Models\Grade;
 use App\Models\Level;
+use App\Models\Location;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
 use App\Models\Subject;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
@@ -649,15 +652,15 @@ class Helper {
                     <label>
                         Are you a Full Time Music Teacher?
                     </label>
-                    <select class="custom-select custom-select-sm">
-                        <option value="Yes"> Yes </option>
-                        <option value="No">No</option>
+                    <select class="custom-select custom-select-sm" name="is_fulltime_music_teacher">
+                        <option value="1"> Yes </option>
+                        <option value="0">No</option>
                     </select>
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label>Your Theory Level ?</label>
-                    <input style="height: 30px" type="text" class="form-control" placeholder="Theory Level" />
+                    <input style="height: 30px" type="text" class="form-control" name="thoery_level" placeholder="Theory Level" />
                 </div>
             </div>
 
@@ -687,54 +690,41 @@ class Helper {
                       <tbody>
                       <tr>
                           <td>
-                              <select class="custom-select custom-select-sm">
+                              <select name="instrument[]" class="custom-select custom-select-sm">
                                   <option selected disabled> Select instrument </option>
+                                  <option value="0">Flute</option>
+                                  <option value="1">Guitar</option>
                               </select>
                           </td>
 
-                          <td> <input type="text" src="" class="form-control" /> </td>
-                          <td> <textarea style="resize: none;height: 40px" class="form-control"></textarea> </td>
+                          <td> <input name="practical_level[]" type="text" src="" class="form-control" /> </td>
+                          <td> <textarea name="achievements[]" style="resize: none;height: 40px" class="form-control"></textarea> </td>
                       </tr>
                       <tr>
                           <td>
-                              <select class="custom-select custom-select-sm">
+                              <select name="instrument[]" class="custom-select custom-select-sm">
                                   <option selected disabled> Select instrument </option>
+                                  <option value="0">Flute</option>
+                                  <option value="1">Guitar</option>
                               </select>
                           </td>
 
-                          <td> <input type="text" class="form-control" /> </td>
-                          <td> <textarea style="resize: none;height: 40px" class="form-control"></textarea> </td>
+                          <td> <input name="practical_level[]" type="text" src="" class="form-control" /> </td>
+                          <td> <textarea name="achievements[]" style="resize: none;height: 40px" class="form-control"></textarea> </td>
                       </tr>
                       <tr>
                           <td>
-                              <select class="custom-select custom-select-sm">
+                              <select name="instrument[]" class="custom-select custom-select-sm">
                                   <option selected disabled> Select instrument </option>
+                                  <option value="0">Flute</option>
+                                  <option value="1">Guitar</option>
                               </select>
                           </td>
 
-                          <td> <input type="text" class="form-control" /> </td>
-                          <td> <textarea style="resize: none;height: 40px" class="form-control"></textarea> </td>
+                          <td> <input name="practical_level[]" type="text" src="" class="form-control" /> </td>
+                          <td> <textarea name="achievements[]" style="resize: none;height: 40px" class="form-control"></textarea> </td>
                       </tr>
-                      <tr>
-                          <td>
-                              <select class="custom-select custom-select-sm">
-                                  <option selected disabled> Select instrument </option>
-                              </select>
-                          </td>
 
-                          <td> <input type="text" class="form-control" /> </td>
-                          <td> <textarea style="resize: none;height: 40px" class="form-control"></textarea> </td>
-                      </tr>
-                      <tr>
-                          <td>
-                              <select class="custom-select custom-select-sm">
-                                  <option selected disabled> Select instrument </option>
-                              </select>
-                          </td>
-
-                          <td> <input type="text" class="form-control" /> </td>
-                          <td> <textarea style="resize: none;height: 40px" class="form-control"></textarea> </td>
-                      </tr>
 
 
                       </tbody>
@@ -744,7 +734,7 @@ class Helper {
                   <div class="row">
                       <div class="col-12">
                           <label>Play other music instruments? <code>Please give details here:</code></label>
-                          <textarea style="" class="form-control"></textarea>
+                          <textarea name="other_music_details" style="" class="form-control"></textarea>
                       </div>
                       <hr/>
                   </div>
@@ -757,7 +747,7 @@ class Helper {
 
                       <div class="form-group col-sm-12 col-md-6 col-lg-6">
                           <label> Number of years teaching music? </label>
-                          <input type="tel" class="form-control" placeholder="e.g 10"/>
+                          <input name="no_of_years_experience" type="tel" class="form-control" placeholder="e.g 10"/>
                       </div>
                   </div>
 
@@ -767,14 +757,14 @@ class Helper {
                           <label>
                               Taught in a School ?
                           </label>
-                          <select class="custom-select custom-select-sm">
-                              <option value="Yes"> Yes </option>
-                              <option value="No">No</option>
+                          <select name="is_taught_in_school"  class="custom-select custom-select-sm">
+                              <option value="1"> Yes </option>
+                              <option value="0">No</option>
                           </select>
                       </div>
                       <div class="col-sm-12 col-md-6 col-lg-6">
                           <label>Please give details here:</label>
-                          <textarea style="resize: none;height: 40px" class="form-control" placeholder=""></textarea>
+                          <textarea name="taught_in_school_details" style="resize: none;height: 40px" class="form-control" placeholder=""></textarea>
                       </div>
                   </div>
                   <div class="row">
@@ -782,14 +772,14 @@ class Helper {
                           <label>
                               Taught private lessons?
                           </label>
-                          <select class="custom-select custom-select-sm">
-                              <option value="Yes"> Yes </option>
-                              <option value="No">No</option>
+                          <select name="is_taught_in_private" class="custom-select custom-select-sm">
+                              <option value="1"> Yes </option>
+                              <option value="0">No</option>
                           </select>
                       </div>
                       <div class="col-sm-12 col-md-6 col-lg-6">
                           <label>Please give details here:</label>
-                          <textarea style="resize: none;height: 40px" class="form-control" placeholder=""></textarea>
+                          <textarea name="taught_in_private_details" style="resize: none;height: 40px" class="form-control" placeholder=""></textarea>
                       </div>
                   </div>
               </section>
@@ -806,33 +796,51 @@ class Helper {
 
 
     public static function loadPreferencePage(){
+       $locations = Location::with('places')->get();
+       $primary_grades = Grade::where(['level_id'=>1])->get();
+       $secondary_grades = Grade::where(['level_id'=>2])->get();
+       $jc_grades = Grade::where(['level_id'=>3])->get();
+       $others_grades = Grade::where(['level_id'=>4])->get();
+       $subjects = Subject::all();
         ob_start();
+
         ?>
         <h6> I am available to take tuition at...  <code>*</code></h6>
+        <script>
+             function toggleTutorHomeInfoSection(){
+                 var e = document.getElementById('my_home_information');
+                 if(e.style.display === 'none'){
+                     e.style.display = '';
+                 }else{
+                     e.style.display = 'none';
+                 }
+
+             }
+        </script>
         <div class="row">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="student_house" value="option1">
+                <input class="form-check-input" name="availability_at_student_home" type="checkbox" id="student_house" value="1">
                 <label class="form-check-label" for="student_house">Student House</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="own_house" value="option2">
-                <label class="form-check-label" for="own_house">My Own House or Centre</label>
+                <input class="form-check-input" onchange="toggleTutorHomeInfoSection()" name="availability_at_tutor_home" type="checkbox" id="own_house" value="1">
+                <label class="form-check-label"  for="own_house">My Own House or Centre</label>
             </div>
         </div>
 
 
         <hr/>
-        <div class="row">
+        <div class="row" style="display: none" id="my_home_information">
 
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <label>My Postal Code</label>
 
-                <input type="text" class="form-control" placeholder="Enter location postal code" style="height: 30px"/>
+                <input type="text" class="form-control" name="tutor_home_postal" placeholder="Enter location postal code" style="height: 30px"/>
             </div>
 
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <label>What can students expect for classes at my location:</label>
-                <textarea class="form-control"></textarea>
+                <textarea name="class_criteria" class="form-control"></textarea>
                 <small>e.g. Group size? Material cost? Are trial lessons free/chargeable? Classroom with whiteboard? etc</small>
             </div>
         </div>
@@ -841,28 +849,23 @@ class Helper {
 
 
         <span> I would like to teach in these locations... * </span>
+
         <div class="row">
+            <?php foreach($locations as $location):?>
             <div class="form-group col-sm-12 col-md-8 col-lg-8">
-               <span style="font-size: 16px;font-weight: normal;margin:10px;"> <strong style="font-size: 16px;font-weight: normal;margin:10px;">Central</strong></span>
+               <span style="font-size: 16px;font-weight: normal;margin:10px;"> <b style="font-size: 16px;margin:10px;"><?php echo $location->location_title ?></b></span>
+               <?php foreach ($location->places as $place):?>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                    <input class="form-check-input" type="checkbox" name="location[]"  value="<?=$place->id?>" id="check1">
                     <label class="form-check-label" for="check1">
-                        Cecil, Chinatown, Marina, People's Park, Raffles Place
+                       <?php echo $place->place ?>
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check1">
-                    <label class="form-check-label" for="check1">
-                        Cecil, Chinatown, Marina, People's Park, Raffles Place
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="check1">
-                    <label class="form-check-label" for="check1">
-                        Cecil, Chinatown, Marina, People's Park, Raffles Place
-                    </label>
-                </div>
+                <?php endforeach;?>
+
             </div>
+
+            <?php endforeach;?>
         </div>
 
 
@@ -892,65 +895,103 @@ class Helper {
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="primary" role="tabpanel" aria-labelledby="primary-tab">
                 <div class="row">
-                    <div class="col">
-                        <br/>
-                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
-                        <hr/>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil, Chinat
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col">
 
-                        <br/>
-                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
-                        <hr/>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil, Chinat
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col">
+                    <?php foreach($primary_grades as $grade):?>
+                        <div class="col">
+                            <br/>
+                            <span style="font-size: 16px; margin:5px;"><?=$grade->grade_title?></span>
+                            <hr/>
+                            <?php foreach($subjects as $subject):?>
+                            <?php
+                                $name = str_replace(' ','',$grade->grade_title);
+                                ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                    <label class="form-check-label" for="check1">
+                                        <?php echo $subject->subject_title ?>
+                                    </label>
+                                </div>
 
-                        <br/>
-                        <span style="font-size: 16px; margin:5px;">Primary 1</span>
-                        <hr/>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil
-                            </label>
+                            <?php endforeach;?>
+
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="check1">
-                            <label class="form-check-label" for="check1">
-                                Cecil, Chinat
-                            </label>
-                        </div>
-                    </div>
+                    <?php endforeach;?>
+
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="secondary" role="tabpanel" aria-labelledby="secondary-tab">akram</div>
-            <div class="tab-pane fade" id="jc" role="tabpanel" aria-labelledby="jc-tab">bhatii</div>
-            <div class="tab-pane fade" id="others" role="tabpanel" aria-labelledby="others-tab">others</div>
+            <div class="tab-pane fade" id="secondary" role="tabpanel" aria-labelledby="secondary-tab">
+              <div class="row">
+                  <?php foreach($secondary_grades as $grade):?>
+                      <div class="col">
+                          <br/>
+                          <span style="font-size: 16px; margin:5px;"><?=$grade->grade_title?></span>
+                          <hr/>
+                          <?php foreach($subjects as $subject):?>
+                              <?php
+                              $name = str_replace(' ','',$grade->grade_title);
+                              ?>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                  <label class="form-check-label" for="check1">
+                                      <?php echo $subject->subject_title ?>
+                                  </label>
+                              </div>
+
+                          <?php endforeach;?>
+
+                      </div>
+                  <?php endforeach;?>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="jc" role="tabpanel" aria-labelledby="jc-tab">
+              <div class="row">
+                  <?php foreach($jc_grades as $grade):?>
+                      <div class="col">
+                          <br/>
+                          <span style="font-size: 16px; margin:5px;"><?=$grade->grade_title?></span>
+                          <hr/>
+                          <?php foreach($subjects as $subject):?>
+                              <?php
+                              $name = str_replace(' ','',$grade->grade_title);
+                              ?>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                  <label class="form-check-label" for="check1">
+                                      <?php echo $subject->subject_title ?>
+                                  </label>
+                              </div>
+
+                          <?php endforeach;?>
+
+                      </div>
+                  <?php endforeach;?>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="others" role="tabpanel" aria-labelledby="others-tab">
+                <div class="row">
+                    <?php foreach($others_grades as $grade):?>
+                        <div class="col">
+                            <br/>
+                            <span style="font-size: 16px; margin:5px;"><?=$grade->grade_title?></span>
+                            <hr/>
+                            <?php foreach($subjects as $subject):?>
+                                <?php
+                                $name = str_replace(' ','',$grade->grade_title);
+                                ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                    <label class="form-check-label" for="check1">
+                                        <?php echo $subject->subject_title ?>
+                                    </label>
+                                </div>
+
+                            <?php endforeach;?>
+
+                        </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
 
         </div>
 
@@ -976,28 +1017,28 @@ class Helper {
                     <tr>
                         <td> 1 </td>
                         <td>Lower Primary</td>
-                        <td><input type="text" class="form-control"/></td>
+                        <td><input type="text" name="lower_primary_rate" class="form-control"/></td>
                     </tr>
                     <tr>
                         <td> 2 </td>
                         <td>Upper Primary</td>
-                        <td><input type="text" class="form-control"/></td>
+                        <td><input type="text" name="upper_primary_rate" class="form-control"/></td>
                     </tr>
                     <tr>
                         <td> 3 </td>
                         <td>Lower Secondary</td>
-                        <td><input type="text" class="form-control"/></td>
+                        <td><input type="text" name="lower_secondary_rate" class="form-control"/></td>
                     </tr>
                     <tr>
                         <td> 4 </td>
                         <td>Uper Secondary</td>
-                        <td><input type="text" class="form-control"/></td>
+                        <td><input type="text" name="uper_secondary_rate" class="form-control"/></td>
                     </tr>
 
                     <tr>
                         <td> 5 </td>
                         <td>JC</td>
-                        <td><input type="text" class="form-control"/></td>
+                        <td><input type="text" name="jc_rate" class="form-control"/></td>
                     </tr>
 
                     </tbody>
@@ -1021,7 +1062,7 @@ class Helper {
                         </small>
 
                     </code> </label>
-                <textarea class="form-control"></textarea>
+                <textarea name="description" class="form-control"></textarea>
             </div>
         </div>
         <?php

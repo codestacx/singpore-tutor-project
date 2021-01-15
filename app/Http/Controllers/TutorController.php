@@ -7,6 +7,7 @@ use App\Models\Citizenship;
 use App\Models\EducationInfo;
 use App\Models\Level;
 use App\Models\MoeTutorSpecification;
+use App\Models\MusicExperience;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
@@ -209,8 +210,49 @@ class TutorController extends Controller
         $formData['private_experiences'] = json_encode($data);
         $formData['students_taught'] = json_encode($request->students_taught);
 
-        DB::table('academic_experiences')->insert($formData);
-        dd(DB::getPdo()->lastInsertId());
+       // DB::table('academic_experiences')->insert($formData);
+
+
+
+        // music information
+
+        $formData  = [
+            'is_fulltime_music_teacher'=>$request->is_fulltime_music_teacher,
+            'theory_level'=>$request->thoery_level,
+            'other_music_details'=>$request->other_music_details,
+            'no_of_years_experience'=>$request->no_of_years_experience,
+            'is_taught_in_school'=>$request->is_taught_in_school,
+            'taught_in_school_details'=>$request->taught_in_school_details,
+            'is_taught_in_private'=>$request->is_taught_in_private,
+            'taught_in_private_details'=>$request->taught_in_private_details,
+            'user_id'=>session('tutor_id')
+
+        ];
+
+
+
+        $data = array();
+        for($index = 0,$iterator = 0;$index < count($request->instrument);$index++){
+
+            $isnull = $request->instrument[$index] == null || $request->practical_level[$index]==null ||$request->achievements[$index]==null;
+
+            if(!$isnull){
+                $data[$iterator] = (object)[
+                    'instrument'=>$request->instrument[$index],
+                    'practical_level'=>$request->practical_level[$index],
+                    'achievements'=>$request->achievements[$index]
+                ];
+                $iterator+=1;
+            }
+
+        }
+
+
+
+        $formData['proficiencies'] = json_encode($data);;
+//        DB::table('music_experiences')->insert($formData);
+//
+//        dd(DB::getPdo()->lastInsertId());
 
     }
 
