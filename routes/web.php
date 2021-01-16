@@ -93,7 +93,7 @@ Route::get('/experience/getrow',[TutorController::class,'getAcademicExperienceRo
 
 /* Admin Routes */
 Route::prefix('superadmin')->group(function(){
-    Route::get('/login',[AdminAuthController::class,'login'])->name('admin.login');
+    Route::match(['get', 'post'], '/login',[AdminAuthController::class,'login'])->name('admin.login');
 });
 Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(function(){
 

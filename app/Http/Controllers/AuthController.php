@@ -32,6 +32,8 @@ class AuthController extends Controller
                 'email'=>$email
             ])->first();
 
+
+
             if($user){
 
 

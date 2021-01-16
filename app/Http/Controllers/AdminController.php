@@ -14,9 +14,11 @@ class AdminController extends Controller
     }
     public function levels(Request $request, $action = null, $level = null){
 
-        $table = DB::table('levels');
+        $table = DB::table('levels')->orderBy('id','DESC');
+
         if($action == 'create'){
-            return view('admin.levels.create');
+            $levels = $table->get();
+            return view('admin.levels.create',compact('levels'));
         }
         if($action == 'delete'){
             //delete grade
@@ -25,9 +27,9 @@ class AdminController extends Controller
         }
         if($action == 'update'){
             //update grade & save
-            $level_edit = $table->where('id',$request->input('level'))->first();
-
-            return view('admin.levels.create',compact('level_edit'));
+            $level_edit = DB::table('levels')->where('id',$request->input('level'))->first();
+            $levels = $table->get();
+            return view('admin.levels.create',compact('level_edit','levels'));
         }
 
 
@@ -35,22 +37,23 @@ class AdminController extends Controller
 
             $formData = [
                     'level_title'           =>  $request->input('title'),
-                    'active'                =>  ($request->input('is_active')!=""?1:0),
+                    'active'                =>  $request->input('is_active'),
                     'created_at'            => Carbon::now()->toDateTimeString(),
                     'updated_at'            => Carbon::now()->toDateTimeString()
             ];
-
             if(isset($request->level_id)){
                 $table->where('id',$request->input('level_id'))->update($formData);
               return redirect()->route('admin.levels')->with('success','Level updated Successfully');
             }
 
               DB::table('levels')->insert($formData);
-              return redirect()->route('admin.levels')->with('success','Level add successfully');
+             // $levels = $table->get();
+             // return view('admin.levels.create',compact('levels'));
+//              return redirect()->route('admin.levels')->with('success','Level add successfully');
         }
 
-        $levels = DB::table('levels')->get();
-        return view('admin.levels.index',compact('levels'));
+        $levels = $table->get();
+        return view('admin.levels.create',compact('levels'));
 
     }
 

@@ -49,12 +49,12 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="n@a.com" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                                        <input type="password" name="password" value="1" class="form-control" id="password" placeholder="Password" required>
                                     </div>
                                 </div>
 
