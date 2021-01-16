@@ -19,6 +19,8 @@ use \App\Http\Controllers\AdminController;
 use \App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\TutorController;
 
+use App\Http\Controllers\UpdateTutorProfileController as TPC;
+
 
 Route::prefix('/')->name('site.')->group(function(){
 
@@ -38,12 +40,20 @@ Route::prefix('/')->name('site.')->group(function(){
 });
 
 Route::get('/testing',function(){
-    return view('tutor.testing');
+    return view('application.dashboard.index');
 });
+
+
+
+
 
 
 Route::prefix('dashboard')
     ->name('tutor.')->middleware('tutor')->group(function(){
+
+        Route::match(['get','post'],'tutor/basic-info',[TPC::class,'updateBasicInformation'])->name('profile.basic_info');
+        Route::match(['get','post'],'tutor/education-info',[TPC::class,'updateEducationInformation'])->name('profile.education_info');
+
 
         Route::get('',[TutorController::class,'index'])->name('dashboard');
         Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');

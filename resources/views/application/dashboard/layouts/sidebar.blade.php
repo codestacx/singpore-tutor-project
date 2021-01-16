@@ -14,8 +14,7 @@
                                       stroke-dasharray="90, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
                             </svg>
                             <figure class="sl-userprofileimg">
-
-                                <img style="width: 95px;height: 95px" src="{{ asset(isset($user) ? 'uploads/profile/'.$user->profile->photo : 'raw/user-avatar.jpg')}}" alt="img description">
+                                <img src="{{asset('static/images/insight/profile.jpg')}}" alt="img description">
                             </figure>
                             <span class="sl-percentage">80% Profile Completed</span>
                         </div>
@@ -23,41 +22,50 @@
                             <div class="sl-slider__tags">
                                 <span class="sl-bg-red-orange">Featured</span><span class="sl-bg-green">Verified</span>
                             </div>
-                            <h3><a href="javascript:void(0);"> {{isset($user) ?? $user->fname.' '.$user->lname}}</a></h3>
+                            <h3><a href="javascript:void(0);"> Louanne Mattioli</a></h3>
                             <div class="sl-featureRating">
                                 <span class="sl-featureRating__stars"><span></span></span>
                                 <em>(1642 Feedback)</em>
-                            </div>
-                            <div class="sl-userStatus">
-                                <div class="sl-userStatus__content">
-                                    <a data-toggle="collapse" href="dashboard-insight.html#collapseUser" role="button" aria-expanded="false">
-                                        I’m:<span><em class="sl-online"></em></span><em>Online</em><i class="ti-angle-down"></i>
-                                    </a>
-                                    <div class="collapse" id="collapseUser">
-                                        <a href="javascript:void(0);"><span class="sl-online"></span><em>Online</em></a>
-                                        <a href="javascript:void(0);"><span class="sl-away"></span><em>Away</em></a>
-                                        <a href="javascript:void(0);"><span class="sl-busy"></span><em>Busy</em></a>
-                                        <a href="javascript:void(0);"><span class="sl-offline"></span><em>Offline</em></a>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn sl-btn sl-btn-small"><i class="fas fa-check"></i></button>
                             </div>
                         </div>
                     </div>
                     <nav id="sl-navdashboard" class="sl-navdashboard">
                         <ul>
-                            <li class="sl-active">
-                                <a href="{{route('app.dashboard.ads')}}">
-                                    <i class="ti-dashboard"></i><span> My Ads </span>
+                            <li>
+                                <a href="{{route('tutor.profile.basic_info')}}">
+                                    <i class="ti-dashboard"></i><span>Basic Information</span>
                                 </a>
                             </li>
-
                             <li>
-                                <a href="{{route('app.dashboard.profile')}}">
+                                <a href="{{route('tutor.profile.education_info')}}">
+                                    <i class="ti-dashboard"></i><span>Educational Information</span>
+                                </a>
+                            </li>
+                            <li class="menu-item-has-children page_item_has_children sl-active">
+                                <a href="javascript:void(0);" class="sl-notification sl-noticolor1">
+                                    <i class="ti-star"></i><span>Manage Appointments</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><a href="dashboard-appointment-single.html">Appointment Single</a></li>
+                                    <li><a href="dashboard-all-appointment.html">All Appointment</a></li>
+                                    <li><a href="dashboard-manage-time-slots.html">Manage Time Slots</a></li>
+                                    <li><a href="dashboard-manage-services.html">Manage Services &amp; Prices</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="dashboard-profile-settings.html">
                                     <i class="ti-user"></i><span>Profile Settings</span>
                                 </a>
                             </li>
-
+                            <li class="menu-item-has-children page_item_has_children">
+                                <a href="javascript:void(0);">
+                                    <i class="ti-bookmark-alt"></i><span>Manage Articles</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><a href="dashboard-article-list.html">Articles List</a></li>
+                                    <li><a href="dashboard-add-new-article.html">Add New Articles</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="dashboard-inbox.html">
                                     <i class="ti-email"></i><span>inbox</span>
@@ -83,12 +91,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('app.privacy')}}">
+                                <a href="dashboard-accountprivacy.html">
                                     <i class="ti-lock"></i><span>Account &amp; Privacy</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('app.logout')}}">
+                                <a href="index.html">
                                     <i class="ti-key"></i><span>Logout</span>
                                 </a>
                             </li>

@@ -27,6 +27,7 @@ class TutorController extends Controller
     public function index(Request $request){
 
         $user = User::find(session('tutor_id'));
+        return redirect()->route('tutor.update_info');
         if($user->profile_updated == 0){
             return redirect()->route('tutor.update_info');
         }
@@ -75,9 +76,9 @@ class TutorController extends Controller
 
         $whereClause = ['id'=>session('tutor_id')];
         $tutor = User::where($whereClause)->first();
-        if($tutor->profile_updated == 1){
-            return redirect()->route('tutor.dashboard');
-        }
+//        if($tutor->profile_updated == 1){
+//            return redirect()->route('tutor.dashboard');
+//        }
 
 
 

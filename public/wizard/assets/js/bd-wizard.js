@@ -17,23 +17,23 @@ $("#wizard").steps({
     onStepChanged: function (event, currentIndex, priorIndex) {
         if(priorIndex < currentIndex){
 
-            if(priorIndex === 0){
-                BasicInfo.submitFormData()
-            }
-
-            if(priorIndex === 1){
-                Education.submitFormData();
-            }
-
-            if(priorIndex === 2){
-                Experience.submitFormData();
-            }
-            if(priorIndex === 3){
-                preferenceServer.submitFormData();
-            }
-            if(priorIndex === 4){
-
-            }
+            // if(priorIndex === 0){
+            //     BasicInfo.submitFormData()
+            // }
+            //
+            // if(priorIndex === 1){
+            //     Education.submitFormData();
+            // }
+            //
+            // if(priorIndex === 2){
+            //     Experience.submitFormData();
+            // }
+            // if(priorIndex === 3){
+            //     preferenceServer.submitFormData();
+            // }
+            // if(priorIndex === 4){
+            //
+            // }
         }
 
 
