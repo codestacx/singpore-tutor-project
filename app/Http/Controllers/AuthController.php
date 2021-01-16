@@ -110,8 +110,6 @@ class AuthController extends Controller
         $token = $request->token;
 
 
-
-
         $count = DB::table('verificationlinks')->where([
             'email'=>$email,
             'token'=>$token
@@ -124,6 +122,10 @@ class AuthController extends Controller
                 'email_verified_at'=>Carbon::now(),
                 'active_status'=>1
             ]);
+            DB::table('verificationlinks')->where([
+                'email'=>$email,
+                'token'=>$token
+            ])->delete();
 
             return redirect()->route('site.user.login')->with('success','Email Verified Successfully');
         }else{

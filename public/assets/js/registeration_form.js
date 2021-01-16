@@ -251,6 +251,7 @@ var BasicInfo = {
         formData.append('action','basic-info')
 
         $(function() {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-Token': $('meta[name="_token"]').attr('content')
@@ -453,7 +454,7 @@ var Document = {
             cache:false,
             async:false,
             success:function(response){
-                console.log(response)
+                const url = window.location;
             }
         })
     },

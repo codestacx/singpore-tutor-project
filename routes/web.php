@@ -31,12 +31,15 @@ Route::prefix('/')->name('site.')->group(function(){
 
     Route::match(['get','post'],'update-info/{action?}',[TutorController::class,'registerationForm'])->name('update_info');
     Route::match(['get','post'],'tutor/login/',[AuthController::class,'login'])->name('user.login');
-
     Route::get('/verify_email/{email?}/{token?}',[AuthController::class,'verify_email'])->name('email-verification');
 
+    Route::post('tutor/request',[TutorController::class,'tutor_request'])->name('tutor.request');
 
 });
 
+Route::get('/testing',function(){
+    return view('tutor.testing');
+});
 
 
 Route::prefix('dashboard')
@@ -50,15 +53,10 @@ Route::prefix('dashboard')
 
 
 
-Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){
-    dd('working');
-})->name('tutor.email-verification');
-
 
 Route::get('/education/load-card',[TutorController::class,'loadCard'])->name('load-card');
-
 Route::get('/experience/getrow',[TutorController::class,'getAcademicExperienceRow'])->name('get-experience-row');
-
+Route::get('/tutor-request/row',[HomeController::class,'getTutorRequestRow'])->name('tutor.request.row');
 
 /* Admin Routes */
 Route::prefix('superadmin')->group(function(){
@@ -77,7 +75,9 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
 populateRoutes([
     'card.load'=>url('/education/load-card'),
     'update-info'=>url('/dashboard/update-info'),
-    'get-experience-row'=>url('/experience/getrow')
+    'get-experience-row'=>url('/experience/getrow'),
+    'tutor.request.row'=>url('/tutor-request/row'),
+    'tutor.request'=>url('tutor/request')
 ]);
 
 

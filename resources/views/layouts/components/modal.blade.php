@@ -1,5 +1,6 @@
 @section('links')
     <link rel="stylesheet" href="{{asset('style/modal-tutor.css')}}"/>
+    <meta name="_token" content="{{ csrf_token() }}">
 @endsection
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade">
@@ -18,8 +19,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="forms">
-
-                                <form class="tutor_free_request_form" action="#" method="post">
+                            <span id="response_message"></span>
+                                <form class="tutor_free_request_form" id="tutor_free_request_form" action="{{route('site.tutor.request')}}" method="post">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
@@ -38,24 +40,39 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <textarea class="form-control"  placeholder="Enter Requirement Message (optional)"></textarea>
+                                                <textarea class="form-control"   placeholder="Enter Requirement Message (optional)" name="description"></textarea>
 
                                             </div>
                                         </div>
+                                        <div class="col-sm-12 col-lg-12 col-md-12" id="add_level_grade">
+                                            <div class="form-group">
+                                                <select class="form-control" name="level_grade[grades][]">
+                                                   @foreach($levels as $level)
+                                                       <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f">{{$level->level_title}}</h5></option>
+                                                       @foreach($level->grades as $grade)
+                                                           <option value="{{$grade->grade_id}}">{{$grade->grade_title}}</option>
+                                                        @endforeach
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+
+
+
                                         <div class="col-sm-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" name="level_grade">
-                                                    <option selected disabled>Choose Grade</option>
-                                                </select>
+                                                 <a href="javascript:;" onclick="Server.addAnotherTutorRequestFormRow()"> <i class="fa fa-plus"></i> &nbsp;&nbsp; Add Another Student</a>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn clever-btn w-100">Find Tutor</button>
+                                            <button type="submit"   class="btn clever-btn w-100">Find Tutor</button>
                                         </div>
                                     </div>
                                 </form>
@@ -70,3 +87,9 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+    <script>
+
+    </script>
+@endsection

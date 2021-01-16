@@ -17,7 +17,14 @@
     @include('tutor.layouts.sidebar')
     <main>
         <div class="site-section">
+                   <div class="container">
+                       @if ($user->profile_approved == 0)
+                           <div class="alert alert-success" style="margin-top: 20px">
+                               Please wait while your profile is approved by admin
+                           </div>
 
+                       @endif
+                   </div>
         </div>
 
 

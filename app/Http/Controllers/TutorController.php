@@ -33,6 +33,22 @@ class TutorController extends Controller
         return view('tutor.welcome',['user'=>$user]);
     }
 
+
+    public function tutor_request(Request $request){
+        $formData = [
+          'fname'=>$request->fname,
+            'lname'=>$request->lname,
+            'phone'=>$request->phone,
+            'email'=>$request->email,
+            'description'=>$request->description,
+            'grade'=>json_encode($request->level_grade['grades'])
+        ];
+
+        $status = DB::table('tutor_requests')->insert($formData);
+        return redirect()->back()->with('success','Request Disptached successfully');
+
+    }
+
     public function update_info(Request $request){
 
         if($request->method() == 'POST'){
@@ -40,16 +56,15 @@ class TutorController extends Controller
             $action = $request->action;
             switch ($action){
                 case 'basic-info':
-                   // $this->updateBasicInfo($request);
+                  $this->updateBasicInfo($request);
                     break;
                 case 'educational-info':
-
-                   // $this->updateEducationInformation($request,$request->school_level);
-                    break;
+                   $this->updateEducationInformation($request,$request->school_level);
+                   break;
                 case 'preferences':
-                    //$this->updatePreference($request);break;
+                    $this->updatePreference($request);break;
                 case 'experience-info':
-                   //$this->experienceInformation($request);
+                   $this->experienceInformation($request);
                    break;
                 case 'document-info':
                      $this->updateDocument($request);
@@ -89,7 +104,7 @@ class TutorController extends Controller
             'educationInfoCourses'=>$educationInfoCourses
         ];
 
-         
+
         return view('tutor.update_info',$templateData);
     }
 
@@ -182,8 +197,10 @@ class TutorController extends Controller
 
     private function experienceInformation($request){
         $formData = [
+
             'is_taught_in_moe'=>$request->is_taught_in_moe,
             'user_id'=>session('tutor_id')
+
         ];
 
         if($request->is_taught_in_moe){
@@ -221,7 +238,7 @@ class TutorController extends Controller
         $formData['private_experiences'] = json_encode($data);
         $formData['students_taught'] = json_encode($request->students_taught);
 
-       // DB::table('academic_experiences')->insert($formData);
+         DB::table('academic_experiences')->insert($formData);
 
 
 
@@ -261,9 +278,8 @@ class TutorController extends Controller
 
 
         $formData['proficiencies'] = json_encode($data);;
-//        DB::table('music_experiences')->insert($formData);
-//
-//        dd(DB::getPdo()->lastInsertId());
+        DB::table('music_experiences')->insert($formData);
+        dd(DB::getPdo()->lastInsertId());
 
     }
 
@@ -274,7 +290,7 @@ class TutorController extends Controller
         $category = $request->tutorrole;
         $formData = [
 
-            'user_id'=>$user,
+            'user_id' =>$user,
             'category'=>$category,
             'is_nie_trained'=>$request->is_nie_trained,
             'highest_qualification'=>$request->highest_qualification,
@@ -302,8 +318,6 @@ class TutorController extends Controller
         }
 
         $educationInfo = EducationInfo::create($formData);
-
-
 
 
         $school_level = $request->school_level;   //array of school level
@@ -337,25 +351,21 @@ class TutorController extends Controller
             ];
             $deploma_degree_others = [6,7,8];
 
-
-
             if(in_array($levels[$index],$deploma_degree_others)){
 
                 $formData['subjects_or_majors'] = json_encode($request->course_name[$index]);
 
             }else{
 
-
-
                 $subjects = $request->subject[$index];
                 $grades = $request->grade[$index];
+
                 $data = array();
                 for($iterator = 0;$iterator < count((array)$subjects); $iterator++){
                     $data[$iterator] = (object)['subject'=>$subjects[$iterator],'grade'=>$grades[$iterator]];
                 }
 
                 $formData['subjects_and_grades'] = json_encode($data);
-
             }
 
             DB::table('tutor_school_courses')->insert($formData);

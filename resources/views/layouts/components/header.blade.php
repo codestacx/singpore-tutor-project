@@ -50,17 +50,13 @@
                             <li><a href="{{route('site.home')}}">Home</a></li>
                             <li><a href="{{route('site.tution_rates')}}">Tution Rates</a></li>
                             <li><a  href="{{route('site.faqs')}}">FAQ's</a></li>
+                            <li><a  href="">Tuition Assignments</a></li>
+
                             <li><a href="blog.html">Blog</a></li>
                             <li><a href="{{route('site.contact')}}">Contact</a></li>
                         </ul>
 
-                        <!-- Search Button -->
-                        <div class="search-area">
-                            <form action="#" method="post">
-                                <input type="search" name="search" id="search" placeholder="Search">
-                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
-                        </div>
+
 
 
                         @if(!session('tutor_logged'))

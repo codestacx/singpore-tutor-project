@@ -3,13 +3,13 @@
 @section('content')
 
     <!-- import modal at the top -->
-    @include('layouts.components.modal')
+    @include('layouts.components.modal',['levels'=>$levels])
     <!-- modal ends here -->
     <!-- slider starts here -->
     @include('layouts.components.slider')
     <!-- slider ends here -->
 
-
+   @php generateFlashMessage() @endphp
     <!-- community-guideline -->
     @include('partials.guidlines')
     <!-- ends here -->
