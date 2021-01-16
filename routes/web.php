@@ -32,6 +32,9 @@ Route::prefix('/')->name('site.')->group(function(){
     Route::match(['get','post'],'update-info/{action?}',[TutorController::class,'registerationForm'])->name('update_info');
     Route::match(['get','post'],'tutor/login/',[AuthController::class,'login'])->name('user.login');
 
+    Route::get('/verify_email/{email?}/{token?}',[AuthController::class,'verify_email'])->name('email-verification');
+
+
 });
 
 
@@ -44,10 +47,7 @@ Route::prefix('dashboard')
         Route::get('logout',[TutorController::class,'logout'])->name('logout');
 });
 
-Route::get('/testing',function(){
-//   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
-    return view('auths.pages.login');
-});
+
 
 
 Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){

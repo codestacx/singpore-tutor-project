@@ -22,7 +22,7 @@ class CreatePreferencesTable extends Migration
             $table->text('class_criteria')->nullable(true);
 
 
-            $table->text('description')->nullable(true);
+
             $table->timestamps();
         });
     }

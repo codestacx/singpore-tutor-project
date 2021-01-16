@@ -213,6 +213,36 @@ var commonServer = {
 }
 
 
+var preferenceServer = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#prefernce_form');
+        var formData = new FormData(form);
+
+        formData.append('action','preferences')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    }
+}
 var BasicInfo = {
     submitFormData:()=>{
         var form = document.querySelector('form#basic_info_form');
@@ -399,11 +429,39 @@ var Experience = {
 
 
 var Document = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#document_form');
+        var formData = new FormData(form);
+
+        formData.append('action','document-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    },
     addCerticateFieldRow:(e)=>{
         const element = document.getElementById(e);
         const html = ' <tr>\n' +
             '                    <td>\n' +
-            '                        <input type="file" class="form-control"/>\n' +
+            '                        <input type="file" name="certificates[]" class="form-control"/>\n' +
             '                    </td>\n' +
             '                    <td>\n' +
             '                        Empty\n' +
@@ -423,7 +481,7 @@ var Document = {
         const element = document.getElementById(e);
         const html = ' <tr>\n' +
             '                    <td>\n' +
-            '                        <input type="file" class="form-control"/>\n' +
+            '                        <input type="file" name="supported_documents[]" class="form-control"/>\n' +
             '                    </td>\n' +
             '                    <td>\n' +
             '                        Empty\n' +

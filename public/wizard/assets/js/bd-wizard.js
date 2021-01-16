@@ -24,12 +24,18 @@ $("#wizard").steps({
         }
 
         if(priorIndex === 2){
-            Experience.submitFormData();
+            //Experience.submitFormData();
+        }
+        if(priorIndex === 3){
+           // preferenceServer.submitFormData();
+        }
+        if(priorIndex === 4){
+
         }
 
     },
     onFinished: function (event, currentIndex) {
-        console.log(currentIndex)
+        Document.submitFormData();
     },
 });
 

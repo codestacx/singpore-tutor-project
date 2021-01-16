@@ -13,6 +13,7 @@ use App\Models\Race;
 use App\Models\SchoolType;
 use App\Models\StudentCategory;
 use App\Models\Subject;
+use App\Models\TutorTaught;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -26,18 +27,15 @@ class TutorController extends Controller
     public function index(Request $request){
 
         $user = User::find(session('tutor_id'));
-
         if($user->profile_updated == 0){
             return redirect()->route('tutor.update_info');
         }
-
         return view('tutor.welcome',['user'=>$user]);
     }
 
     public function update_info(Request $request){
 
         if($request->method() == 'POST'){
-
 
             $action = $request->action;
             switch ($action){
@@ -48,22 +46,34 @@ class TutorController extends Controller
 
                    // $this->updateEducationInformation($request,$request->school_level);
                     break;
+                case 'preferences':
+                    //$this->updatePreference($request);break;
                 case 'experience-info':
-                   $this->experienceInformation($request);
+                   //$this->experienceInformation($request);
+                   break;
+                case 'document-info':
+                     $this->updateDocument($request);
                     break;
             }
-
             return;
         }
 
-        $whereClause = ['user_id'=>session('tutor_id')];
-        $basicInfo = DB::table('basic_infos')->where($whereClause)->first();
-        $educationInfo = DB::table('education_infos')->where($whereClause)->first();
+        $whereClause = ['id'=>session('tutor_id')];
+        $tutor = User::where($whereClause)->first();
+        if($tutor->profile_updated == 1){
+            return redirect()->route('tutor.dashboard');
+        }
+
+
+
+
+        $basicInfo = DB::table('basic_infos')->where(['user_id'=>$tutor->id])->first();
+        $educationInfo = DB::table('education_infos')->where(['user_id'=>$tutor->id])->first();
 
 
         $educationInfoCourses = isset($educationInfo) ?
          DB::table('tutor_school_courses')->where(['education_id'=>$educationInfo->education_id])->get():
-            [];
+            null;
 
 
         $templateData = [
@@ -79,6 +89,7 @@ class TutorController extends Controller
             'educationInfoCourses'=>$educationInfoCourses
         ];
 
+         
         return view('tutor.update_info',$templateData);
     }
 
@@ -400,6 +411,52 @@ class TutorController extends Controller
     private function updateEmployeInfo($request){
 
     }
+
+    private function updatePreference($request){
+       // dd($request->all());
+        $formData = [
+            'availability_at_student_home'=>isset($request->availability_at_student_home) ? $request->availability_at_student_home:0,
+            'availability_at_tutor_home'=>isset($request->availability_at_tutor_home) ? $request->availability_at_tutor_home:0,
+            'tutor_home_postal'=>$request->tutor_home_postal,
+            'class_criteria'=>$request->class_criteria,
+            'description'=>$request->description,
+            'location'=>json_encode($request->location),
+            'lower_primary_rate'=>$request->lower_primary_rate,
+            'upper_primary_rate'=>$request->upper_primary_rate,
+            'lower_secondary_rate'=>$request->lower_secondary_rate,
+            'uper_secondary_rate'=>$request->uper_secondary_rate,
+            'jc_rate'=>$request->jc_rate,
+            'user_id'=>session('tutor_id')
+        ];
+
+
+        DB::table('preferences')->insert($formData);
+        $prefernce_id = DB::getPdo()->lastInsertId();
+        $records = [];
+
+        $iterator  = 0;
+        foreach ($request->levels as $key=>$level){
+
+            $KEY = explode('_',$key);
+
+            $grade_id = $KEY[1];
+            $level_id = $KEY[2];
+
+
+            foreach ($level as $subject){
+                $records[$iterator++] = array(
+                    'preference_id'=>$prefernce_id,
+                    'level'=>$level_id,
+                    'grade'=>$grade_id,
+                    'subject'=>$subject
+                );
+
+            }
+        }
+
+       $id = TutorTaught::insert($records);
+    }
+
     public function registerationForm(Request $request){
 
         $templateData = [
@@ -420,6 +477,24 @@ class TutorController extends Controller
 
         $id = $request;
         return Helper::loadCard($id);
+    }
+
+
+    public function updateDocument($request){
+        $user = User::find(session('tutor_id'));
+            $formData = [
+                'certificates'=>json_encode(uploadFile($request->certificates,'tutor/'.$user->name.'/documents')),
+                'proof_citizenship'=>uploadFile([$request->proof_citizenship],'tutor/'.$user->name.'/documents')[0],
+                'photo_id'=>uploadFile([$request->photo_id],'tutor/'.$user->name.'/documents')[0],
+                'recent_photo'=>uploadFile([$request->recent_photo],'tutor/'.$user->name.'/documents')[0],
+                'supported_documents'=>json_encode(uploadFile($request->supported_documents,'tutor/'.$user->name.'/documents')),
+                'user_id'=>$user->id
+            ];
+
+           DB::table('documents')->insert($formData);
+           DB::table('users')->where(['id'=>session('tutor_id')])
+               ->update(['profile_updated'=>1]);
+           dd(DB::getPdo()->lastInsertId());
     }
 
 

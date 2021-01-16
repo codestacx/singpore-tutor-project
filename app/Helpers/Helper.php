@@ -8,6 +8,7 @@ use App\Models\Citizenship;
 use App\Models\Grade;
 use App\Models\Level;
 use App\Models\Location;
+use App\Models\Preference;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
@@ -802,7 +803,10 @@ class Helper {
        $jc_grades = Grade::where(['level_id'=>3])->get();
        $others_grades = Grade::where(['level_id'=>4])->get();
        $subjects = Subject::all();
-        ob_start();
+
+       //$preference = Preference::where()->first();
+
+       ob_start();
 
         ?>
         <h6> I am available to take tuition at...  <code>*</code></h6>
@@ -906,7 +910,7 @@ class Helper {
                                 $name = str_replace(' ','',$grade->grade_title);
                                 ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                    <input class="form-check-input" type="checkbox" name="levels[<?='grade_'.$grade->grade_id.'_'.$grade->level_id?>][]" value="<?=$subject->subject_id?>" id="">
                                     <label class="form-check-label" for="check1">
                                         <?php echo $subject->subject_title ?>
                                     </label>
@@ -932,7 +936,7 @@ class Helper {
                               $name = str_replace(' ','',$grade->grade_title);
                               ?>
                               <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                  <input class="form-check-input" type="checkbox" name="levels[<?='grade_'.$grade->grade_id.'_'.$grade->level_id?>][]" value="<?=$subject->subject_id?>" id="">
                                   <label class="form-check-label" for="check1">
                                       <?php echo $subject->subject_title ?>
                                   </label>
@@ -956,7 +960,7 @@ class Helper {
                               $name = str_replace(' ','',$grade->grade_title);
                               ?>
                               <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                  <input class="form-check-input" type="checkbox" name="levels[<?='grade_'.$grade->grade_id.'_'.$grade->level_id?>][]" value="<?=$subject->subject_id?>" id="">
                                   <label class="form-check-label" for="check1">
                                       <?php echo $subject->subject_title ?>
                                   </label>
@@ -980,7 +984,7 @@ class Helper {
                                 $name = str_replace(' ','',$grade->grade_title);
                                 ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="[<?=$name?>][]" value="<?=$subject->subject_id?>" id="">
+                                    <input class="form-check-input" type="checkbox" name="levels[<?='grade_'.$grade->grade_id.'_'.$grade->level_id?>][]" value="<?=$subject->subject_id?>" id="">
                                     <label class="form-check-label" for="check1">
                                         <?php echo $subject->subject_title ?>
                                     </label>
@@ -1095,7 +1099,7 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <input type="file" class="form-control"/>
+                        <input type="file" name="certificates[]" class="form-control"/>
                     </td>
                     <td>
                         Empty
@@ -1126,7 +1130,7 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <input type="file" class="form-control"/>
+                        <input type="file" name="proof_citizenship" class="form-control"/>
                     </td>
 
 
@@ -1149,7 +1153,7 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <input type="file" class="form-control"/>
+                        <input type="file" name="photo_id" class="form-control"/>
                     </td>
 
 
@@ -1169,7 +1173,7 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <input type="file" class="form-control"/>
+                        <input type="file" name="recent_photo" class="form-control"/>
                     </td>
 
 
@@ -1186,7 +1190,7 @@ class Helper {
                 <tbody>
                 <tr>
                     <td>
-                        <input type="file" class="form-control"/>
+                        <input type="file" name="supported_documents[]" class="form-control"/>
                     </td>
                     <td>
                         Empty
