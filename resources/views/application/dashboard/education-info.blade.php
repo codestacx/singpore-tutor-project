@@ -1,5 +1,10 @@
 @extends('application.dashboard.layouts.app')
 @section('title','Tutor | Educational Information')
+<style>
+    #subject_grade_tbody input {
+        height: 30px;border-top: none;border-right: none;border-left: none;
+    }
+</style>
 @section('content')
 
     <div class="col-lg-8 col-xl-9">
@@ -224,15 +229,82 @@
                                          </span>
 
 
-                                        <div class="form-group sl-manageTimeSlots__btn">
-                                            <button type="submit" class="btn sl-btn">Add Now</button>
-                                            <p>Click “Add Now” to add latest time slots</p>
-                                        </div>
+{{--                                        <div class="form-group sl-manageTimeSlots__btn">--}}
+{{--                                            <button type="submit" class="btn sl-btn">Add Now</button>--}}
+{{--                                            <p>Click “Add Now” to add latest time slots</p>--}}
+{{--                                        </div>--}}
                                     </div>
 
 
                                     <div class="sl-form__wrap">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="achievements" placeholder="Achievements"></textarea>
+                                        </div>
+                                    </div>
 
+                                    <div class="sl-form__wrap">
+                                        <table class="table table-sm table-hover" id="table_subjectgrade">
+                                            <thead style="background-color: #2cdd9b;color: ghostwhite">
+                                            <tr>
+                                                <th style="padding: 10px;">Subject</th>
+                                                <th style="padding: 10px;">Grade</th>
+
+                                                <th style="padding: 10px;" colspan="2">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="subject_grade_tbody">
+
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="subject" class="form-control"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="grade" class="form-control"/>
+                                                </td>
+                                                <td>
+
+
+                                                </td>
+                                                <td>
+                                                    <a onclick="commonServer.addNewSubjectAndGrade(this)" href="javascript:void(0);" class="sl-icon sl-editbtn"><i class="fas fa-plus" style="margin-top: 10px;margin-left: 15px;"></i></a>
+
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="sl-form__wrap">
+                                        <table class="table table-sm table-hover" id="table_subjectgrade">
+                                            <thead style="background-color: #2cdd9b;color: ghostwhite">
+                                            <tr>
+                                                <th style="padding: 10px;">Subject</th>
+                                                <th style="padding: 10px;">Grade</th>
+
+                                                <th style="padding: 10px;" colspan="2">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="subject_grade_tbody">
+
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="subject" class="form-control"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="grade" class="form-control"/>
+                                                </td>
+                                                <td>
+
+
+                                                </td>
+                                                <td>
+                                                    <a onclick="commonServer.addNewSubjectAndGrade(this)" href="javascript:void(0);" class="sl-icon sl-editbtn"><i class="fas fa-plus" style="margin-top: 10px;margin-left: 15px;"></i></a>
+
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </fieldset>
                             </form>

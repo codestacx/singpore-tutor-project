@@ -162,6 +162,65 @@ var commonServer = {
 
     },
     subject_and_grade:1,
+
+    addNewSubjectAndGrade:(e)=>{
+
+        const parent = e.parentNode.parentNode.parentNode;
+
+        const tr = document.createElement('tr');
+
+        var td;
+        var input;
+
+        td = document.createElement('td');
+
+        input = document.createElement('input');
+        input.classList.add("form-control");
+        input.placeholder="Subject";
+        input.name="subject[]";
+
+
+        td.appendChild(input);
+        tr.appendChild(td);
+
+
+        td = document.createElement('td');
+        input = document.createElement('input');
+        input.classList.add("form-control");
+        input.placeholder="Grade";
+        input.name="grade[]";
+
+        td.appendChild(input);
+        tr.appendChild(td);
+
+
+        td = document.createElement('td');
+
+        var a = document.createElement('a');
+
+        a.href='javascript:;';
+        a.classList.add("sl-icon","sl-delbtn");
+
+        a.addEventListener('click',(e)=>{console.log(e.target.parentNode.parentNode.parentNode.remove())})
+        var i = document.createElement('i');
+        i.classList.add("fas","fa-trash");
+        i.style.marginTop='10px';
+        i.style.marginLeft='15px';
+
+
+        a.appendChild(i);
+
+        td.appendChild(a);
+
+        tr.appendChild(td);
+
+
+
+
+
+        parent.appendChild(tr)
+
+    },
     addSubjectAndGrade:(e,index)=>{
         const parent = document.getElementById(e);
 
