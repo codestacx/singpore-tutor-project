@@ -1,3 +1,3 @@
 Please click the link to verify your account.
 
-<a href="{{route('tutor.email-verification',['email'=>$email,'token'=>$token])}}">Verify</a>
+<a href="{{route('site.email-verification',['email'=>$email,'token'=>$token])}}">Verify</a>

@@ -1,5 +1,8 @@
 var ids = [];
-var index = 0;
+var index = 1;
+var exp_index = 1;
+var priv_exp_index=1;
+var subject_and_grade = 0;
 var commonServer = {
     toggleExperienceForm:(e)=>{
         const el = document.getElementById('moe_school_experience');
@@ -17,7 +20,7 @@ var commonServer = {
             (e.parentNode.parentNode).remove();
         }
     },
-    addCourseMajor:(e)=>{
+    addCourseMajor:(e,INDEX)=>{
 
         const parent = document.getElementById(e);
         const tr = document.createElement('tr');
@@ -29,7 +32,7 @@ var commonServer = {
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Course/Major Title";
-        input.name="course_name[]";
+        input.name="course_name["+INDEX+"][]";
 
 
         td.appendChild(input);
@@ -90,7 +93,7 @@ var commonServer = {
         e.querySelector('#'+section).style.display = '';
     },
 
-    addCollapseSection:(parent)=>{
+    addCollapseSection:(parent,i = null)=>{
 
 
 
@@ -114,11 +117,15 @@ var commonServer = {
 
         const obj = ids[ids.length-1];
 
+        if(i !== null){
+            index = i;
+        }
         $.ajax({
             url:config['card.load'],
             data:{cardid:obj.cardid,parent:obj.parent,index:index},
             dataType:'html',
             success:function (response) {
+                console.log(response)
                 const spn = document.createElement('span');
                 spn.id = obj.span;
 
@@ -128,6 +135,7 @@ var commonServer = {
         })
 
         index+=1;
+        subject_and_grade+=1;
 
 
 
@@ -153,7 +161,8 @@ var commonServer = {
         const td = document.createElement('td');
 
     },
-    addSubjectAndGrade:(e)=>{
+    subject_and_grade:1,
+    addSubjectAndGrade:(e,index)=>{
         const parent = document.getElementById(e);
 
         const tr = document.createElement('tr');
@@ -166,7 +175,7 @@ var commonServer = {
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Subject";
-        input.name="subject[]";
+        input.name="subject["+index+"][]";
 
 
         td.appendChild(input);
@@ -177,7 +186,7 @@ var commonServer = {
         input = document.createElement('input');
         input.classList.add("form-control");
         input.placeholder="Grade";
-        input.name="grade[]";
+        input.name="grade["+index+"][]";
 
         td.appendChild(input);
         tr.appendChild(td);
@@ -204,6 +213,36 @@ var commonServer = {
 }
 
 
+var preferenceServer = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#prefernce_form');
+        var formData = new FormData(form);
+
+        formData.append('action','preferences')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    }
+}
 var BasicInfo = {
     submitFormData:()=>{
         var form = document.querySelector('form#basic_info_form');
@@ -236,73 +275,152 @@ var BasicInfo = {
 }
 
 var Education = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#education_form');
+        var formData = new FormData(form);
 
+        formData.append('action','educational-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    }
 }
 
 
 var Experience = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#experience_form');
+        var formData = new FormData(form);
+
+        formData.append('action','experience-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    },
     addAnotherMoeExperienceLevelRow:(e)=>{
+
         const element = document.getElementById(e);
+        // const html ='    <tr>\n' +
+        //     '                        <td>\n' +
+        //     '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
+        //     '                                <option disabled selected> Level</option>\n' +
+        //     '                            </select>\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '                        <td>\n' +
+        //     '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
+        //     '                        </td>\n' +
+        //     '                    </tr>';
 
-        const html ='    <tr>\n' +
-            '                        <td>\n' +
-            '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
-            '                                <option disabled selected> Level</option>\n' +
-            '                            </select>\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '                        <td>\n' +
-            '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
-            '                        </td>\n' +
-            '                    </tr>';
 
-        element.querySelector('tbody tr').insertAdjacentHTML('afterend',html)
+        $.ajax({
+            url:config['get-experience-row'],
+            type:'GET',
+            data:{action:'experience-info',index:exp_index,row:'moe'},
+            dataType:'html',
+            success:function(response){
+                element.querySelector('tbody tr').insertAdjacentHTML('afterend',response);
+                $('.selectpicker').selectpicker();
+                exp_index+=1;
+            }
+        })
+
+
     },
     addAnotherPrivateExperienceLevelRow:(e)=>{
         const element = document.getElementById(e);
-        const html ='    <tr>\n' +
-            '                        <td>\n' +
-            '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
-            '                                <option disabled selected> Level</option>\n' +
-            '                            </select>\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '\n' +
-            '\n' +
-            '                        <td>\n' +
-            '                            <input type="text" class="form-control" name="" id="" />\n' +
-            '                        </td>\n' +
-            '                        <td>\n' +
-            '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
-            '                        </td>\n' +
-            '                    </tr>';
+        $.ajax({
+            url:config['get-experience-row'],
+            type:'GET',
+            data:{action:'experience-info',index:priv_exp_index,row:'private'},
+            dataType:'html',
+            success:function(response){
+                element.querySelector('tbody tr').insertAdjacentHTML('afterend',response);
+                $('.selectpicker').selectpicker();
+                priv_exp_index+=1;
+            }
+        })
+        // const html ='    <tr>\n' +
+        //     '                        <td>\n' +
+        //     '                            <select name="" id="" class="custom-select custom-select-sm">\n' +
+        //     '                                <option disabled selected> Level</option>\n' +
+        //     '                            </select>\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="Subject level to see Subjects"/>\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '\n' +
+        //     '\n' +
+        //     '                        <td>\n' +
+        //     '                            <input type="text" class="form-control" name="" id="" />\n' +
+        //     '                        </td>\n' +
+        //     '                        <td>\n' +
+        //     '                           <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>\n' +
+        //     '                        </td>\n' +
+        //     '                    </tr>';
 
         element.querySelector('tbody tr').insertAdjacentHTML('afterend',html)
     }
@@ -311,11 +429,39 @@ var Experience = {
 
 
 var Document = {
+    submitFormData:()=>{
+        var form = document.querySelector('form#document_form');
+        var formData = new FormData(form);
+
+        formData.append('action','document-info')
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        $.ajax({
+            url:config['update-info'],
+            type:'POST',
+            dataType:'JSON',
+            data:formData,
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success:function(response){
+                console.log(response)
+            }
+        })
+    },
     addCerticateFieldRow:(e)=>{
         const element = document.getElementById(e);
         const html = ' <tr>\n' +
             '                    <td>\n' +
-            '                        <input type="file" class="form-control"/>\n' +
+            '                        <input type="file" name="certificates[]" class="form-control"/>\n' +
             '                    </td>\n' +
             '                    <td>\n' +
             '                        Empty\n' +
@@ -335,7 +481,7 @@ var Document = {
         const element = document.getElementById(e);
         const html = ' <tr>\n' +
             '                    <td>\n' +
-            '                        <input type="file" class="form-control"/>\n' +
+            '                        <input type="file" name="supported_documents[]" class="form-control"/>\n' +
             '                    </td>\n' +
             '                    <td>\n' +
             '                        Empty\n' +

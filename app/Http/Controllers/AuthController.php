@@ -103,10 +103,14 @@ class AuthController extends Controller
     }
 
 
-    public function verify_email(Request $request,$email = false, $token = false){
-        if(!$email || !$token){
-            abort(404);
-        }
+    public function verify_email(Request $request){
+        $request = (object)$request->all();
+
+        $email  = $request->email;
+        $token = $request->token;
+
+
+
 
         $count = DB::table('verificationlinks')->where([
             'email'=>$email,
@@ -120,6 +124,10 @@ class AuthController extends Controller
                 'email_verified_at'=>Carbon::now(),
                 'active_status'=>1
             ]);
+
+            return redirect()->route('site.user.login')->with('success','Email Verified Successfully');
+        }else{
+            abort(403,'Bad Request');
         }
 
     }

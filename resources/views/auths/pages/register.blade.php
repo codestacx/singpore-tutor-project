@@ -5,6 +5,14 @@
 @endsection
 @section('content')
 
+<?php
+//     //print_r($user);
+// $ac="muhammad.nabeel@bnu.edu.pk";
+// $user = explode($ac,"@");
+// echo $user['0'];
+?>
+
+{{-- <img src="{{$user['picture']}}"> --}}
   <div class="container">
 
        <div class="row">

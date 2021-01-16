@@ -32,6 +32,9 @@ Route::prefix('/')->name('site.')->group(function(){
     Route::match(['get','post'],'update-info/{action?}',[TutorController::class,'registerationForm'])->name('update_info');
     Route::match(['get','post'],'tutor/login/',[AuthController::class,'login'])->name('user.login');
 
+    Route::get('/verify_email/{email?}/{token?}',[AuthController::class,'verify_email'])->name('email-verification');
+
+
 });
 
 Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
@@ -70,6 +73,8 @@ Route::get('/auth/redirect', function () {
 });
 
 
+
+
 Route::get('/testing',function(){
     //   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
         return view('auths.pages.login');
@@ -81,9 +86,9 @@ Route::get('/tutor/email-verification/{email}/{token}',function($email,$token){
 })->name('tutor.email-verification');
 
 
-Route::get('/update-info/load-card',[TutorController::class,'loadCard'])->name('load-card');
+Route::get('/education/load-card',[TutorController::class,'loadCard'])->name('load-card');
 
-
+Route::get('/experience/getrow',[TutorController::class,'getAcademicExperienceRow'])->name('get-experience-row');
 
 
 /* Admin Routes */
@@ -101,8 +106,9 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
 
 
 populateRoutes([
-    'card.load'=>url('/update-info/load-card'),
-    'update-info'=>url('/dashboard/update-info')
+    'card.load'=>url('/education/load-card'),
+    'update-info'=>url('/dashboard/update-info'),
+    'get-experience-row'=>url('/experience/getrow')
 ]);
 
 
