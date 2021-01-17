@@ -53,7 +53,8 @@ Route::prefix('dashboard')
 
         Route::match(['get','post'],'tutor/basic-info',[TPC::class,'updateBasicInformation'])->name('profile.basic_info');
         Route::match(['get','post'],'tutor/education-info',[TPC::class,'updateEducationInformation'])->name('profile.education_info');
-
+        Route::post('tutor/education-info/timeline',[TPC::class,'addNewEducationTimeline'])->name('profile.education_info.timeline');
+        Route::match(['get','post'],'tutor/experience-info/{action?}',[TPC::class,'updateExperienceInformation'])->name('profile.experience_info');
 
         Route::get('',[TutorController::class,'index'])->name('dashboard');
         Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
@@ -82,13 +83,13 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
 });
 
 
-populateRoutes([
-    'card.load'=>url('/education/load-card'),
-    'update-info'=>url('/dashboard/update-info'),
-    'get-experience-row'=>url('/experience/getrow'),
-    'tutor.request.row'=>url('/tutor-request/row'),
-    'tutor.request'=>url('tutor/request')
-]);
+//populateRoutes([
+//    'card.load'=>url('/education/load-card'),
+//    'update-info'=>url('/dashboard/update-info'),
+//    'get-experience-row'=>url('/experience/getrow'),
+//    'tutor.request.row'=>url('/tutor-request/row'),
+//    'tutor.request'=>url('tutor/request')
+//]);
 
 
 

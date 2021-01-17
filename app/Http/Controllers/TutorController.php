@@ -119,18 +119,21 @@ class TutorController extends Controller
         ob_start();
         ?>
 
-        <link rel="stylesheet" href="<?= public_path('dist/css/bootstrap-select.css') ?>">
 
         <?php if($request->row != 'private'):?>
         <tr>
             <td>
-                <select name="level[]" id="" class="custom-select custom-select-sm">
+                <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
+            </td>
+            <td class="">
+                <select name="level[]" class="form-control sl-form-control">
+                    <option selected disabled>Level </option>
                     <?php foreach($levels as $level):?>
                         <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
 
                     <?php endforeach;?>
-                </select>
-            </td>
+
+                </select></td>
 
             <td>
                 <select name="subjects[<?=$request->index?>][]"  class="selectpicker show-menu-arrow" multiple >
@@ -141,56 +144,44 @@ class TutorController extends Controller
             </td>
 
             <td>
-                <input type="text"  class="form-control" name="school[]" id="" />
+                <input type="text" style="width: 150px;"  name="school[]" id="" />
             </td>
 
-            <td>
-                <input type="text" class="form-control" name="years_taught[]" id="" />
-            </td>
+            <td class=""><input name="years_taught[]" type="text"  style="width: 60px;"/> </td>
 
+            <td class=""><input  name="last_taught[]" type="text" style="width: 60px;" /></td>
 
-            <td>
-                <input type="text" class="form-control" name="last_taught[]" id="" />
-            </td>
-            <td>
-                <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
-            </td>
         </tr>
         <?php else:?>
             <tr>
-                <td>
-                    <select name="private_level[]" id="" class="custom-select custom-select-sm">
-                        <?php foreach($levels as $level):?>
-                            <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
+            <td>
+                <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
+            </td>
+            <td class="">
+                <select name="private_level[]" class="form-control sl-form-control">
+                    <option selected disabled>Level </option>
+                    <?php foreach($levels as $level):?>
+                        <option value="<?php echo $level->id?>"><?=$level->level_title?></option>
 
-                        <?php endforeach;?>
-                    </select>
-                </td>
+                    <?php endforeach;?>
 
-                <td>
-                    <select name="private_subjects[<?=$request->index?>][]"  class="selectpicker show-menu-arrow" multiple >
-                        <?php foreach($subjects as $subject):?>
-                            <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
-                        <?php endforeach;?>
-                    </select>
-                </td>
+                </select></td>
 
-                <td>
-                    <input type="text"  class="form-control" name="private_school[]" id="" />
-                </td>
+            <td>
+                <select name="private_subjects[<?=$request->index?>][]"  class="selectpicker show-menu-arrow" multiple >
+                    <?php foreach($subjects as $subject):?>
+                        <option value="<?=$subject->subject_id?>"><?=$subject->subject_title?></option>
+                    <?php endforeach;?>
+                </select>
+            </td>
 
-                <td>
-                    <input type="text" class="form-control" name="private_years_taught[]" id="" />
-                </td>
+            <td>
+                <input type="text" style="width: 150px;"  name="private_school[]" id="" />
+            </td>
 
+            <td class=""><input name="private_years_taught[]" type="text"  style="width: 60px;"/> </td>
 
-                <td>
-                    <input type="text" class="form-control" name="private_last_taught[]" id="" />
-                </td>
-                <td>
-                    <i class="fa fa-trash" style="cursor:pointer;color: #b21f2d" onclick="this.parentNode.parentNode.remove()"></i>
-                </td>
-            </tr>
+            <td class=""><input  name="private_last_taught[]" type="text" style="width: 60px;" /></td>
         <?php endif;?>
         <?php
         return ob_get_clean();

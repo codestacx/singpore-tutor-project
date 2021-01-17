@@ -9,3 +9,4 @@
 <link rel="stylesheet" href="{{asset('static/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('static/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('static/css/dashboard.css')}}">
+@yield('links')

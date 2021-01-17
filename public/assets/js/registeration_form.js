@@ -13,6 +13,7 @@ var commonServer = {
         }
     },
 
+
     removeMajorCourse:(e)=>{
         if(e.target ){
             (e.target.parentNode.parentNode.parentNode.remove())
@@ -69,6 +70,10 @@ var commonServer = {
 
 
     },
+
+
+
+
     onChangeSchoolLevel:(e,parent)=>{
         const p  = document.getElementById(parent)
         if([6,7,8].includes(parseInt(e.value))){
@@ -142,15 +147,9 @@ var commonServer = {
 
     },
 
-    testi:()=>{
-        $.ajax({
-            url:config['card.load'],
-            data:{cardid:obj.cardid,parent:obj.parent,index:index},
-            dataType:'html',
-            success:function (response) {
-                document.getElementById(parent).innerHTML+=response
-            }
-        })
+    testi:(a,b,c,d)=>{
+        console.log(a,b,c,d);
+        document.getElementById('testing').value = a;
     },
 
     removeCollapseSection:(current)=>{
@@ -163,6 +162,52 @@ var commonServer = {
     },
     subject_and_grade:1,
 
+    addNewMajor:(e)=>{
+        const parent = e.parentNode.parentNode.parentNode;
+
+        const tr = document.createElement('tr');
+
+        var td;
+        var input;
+
+        td = document.createElement('td');
+
+        input = document.createElement('input');
+        input.classList.add("form-control");
+        input.placeholder="Subject";
+        input.name="course_name[]";
+
+
+        td.appendChild(input);
+        tr.appendChild(td);
+
+
+
+
+
+        td = document.createElement('td');
+
+        var a = document.createElement('a');
+
+        a.href='javascript:;';
+        a.classList.add("sl-icon","sl-delbtn");
+
+        a.addEventListener('click',(e)=>{console.log(e.target.parentNode.parentNode.parentNode.remove())})
+        var i = document.createElement('i');
+        i.classList.add("fas","fa-trash");
+        i.style.marginTop='10px';
+        i.style.marginLeft='15px';
+
+
+        a.appendChild(i);
+
+        td.appendChild(a);
+
+        tr.appendChild(td);
+
+
+        parent.appendChild(tr)
+    },
     addNewSubjectAndGrade:(e)=>{
 
         const parent = e.parentNode.parentNode.parentNode;
@@ -335,11 +380,9 @@ var BasicInfo = {
 }
 
 var Education = {
-    submitFormData:()=>{
-        var form = document.querySelector('form#education_form');
+    submitFormData:(parent)=>{
+        var form = document.getElementById(parent).querySelector('form');
         var formData = new FormData(form);
-
-        formData.append('action','educational-info')
 
         $(function() {
             $.ajaxSetup({
@@ -362,11 +405,44 @@ var Education = {
                 console.log(response)
             }
         })
-    }
+    },
+    // submitFormData:()=>{
+    //     var form = document.querySelector('form#education_form');
+    //     var formData = new FormData(form);
+    //
+    //     formData.append('action','educational-info')
+    //
+    //     $(function() {
+    //         $.ajaxSetup({
+    //             headers: {
+    //                 'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+    //             }
+    //         });
+    //     });
+    //
+    //     $.ajax({
+    //         url:config['update-info'],
+    //         type:'POST',
+    //         dataType:'JSON',
+    //         data:formData,
+    //         processData:false,
+    //         contentType:false,
+    //         cache:false,
+    //         async:false,
+    //         success:function(response){
+    //             console.log(response)
+    //         }
+    //     })
+    // }
 }
 
 
 var Experience = {
+
+
+    addAnotherRow:()=>{
+      alert('working');
+    },
     submitFormData:()=>{
         var form = document.querySelector('form#experience_form');
         var formData = new FormData(form);

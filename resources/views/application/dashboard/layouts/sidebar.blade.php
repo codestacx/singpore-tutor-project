@@ -41,6 +41,11 @@
                                     <i class="ti-dashboard"></i><span>Educational Information</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('tutor.profile.experience_info')}}">
+                                    <i class="ti-dashboard"></i><span>Experience Information</span>
+                                </a>
+                            </li>
                             <li class="menu-item-has-children page_item_has_children sl-active">
                                 <a href="javascript:void(0);" class="sl-notification sl-noticolor1">
                                     <i class="ti-star"></i><span>Manage Appointments</span>
