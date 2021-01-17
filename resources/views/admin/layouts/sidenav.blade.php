@@ -24,7 +24,7 @@
                     </ul>
                 </li>
 
-                <li><a href="#formsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>Grades </a>
+                <li><a href="{{route('admin.grades',['action'=>'create'])}}" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>Grades </a>
                     <ul id="formsDropdown" class="collapse list-unstyled ">
                         <li><a href="{{route('admin.grades')}}">View Grades </a></li>
                         <li><a href="{{route('admin.grades',['action'=>'create'])}}">Add Grade</a></li>

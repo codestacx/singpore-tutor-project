@@ -62,32 +62,21 @@ class AdminController extends Controller
         $table = DB::table('grades');
         $levels = Level::all();
 
-        if($request->method() == 'POST'){
+        $grades = $table->join('levels','levels.id','=','grades.level_id')->get();
 
+        if($request->method() == 'POST'){
             $formData = [
                 'grade_title'=>$request->title,
                 'level_id'=>$request->level
             ];
-
-
-
             if(isset($request->grade)){
-
                 $table->where('grade_id',$request->grade)->update($formData);
                 return redirect()->route('admin.grades')->with('success','Grade updated Successfully');
             }
-
-
             $table->insert($formData);
             return redirect()->route('admin.grades')->with('success','Grade Added Successfully');
-
-            //request is hit either from post or update form
-
         }
-
-
         if(!is_null($grade)){
-
 
             if($action == 'delete'){
                 //delete grade
@@ -99,18 +88,11 @@ class AdminController extends Controller
                 //update grade & save
                 $grade = $table->where('grade_id',$grade)->first();
 
-                return view('admin.grades.create',compact('grade','levels'));
+                return view('admin.grades.create',compact('grades','grade','levels'));
             }
 
         }
-
-
-        if($action == 'create'){
-            return view('admin.grades.create',compact('levels'));
-        }
-        $grades = $table->join('levels','levels.id','=','grades.level_id')->get();
-        return view('admin.grades.index',compact('grades'));
-
+        return view('admin.grades.create',compact('grades','levels'));
 
     }
 

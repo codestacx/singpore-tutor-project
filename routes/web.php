@@ -40,7 +40,6 @@ Route::prefix('/')->name('site.')->group(function(){
 Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
 
 
-
 Route::prefix('dashboard')
     ->name('tutor.')->middleware('tutor')->group(function(){
 
