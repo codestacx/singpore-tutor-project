@@ -600,14 +600,7 @@ var Document = {
             '                        <input type="file" name="certificates[]" class="form-control"/>\n' +
             '                    </td>\n' +
             '                    <td>\n' +
-            '                        Empty\n' +
-            '                    </td>\n' +
-            '                    <td>\n' +
             '                         <i onclick="this.parentNode.parentNode.remove()" class="fa fa-trash" style="color: #b21f2d;cursor:pointer;"></i>\n' +
-            '                    </td>\n' +
-            '\n' +
-            '                    <td>\n' +
-            '                        <span> <i onclick="Document.addCerticateFieldRow(\'academic_certificates_table\')" class="fa fa-plus" style="cursor: pointer;color: #00d69f"></i> </span>\n' +
             '                    </td>\n' +
             '                </tr>';
 
@@ -619,16 +612,11 @@ var Document = {
             '                    <td>\n' +
             '                        <input type="file" name="supported_documents[]" class="form-control"/>\n' +
             '                    </td>\n' +
-            '                    <td>\n' +
-            '                        Empty\n' +
-            '                    </td>\n' +
+
             '                    <td>\n' +
             '                         <i onclick="this.parentNode.parentNode.remove()" class="fa fa-trash" style="color: #b21f2d;cursor:pointer;"></i>\n' +
             '                    </td>\n' +
-            '\n' +
-            '                    <td>\n' +
-            '                        <span> <i onclick="Document.addCerticateFieldRow(\'academic_certificates_table\')" class="fa fa-plus" style="cursor: pointer;color: #00d69f"></i> </span>\n' +
-            '                    </td>\n' +
+
             '                </tr>';
 
         element.querySelector('tbody tr').insertAdjacentHTML('afterend',html);

@@ -3,30 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Citizenship;
+use App\Models\Document;
 use App\Models\Grade;
 use App\Models\Instrument;
 use App\Models\Level;
 use App\Models\Location;
 use App\Models\MoeTutorSpecification;
+use App\Models\Preference;
 use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\SchoolType;
 use App\Models\StudentCategory;
 use App\Models\Subject;
+use App\Models\TutorTaught;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 
 class UpdateTutorProfileController extends Controller{
 
+    public function __construct(){
+
+        $this->middleware(function ($request,$next){
+           $user_id = (session('tutor_id'));
+            $tutor = User::where([
+                'id' => $user_id
+            ])->with('basicinfo')->first();
+
+            View::share(['tutor'=>$tutor]);
+            return ($next)($request);
+        });
+
+    }
     public function updateBasicInformation(Request $request){
+
 
         if($request->method() == 'POST'){
             //update the basic information
 
+
+            $image = uploadFile([$request->file],'profiles/'.$request->fullname.'/')[0];
             $user = User::find(session('tutor_id'));
             $user->name = $request->fullname;
             $user->save();
@@ -34,6 +54,7 @@ class UpdateTutorProfileController extends Controller{
             session()->put('tutor_name',$user->name);
             $now = Carbon::now();
             $formData = [
+                'profile_image'=>$image,
                 'user_id'=>$user->id,
                 'gender'=>$request->gender,
                 'mobile'=>$request->mobile,
@@ -321,7 +342,53 @@ class UpdateTutorProfileController extends Controller{
     public function updatePreferences(Request $request){
 
         if($request->method() == 'POST'){
-            dd($request->all());
+            $now = Carbon::now();
+            $formData = [
+                'availability_at_student_home'=>isset($request->availability_at_student_home) ? $request->availability_at_student_home:0,
+                'availability_at_tutor_home'=>isset($request->availability_at_tutor_home) ? $request->availability_at_tutor_home:0,
+                'tutor_home_postal'=>$request->tutor_home_postal,
+                'class_criteria'=>$request->class_criteria,
+                'description'=>$request->description,
+                'location'=>json_encode($request->location),
+                'lower_primary_rate'=>$request->lower_primary_rate,
+                'upper_primary_rate'=>$request->upper_primary_rate,
+                'lower_secondary_rate'=>$request->lower_secondary_rate,
+                'uper_secondary_rate'=>$request->uper_secondary_rate,
+                'jc_rate'=>$request->jc_rate,
+                'created_at'=>$now,
+                'updated_at'=>$now,
+                'user_id'=>session('tutor_id')
+            ];
+
+
+            DB::table('preferences')->insert($formData);
+            $prefernce_id = DB::getPdo()->lastInsertId();
+            $records = [];
+
+            $iterator  = 0;
+            foreach ($request->levels as $key=>$level){
+
+                $KEY = explode('_',$key);
+
+                $grade_id = $KEY[1];
+                $level_id = $KEY[2];
+
+
+                foreach ($level as $subject){
+                    $records[$iterator++] = array(
+                        'preference_id'=>$prefernce_id,
+                        'level'=>$level_id,
+                        'grade'=>$grade_id,
+                        'subject'=>$subject,
+                        'created_at'=>$now,
+                        'updated_at'=>$now
+                    );
+
+                }
+            }
+
+            $id = TutorTaught::insert($records);
+           return redirect()->route('tutor.profile.preference_info')->with('success','Preferences Updated');
         }
 
 
@@ -332,10 +399,46 @@ class UpdateTutorProfileController extends Controller{
         $others_grades = Grade::where(['level_id'=>4])->get();
         $subjects = Subject::all();
 
+        $preferences = Preference::where([
+            'user_id'=>session('tutor_id')
+        ])->count();
+
         $templateData = [
             'locations'=>$locations,
-            'subjects'=>$subjects
+            'subjects'=>$subjects,
+            'primary_grades'=>$primary_grades,
+            'secondary_grades'=>$secondary_grades,
+            'jc_grades'=>$jc_grades,
+            'others_grades'=>$others_grades,
+            'preference' =>$preferences > 0 ? true:false
         ];
         return view('application.dashboard.preferences',$templateData);
+    }
+
+
+    public function updateDocuments(Request $request){
+        if($request->method() == 'POST'){
+            $user = User::find(session('tutor_id'));
+            $formData = [
+                'certificates'=>json_encode(uploadFile($request->certificates,'tutor/'.$user->name.'/documents')),
+                'proof_citizenship'=>uploadFile([$request->proof_citizenship],'tutor/'.$user->name.'/documents')[0],
+                'photo_id'=>uploadFile([$request->photo_id],'tutor/'.$user->name.'/documents')[0],
+                'recent_photo'=>uploadFile([$request->recent_photo],'tutor/'.$user->name.'/documents')[0],
+                'supported_documents'=>json_encode(uploadFile($request->supported_documents,'tutor/'.$user->name.'/documents')),
+                'user_id'=>$user->id
+            ];
+
+            DB::table('documents')->insert($formData);
+            DB::table('users')->where(['id'=>session('tutor_id')])
+                ->update(['profile_updated'=>1]);
+
+            return redirect()->route('tutor.profile.experience_info')->with('success','Document Information Added Successfully');
+        }
+
+        $document = Document::where([
+            'user_id'=>session('tutor_id')
+        ])->count();
+        $document = $document > 0 ? true:false;
+        return view('application.dashboard.documents',compact('document'));
     }
 }

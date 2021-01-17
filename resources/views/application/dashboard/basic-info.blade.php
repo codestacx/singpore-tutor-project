@@ -2,6 +2,7 @@
 @section('title','Tutor | Basic Information')
 @section('content')
 
+
     <div class="col-lg-8 col-xl-9">
         <div class="sl-dashboardbox">
             <div class="sl-dashboardbox__title">
@@ -9,7 +10,7 @@
             </div>
             <div class="sl-dashboardbox__content sl-manageTimeSlots">
                 @php generateFlashMessage();@endphp
-                <form class="sl-manageTimeSlots__form sl-form" method="POST" action="{{route('tutor.profile.basic_info')}}">
+                <form class="sl-manageTimeSlots__form sl-form" method="POST" action="{{route('tutor.profile.basic_info')}}" enctype="multipart/form-data">
                    @csrf
                     <fieldset>
                         <div class="sl-form__wrap">
@@ -342,10 +343,21 @@
                                 </label>
                             </div>
 
+                            <div class="form-group">
+                                <div class="sl-manageServices__upload">
+                                    <div class="sl-manageServices__uploadarea">
+                                        <span><i class="fas fa-cloud-upload-alt"></i></span>
+                                        <h5>Profile Image</h5>
+                                        <p>Drop image here or click <label for="file1"><span><input id="file1" required type="file" name="file"> upload</span></label> <i class="far fa-question-circle toltip-content tipso_style" data-tipso="name"></i></p>
+                                        <svg>
+                                            <rect width="100%" height="204px"></rect>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group sl-manageTimeSlots__btn">
                                 <button type="submit" class="btn sl-btn">Submit</button>
-
                             </div>
                         </div>
                     </fieldset>
