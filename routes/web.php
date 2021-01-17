@@ -56,6 +56,8 @@ Route::prefix('dashboard')
         Route::post('tutor/education-info/timeline',[TPC::class,'addNewEducationTimeline'])->name('profile.education_info.timeline');
         Route::match(['get','post'],'tutor/experience-info/{action?}',[TPC::class,'updateExperienceInformation'])->name('profile.experience_info');
 
+        Route::match(['get','post'],'tutor/preferences',[TPC::class,'updatePreferences'])->name('profile.preference_info');
+
         Route::get('',[TutorController::class,'index'])->name('dashboard');
         Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
         Route::get('logout',[TutorController::class,'logout'])->name('logout');

@@ -867,6 +867,7 @@ class Helper {
                 <label>What can students expect for classes at my location:</label>
                 <textarea name="class_criteria" class="form-control"></textarea>
                 <small>e.g. Group size? Material cost? Are trial lessons free/chargeable? Classroom with whiteboard? etc</small>
+
             </div>
         </div>
 

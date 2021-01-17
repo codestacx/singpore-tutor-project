@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Citizenship;
+use App\Models\Grade;
 use App\Models\Instrument;
 use App\Models\Level;
+use App\Models\Location;
 use App\Models\MoeTutorSpecification;
 use App\Models\Qualification;
 use App\Models\Race;
@@ -312,5 +314,28 @@ class UpdateTutorProfileController extends Controller{
 
 
         return view('application.dashboard.experience-info',$templateData);
+    }
+
+
+
+    public function updatePreferences(Request $request){
+
+        if($request->method() == 'POST'){
+            dd($request->all());
+        }
+
+
+        $locations = Location::with('places')->get();
+        $primary_grades = Grade::where(['level_id'=>1])->get();
+        $secondary_grades = Grade::where(['level_id'=>2])->get();
+        $jc_grades = Grade::where(['level_id'=>3])->get();
+        $others_grades = Grade::where(['level_id'=>4])->get();
+        $subjects = Subject::all();
+
+        $templateData = [
+            'locations'=>$locations,
+            'subjects'=>$subjects
+        ];
+        return view('application.dashboard.preferences',$templateData);
     }
 }
