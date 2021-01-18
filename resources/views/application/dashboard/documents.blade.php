@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-            <form method="POST" action="{{route('tutor.profile.experience_info')}}">
+            <form method="POST" action="{{route('tutor.profile.document_info')}}" enctype="multipart/form-data"  id="document_form">
                 @csrf
                 <input type="submit"/>
                 <div class="sl-dashboardbox">
@@ -77,7 +77,7 @@
                                 <div class="sl-manageServices__uploadarea">
                                     <span><i class="fas fa-cloud-upload-alt"></i></span>
                                     <h5>Clearer Picture to identify your identity</h5>
-                                    <p>Drop image here or click <label for="file1"><span><input id="file1" required type="file" name="photo_id"> upload</span></label> <i class="far fa-question-circle toltip-content tipso_style" data-tipso="name"></i></p>
+                                    <p>Drop image here or click <label for="file2"><span><input id="file2" required type="file" name="photo_id"> upload</span></label> <i class="far fa-question-circle toltip-content tipso_style" data-tipso="name"></i></p>
                                     <svg>
                                         <rect width="100%" height="204px"></rect>
                                     </svg>
@@ -96,7 +96,7 @@
                                 <div class="sl-manageServices__uploadarea">
                                     <span><i class="fas fa-cloud-upload-alt"></i></span>
                                     <h5>Most Recent Image</h5>
-                                    <p><label for="file1"><span><input id="file1" required type="file" name="recent_photo"> upload</span></label> <i class="far fa-question-circle toltip-content tipso_style" data-tipso="name"></i></p>
+                                    <p><label for="file3"><span><input id="file3" required type="file" name="recent_photo"> upload</span></label> <i class="far fa-question-circle toltip-content tipso_style" data-tipso="name"></i></p>
                                     <svg>
                                         <rect width="100%" height="204px"></rect>
                                     </svg>
@@ -175,5 +175,21 @@
 
 
 @endsection
-
+<script>
+    function submitForm(){
+        var form = document.querySelector('form#document_form');
+        const formData = new FormData(form);
+        $.ajax({
+            url:"{{route('tutor.profile.document_info')}}",
+            type:'POST',
+            data:formData,
+            processData:false,
+            cache:false,
+            contentType:false,
+            success:function (response) {
+                console.log(response)
+            }
+        })
+    }
+    </script>
 

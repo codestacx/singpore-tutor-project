@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- import modal at the top -->
-    @include('layouts.components.modal',['levels'=>$levels])
+    @include('layouts.components.modal',['levels'=>$levels,'subjects'=> $subjects])
     <!-- modal ends here -->
     <!-- slider starts here -->
     @include('layouts.components.slider')

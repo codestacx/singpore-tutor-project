@@ -32,12 +32,22 @@ class AuthController extends Controller
                 'email'=>$email
             ])->first();
 
+            $isDeactivated = DB::table('deactivates')->where([
+                'user_id'=>$user->id
+            ])->count();
+
+
+
             if($user){
 
 
                 // check if email is already verified
                 if(!Hash::check($password,$user->password)){
                     return redirect()->back()->with('error','Invalid password');
+                }
+
+                if($isDeactivated > 0){
+                    return redirect()->back()->with('error',' Account is  Deactivated !');
                 }
 
                 $request->session()->put('tutor_logged',true);

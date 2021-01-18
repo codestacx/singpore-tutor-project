@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Level;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -12,7 +13,8 @@ class HomeController extends Controller
 {
     public function index(Request $request){
         $levels = Level::with('grades')->get();
-        return view('welcome',compact('levels'));
+        $subjects = Subject::all();
+        return view('welcome',compact('levels','subjects'));
     }
 
 

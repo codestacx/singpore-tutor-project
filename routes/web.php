@@ -34,22 +34,14 @@ Route::prefix('/')->name('site.')->group(function(){
     Route::match(['get','post'],'update-info/{action?}',[TutorController::class,'registerationForm'])->name('update_info');
     Route::match(['get','post'],'tutor/login/',[AuthController::class,'login'])->name('user.login');
     Route::get('/verify_email/{email?}/{token?}',[AuthController::class,'verify_email'])->name('email-verification');
-
     Route::post('tutor/request',[TutorController::class,'tutor_request'])->name('tutor.request');
 
 });
 
-Route::get('/testing',function(){
-    return view('application.dashboard.index');
-});
-
-
-
-
-
 
 Route::prefix('dashboard')
     ->name('tutor.')->middleware('tutor')->group(function(){
+        Route::get('',[TutorController::class,'index'])->name('dashboard');
 
         Route::match(['get','post'],'tutor/basic-info',[TPC::class,'updateBasicInformation'])->name('profile.basic_info');
         Route::match(['get','post'],'tutor/education-info',[TPC::class,'updateEducationInformation'])->name('profile.education_info');
@@ -58,8 +50,10 @@ Route::prefix('dashboard')
 
         Route::match(['get','post'],'tutor/preferences',[TPC::class,'updatePreferences'])->name('profile.preference_info');
         Route::match(['get','post'],'tutor/documents',[TPC::class,'updateDocuments'])->name('profile.document_info');
-        Route::get('',[TutorController::class,'index'])->name('dashboard');
         Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
+
+        Route::match(['get','post'],'account-privacy/{action?}',[TPC::class,'account_privacy'])->name('account.privacy');
+
         Route::get('logout',[TutorController::class,'logout'])->name('logout');
 });
 

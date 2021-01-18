@@ -1,10 +1,13 @@
 @section('links')
     <link rel="stylesheet" href="{{asset('style/modal-tutor.css')}}"/>
+
+    <link rel="stylesheet" href="{{asset('dist/css/bootstrap-select.css')}}">
     <meta name="_token" content="{{ csrf_token() }}">
+
 @endsection
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
+    <div class="modal-dialog modal-confirm" style="max-width: none;width: 600px">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <div class="icon-box">
@@ -49,8 +52,8 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg-12 col-md-12" id="add_level_grade">
-                                            <div class="form-group">
+                                        <div class="col-sm-12 col-lg-12 col-md-12" id="add_level_grade" style="display: flex">
+                                            <div class="form-group" style="flex: 1">
                                                 <select class="form-control" name="level_grade[grades][]">
                                                    @foreach($levels as $level)
                                                        <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f">{{$level->level_title}}</h5></option>
@@ -60,7 +63,13 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            <div class="form-group" style="flex: 3">
+                                                <select name="subjects[0][]"  class="selectpicker show-menu-arrow" style="" multiple>
+                                                    @foreach($subjects as $subject)
+                                                    <option value="{{$subject->subject_id}}">{{$subject->subject_title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
                                         </div>
 
@@ -68,11 +77,11 @@
 
                                         <div class="col-sm-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                 <a href="javascript:;" onclick="Server.addAnotherTutorRequestFormRow()"> <i class="fa fa-plus"></i> &nbsp;&nbsp; Add Another Student</a>
+                                                 <a href="javascript:;" onclick="addAnotherTutorRequestFormRow({{json_encode($levels)}})"> <i class="fa fa-plus"></i> &nbsp;&nbsp; Add Another Student</a>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button type="submit"   class="btn clever-btn w-100">Find Tutor</button>
+                                            <button type="submit"   class="btnn clever-btn w-100">Find Tutor</button>
                                         </div>
                                     </div>
                                 </form>
@@ -90,6 +99,20 @@
 
 @section('scripts')
     <script>
+        function addAnotherTutorRequestFormRow(options){
+            var select = '<div class="form-group"><select class="form-control" name="level_grade[grades][]">';
 
+
+            options.map(option=>{
+                select+=' <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f">'+option.level_title+'</h5></option>';
+                option.grades.map(grade=>{
+                    select+='<option value="'+grade.grade_id+'">'+grade.grade_title+'</option>';
+                })
+            })
+            select+='</select></div>';
+
+            document.getElementById('add_level_grade').insertAdjacentHTML('beforeend',select)
+        }
     </script>
+    <script src="{{asset('dist/js/bootstrap-select.js')}}"></script>
 @endsection

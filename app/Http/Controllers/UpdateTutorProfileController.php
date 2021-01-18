@@ -20,6 +20,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
@@ -88,7 +89,6 @@ class UpdateTutorProfileController extends Controller{
         $whereClause = ['id'=>session('tutor_id')];
         $tutor = User::where($whereClause)->first();
         $basicInfo = DB::table('basic_infos')->where(['user_id'=>$tutor->id])->first();
-
         $templateData = [
             'races'=>Race::all(),
             'citizenships'=>Citizenship::all(),
@@ -118,12 +118,15 @@ class UpdateTutorProfileController extends Controller{
         if($request->method() == 'POST'){
 
             $category = $request->tutorrole;
+            $now = Carbon::now();
             $formData = [
 
                 'user_id' =>$user,
                 'category'=>$category,
                 'is_nie_trained'=>$request->is_nie_trained,
                 'highest_qualification'=>$request->highest_qualification,
+                'created_at'=>$now,
+                'updated_at'=>$now
 
             ];
 
@@ -135,14 +138,16 @@ class UpdateTutorProfileController extends Controller{
             }
 
             if($educationInfo){
+                $formData['updated_at']=Carbon::now();
                 $table->where($whereClause)->update($formData);
                 return redirect()->back()->with('success','Record Updated Successfully');
             }
 
             $table->insert($formData);
-            return redirect()->back()->with('success','Education Record Added Successfully');
+            return redirect()->route('tutor.profile.education_info')->with('success','Education Record Added Successfully');
 
         }
+
 
         $templateData = [
             'moespecs'=>MoeTutorSpecification::all(),
@@ -150,8 +155,6 @@ class UpdateTutorProfileController extends Controller{
             'qualifications'=>Qualification::all(),
             'student_categories'=>StudentCategory::all(),
             'education'=>$educationInfo
-
-
         ];
 
 
@@ -418,6 +421,7 @@ class UpdateTutorProfileController extends Controller{
 
     public function updateDocuments(Request $request){
         if($request->method() == 'POST'){
+
             $user = User::find(session('tutor_id'));
             $formData = [
                 'certificates'=>json_encode(uploadFile($request->certificates,'tutor/'.$user->name.'/documents')),
@@ -432,7 +436,7 @@ class UpdateTutorProfileController extends Controller{
             DB::table('users')->where(['id'=>session('tutor_id')])
                 ->update(['profile_updated'=>1]);
 
-            return redirect()->route('tutor.profile.experience_info')->with('success','Document Information Added Successfully');
+            return redirect()->route('tutor.profile.document_info')->with('success','Document Information Added Successfully');
         }
 
         $document = Document::where([
@@ -440,5 +444,70 @@ class UpdateTutorProfileController extends Controller{
         ])->count();
         $document = $document > 0 ? true:false;
         return view('application.dashboard.documents',compact('document'));
+    }
+
+
+
+    public function account_privacy(Request $request,$action = null){
+
+        if($request->method() == 'POST'){
+            $password = $request->password;
+            $cpassword = $request->cpassword;
+
+            $compare = $password <=> $cpassword;
+            if($compare != 0){
+                return redirect()->back()->with('error','Password does not match');
+            }
+
+            $table = DB::table('users');
+            $whereClause = ['id'=>session('tutor_id')];
+
+            //do for post request
+            if($request->action == 'change-password'){
+                //change password request
+
+
+                $table
+                    ->where($whereClause)
+                    ->update([
+                        'password'=>Hash::make($request->password),
+                        'updated_at'=>Carbon::now()
+                    ]);
+                return redirect()->back()->with('success','Password updated Successfully');
+            }
+
+
+            if($request->action == 'deactivate-account'){
+                $user = $table->where($whereClause)->first();
+                if(!Hash::check($password,$user->password)){
+                    return redirect()->back()->with('error','Password is not correct');
+                }
+
+
+                $table->where($whereClause)->update([
+                    'active_status'=>false || 0
+                ]);
+
+
+
+                $now = Carbon::now();
+                DB::table('deactivates')->insert([
+                    'reason'=>$request->reason,
+                    'description'=>$request->description,
+                    'user_id'=>session('tutor_id'),
+                    'created_at'=>$now,'updated_at'=>$now
+                ]);
+
+                $request->session()->flush();
+
+                return redirect()->route('site.user.login')->with('error','You account has been deactvated successfully');
+
+            }
+
+
+
+        }
+
+        return view('application.dashboard.account-privacy');
     }
 }

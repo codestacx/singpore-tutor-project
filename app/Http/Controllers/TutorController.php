@@ -18,10 +18,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use function GuzzleHttp\json_encode;
 
 class TutorController extends Controller
 {
+
 
 
     public function index(Request $request){
@@ -36,6 +38,7 @@ class TutorController extends Controller
 
 
     public function tutor_request(Request $request){
+
         $formData = [
           'fname'=>$request->fname,
             'lname'=>$request->lname,

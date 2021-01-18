@@ -57,7 +57,11 @@
                                     <i class="ti-dashboard"></i><span>Documents</span>
                                 </a>
                             </li>
-
+                            <li>
+                                <a href="{{route('tutor.account.privacy')}}">
+                                    <i class="ti-lock"></i><span>Account &amp; Privacy</span>
+                                </a>
+                            </li>
                             <li class="menu-item-has-children page_item_has_children sl-active">
                                 <a href="javascript:void(0);" class="sl-notification sl-noticolor1">
                                     <i class="ti-star"></i><span>Manage Appointments</span>
@@ -107,11 +111,7 @@
                                     <i class="ti-bell"></i><span>Notifications</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="dashboard-accountprivacy.html">
-                                    <i class="ti-lock"></i><span>Account &amp; Privacy</span>
-                                </a>
-                            </li>
+
                             <li>
                                 <a href="index.html">
                                     <i class="ti-key"></i><span>Logout</span>

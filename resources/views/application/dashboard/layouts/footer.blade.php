@@ -8,5 +8,6 @@
 <script src="{{asset('static/js/vendor/owl.carousel.min.js')}}"></script>
 <script src="{{asset('static/js/vendor/jquery.ui.touch-punch.js')}}"></script>
 <script src="{{asset('static/js/main.js')}}"></script>
+<script src="{{asset('static/js/vendor/tinymce/tinymce.min.js%3FapiKey=4cuu2crphif3fuls3yb1pe4qrun9pkq99vltezv2lv6sogci')}}"></script>
 
 @yield('scripts')
