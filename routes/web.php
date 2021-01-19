@@ -39,6 +39,8 @@ Route::prefix('/')->name('site.')->group(function(){
 
 });
 
+Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
+
 
 Route::prefix('dashboard')
     ->name('tutor.')->middleware('tutor')->group(function(){
@@ -55,11 +57,25 @@ Route::prefix('dashboard')
         Route::match(['get','post'],'account-privacy/{action?}',[TPC::class,'account_privacy'])->name('account.privacy');
         Route::get('tutor/notifications',[TPC::class,'notifications'])->name('notifications');
 
-        Route::get('logout',[TutorController::class,'logout'])->name('logout');
+
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/google',function(){
+ $user = Socialite::driver('google')->stateless()->user();
+ return view('auths.pages.register',compact('user'));
 });
 
 
 
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+
+
+Route::get('/update-info/load-card',[TutorController::class,'loadCard'])->name('load-card');
+        Route::get('logout',[TutorController::class,'logout'])->name('logout');
+});
 
 
 Route::get('/education/load-card',[TutorController::class,'loadCard'])->name('load-card');

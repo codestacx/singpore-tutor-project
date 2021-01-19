@@ -30,4 +30,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id'     => '579682619369-vv683kgvvi0h5kqsl7b4923uaasnjm1b.apps.googleusercontent.com',
+        'client_secret' => 'juUFW48u9pMkq8HLk0ec2nvz',
+        'redirect'      => 'http://localhost/singpore-tutor-project/public/google'
+        // 'client_id'     => env('579682619369-vv683kgvvi0h5kqsl7b4923uaasnjm1b.apps.googleusercontent.com'),
+        // 'client_secret' => env('juUFW48u9pMkq8HLk0ec2nvz'),
+        // 'redirect'      => env('http://localhost/singpore-tutor-project/public/google')
+    ],
+
 ];

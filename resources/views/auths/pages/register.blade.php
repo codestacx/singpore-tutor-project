@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 
-    <div class="container">
+  <div class="container">
 
        <div class="row">
            <div class="col-sm">
@@ -79,15 +79,15 @@
                        <div class="social-btn text-center">
                            <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-facebook"></i> Facebook</a>
                            <a href="#" class="btn btn-info btn-lg"><i class="fa fa-twitter"></i> Twitter</a>
-                           <a href="#" class="btn btn-danger btn-lg"><i class="fa fa-google"></i> Google</a>
+                           <a href="{{url('/auth/redirect')}}" class="btn btn-danger btn-lg"><i class="fa fa-google"></i> Google</a>
                        </div>
                        <div class="or-seperator"><b>or</b></div>
                        <div class="form-group">
-                           <input type="text" class="form-control input-sm" name="name" value="atif" placeholder="Your Name" required="required">
+                           <input type="text" class="form-control input-sm" name="name" value="<?php if(isset($user)) { echo $user['name']; }?>" placeholder="Your Name" required="required">
                        </div>
 
                        <div class="form-group">
-                           <input type="email" class="form-control input-lg" name="email" value="abc@gmail.com" placeholder="Email Address" required="required">
+                           <input type="email" class="form-control input-lg" name="email" value="<?php if(isset($user)) { echo $user['email']; }?>" placeholder="Email Address" required="required">
                        </div>
                        <div class="form-group">
                            <input type="password" class="form-control input-lg" name="password" value="atif" placeholder="Password" required="required">
