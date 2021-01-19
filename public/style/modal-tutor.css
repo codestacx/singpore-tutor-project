@@ -55,7 +55,7 @@
 .modal-confirm.modal-dialog {
     margin-top: 80px;
 }
-.modal-confirm .btn, .modal-confirm .btn:active {
+.modal-confirm .btnn, .modal-confirm .btnn:active {
     color: #fff;
     border-radius: 4px;
     background: #eeb711 !important;
@@ -67,15 +67,15 @@
     padding: 6px 20px;
     border: none;
 }
-.modal-confirm .btn:hover, .modal-confirm .btn:focus {
+.modal-confirm .btnn:hover, .modal-confirm .btnn:focus {
     background: #eda645 !important;
     outline: none;
 }
-.modal-confirm .btn span {
+.modal-confirm .btnn span {
     margin: 1px 3px 0;
     float: left;
 }
-.modal-confirm .btn i {
+.modal-confirm .btnn i {
     margin-left: 1px;
     font-size: 20px;
     float: right;

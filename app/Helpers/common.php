@@ -1,6 +1,3 @@
-<script>
-    var config = {};
-</script>
 <?php
 
 use \Illuminate\Support\Facades\Session;

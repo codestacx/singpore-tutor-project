@@ -33,6 +33,10 @@ class AuthController extends Controller
             ])->first();
 
 
+            $isDeactivated = DB::table('deactivates')->where([
+                'user_id'=>$user->id
+            ])->count();
+
 
             if($user){
 
@@ -40,6 +44,10 @@ class AuthController extends Controller
                 // check if email is already verified
                 if(!Hash::check($password,$user->password)){
                     return redirect()->back()->with('error','Invalid password');
+                }
+
+                if($isDeactivated > 0){
+                    return redirect()->back()->with('error',' Account is  Deactivated !');
                 }
 
                 $request->session()->put('tutor_logged',true);
@@ -112,8 +120,6 @@ class AuthController extends Controller
         $token = $request->token;
 
 
-
-
         $count = DB::table('verificationlinks')->where([
             'email'=>$email,
             'token'=>$token
@@ -126,6 +132,10 @@ class AuthController extends Controller
                 'email_verified_at'=>Carbon::now(),
                 'active_status'=>1
             ]);
+            DB::table('verificationlinks')->where([
+                'email'=>$email,
+                'token'=>$token
+            ])->delete();
 
             return redirect()->route('site.user.login')->with('success','Email Verified Successfully');
         }else{

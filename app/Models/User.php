@@ -45,4 +45,8 @@ class User extends Authenticatable
         $count = User::where(['email'=>$email])->count();
         return $count == 0 ? false:true;
     }
+
+    public function basicinfo(){
+        return $this->hasOne(BasicInfo::class,'user_id','id');
+    }
 }

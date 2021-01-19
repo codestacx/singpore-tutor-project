@@ -21,6 +21,27 @@ use function GuzzleHttp\json_encode;
 class Helper {
 
 
+    public static function prepareTutorRequestRow(){
+        $levels = Level::with('grades')->get();
+
+        ob_start();
+
+        ?>
+        <div class="form-group">
+            <select class="form-control" name="level_grade[grades][]">
+                <?php foreach($levels as $level):?>
+                    <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f"><?=$level->level_title?></h5></option>
+                    <?php foreach($level->grades as $grade):?>
+                        <option value="<?=$grade->grade_id?>"><?=$grade->grade_title?></option>
+                    <?php endforeach;?>
+                <?php endforeach;?>
+            </select>
+        </div>
+        <?php
+
+        return ob_get_clean();
+    }
+
     public static function loadCard($atts = null){
 
 

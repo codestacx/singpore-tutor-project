@@ -37,5 +37,5 @@
 <script src="{{asset('js/plugins/plugins.js')}}"></script>
 <!-- Active js -->
 <script src="{{asset('js/active.js')}}"></script>
-
+<script src="{{asset('assets/js/index.js')}}"></script>
 @yield('scripts')

@@ -1,9 +1,15 @@
 @section('links')
     <link rel="stylesheet" href="{{asset('style/modal-tutor.css')}}"/>
+
+    <link rel="stylesheet" href="{{asset('dist/css/bootstrap-select-v2.css')}}">
+    <meta name="_token" content="{{ csrf_token() }}">
+<style>
+
+</style>
 @endsection
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
+    <div class="modal-dialog modal-confirm" style="max-width: none;width: 600px">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <div class="icon-box">
@@ -18,8 +24,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="forms">
-
-                                <form class="tutor_free_request_form" action="#" method="post">
+                            <span id="response_message"></span>
+                                <form class="tutor_free_request_form" id="tutor_free_request_form" action="{{route('site.tutor.request')}}" method="post">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
@@ -38,24 +45,55 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                        <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <textarea class="form-control"  placeholder="Enter Requirement Message (optional)"></textarea>
+                                                <input type="text" class="form-control" name="rate" id="" placeholder="Rate /hr eg $10-30/hr">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="area" id="" placeholder="Area Postal Code">
 
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" name="level_grade">
-                                                    <option selected disabled>Choose Grade</option>
+                                                <textarea class="form-control"   placeholder="Enter Requirement Message (optional)" name="description"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-12 col-md-12" id="add_level_grade">
+                                            <div class="form-group" style="">
+                                                <select class="form-control" name="level_grade[grades][]">
+                                                   @foreach($levels as $level)
+                                                       <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f">{{$level->level_title}}</h5></option>
+                                                       @foreach($level->grades as $grade)
+                                                           <option value="{{$grade->grade_id}}">{{$grade->grade_title}}</option>
+                                                        @endforeach
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group" style="">
+                                                <select name="subjects[0][]"  class="selectpicker show-menu-arrow"  multiple>
+                                                    @foreach($subjects as $subject)
+                                                    <option value="{{$subject->subject_id}}">{{$subject->subject_title}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+
+
+                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                 <a href="javascript:;" onclick="addAnotherTutorRequestFormRow({{json_encode($levels)}},{{$subjects}})"> <i class="fa fa-plus"></i> &nbsp;&nbsp; Add Another Student</a>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
-                                            <button class="btn clever-btn w-100">Find Tutor</button>
+                                            <button type="submit"   class="btnn clever-btn w-100">Find Tutor</button>
                                         </div>
                                     </div>
                                 </form>
@@ -70,3 +108,38 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+    <script>
+        var index = 1;
+        function addAnotherTutorRequestFormRow(options,subjects){
+
+            var select = '<div class="form-group"><select class="form-control" name="level_grade[grades][]">';
+
+
+            options.map(option=>{
+                select+=' <option value="" style="color: #00d69f" disabled><h5 style="color: #00d69f">'+option.level_title+'</h5></option>';
+                option.grades.map(grade=>{
+                    select+='<option value="'+grade.grade_id+'">'+grade.grade_title+'</option>';
+                })
+            })
+
+            select+='</select></div>';
+
+
+            var subjects_select = '<div class="form-group"><select name="subjects['+index+'][]"  class="selectpicker show-menu-arrow"  multiple>';
+            subjects.map(subject=>{
+                subjects_select+='<option value="'+subject.subject_id+'">'+subject.subject_title+'</option>';
+            })
+            subjects_select+='</select></div>';
+
+
+
+            index+=1;
+            const html = select + subjects_select;
+            document.getElementById('add_level_grade').insertAdjacentHTML('beforeend',html)
+            $('.selectpicker').selectpicker();
+        }
+    </script>
+    <script src="{{asset('dist/js/bootstrap-select.js')}}"></script>
+@endsection

@@ -8,9 +8,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Courses</a></li>
-                <li class="breadcrumb-item"><a href="#">Art &amp; Design</a></li>
-                <li class="breadcrumb-item active" aria-current="page">English Grammer</li>
+                <li class="breadcrumb-item"><a href="#">FAQ's</a></li>
+
             </ol>
         </nav>
     </div>
