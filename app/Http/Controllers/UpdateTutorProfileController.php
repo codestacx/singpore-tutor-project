@@ -27,8 +27,11 @@ use function GuzzleHttp\json_encode;
 
 class UpdateTutorProfileController extends Controller{
 
+
+    private $viewpath;
     public function __construct(){
 
+        $this->viewpath = 'application.dashboard.';
         $this->middleware(function ($request,$next){
            $user_id = (session('tutor_id'));
             $tutor = User::where([
@@ -40,6 +43,13 @@ class UpdateTutorProfileController extends Controller{
         });
 
     }
+
+
+
+    public function index(Request $request){
+        return view($this->viewpath.'welcome');
+    }
+
     public function updateBasicInformation(Request $request){
 
 
@@ -106,7 +116,6 @@ class UpdateTutorProfileController extends Controller{
 
     }
 
-
     public function updateEducationInformation(Request $request){
 
         $user = session('tutor_id');
@@ -160,7 +169,6 @@ class UpdateTutorProfileController extends Controller{
 
         return view('application.dashboard.education-info',$templateData);
     }
-
 
     public function addNewEducationTimeline(Request $request){
 
@@ -221,8 +229,6 @@ class UpdateTutorProfileController extends Controller{
         return response()->json(['timeline_id'=>DB::getPdo()->lastInsertId()]);
 
     }
-
-
 
     public function updateExperienceInformation(Request $request,$action = null){
         if($request->method() == 'POST'){
@@ -340,8 +346,6 @@ class UpdateTutorProfileController extends Controller{
         return view('application.dashboard.experience-info',$templateData);
     }
 
-
-
     public function updatePreferences(Request $request){
 
         if($request->method() == 'POST'){
@@ -418,7 +422,6 @@ class UpdateTutorProfileController extends Controller{
         return view('application.dashboard.preferences',$templateData);
     }
 
-
     public function updateDocuments(Request $request){
         if($request->method() == 'POST'){
 
@@ -445,8 +448,6 @@ class UpdateTutorProfileController extends Controller{
         $document = $document > 0 ? true:false;
         return view('application.dashboard.documents',compact('document'));
     }
-
-
 
     public function account_privacy(Request $request,$action = null){
 
@@ -509,5 +510,9 @@ class UpdateTutorProfileController extends Controller{
         }
 
         return view('application.dashboard.account-privacy');
+    }
+
+    public function notifications(Request $request){
+        return view($this->viewpath.'notifications');
     }
 }

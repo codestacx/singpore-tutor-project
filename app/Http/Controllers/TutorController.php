@@ -29,26 +29,51 @@ class TutorController extends Controller
     public function index(Request $request){
 
         $user = User::find(session('tutor_id'));
-        return redirect()->route('tutor.update_info');
-        if($user->profile_updated == 0){
-            return redirect()->route('tutor.update_info');
-        }
-        return view('tutor.welcome',['user'=>$user]);
+
+        return view('application.dashboard.welcome');
+
+//        if($user->profile_updated == 0){
+//            return redirect()->route('tutor.update_info');
+//        }
+//        return view('tutor.welcome',['user'=>$user]);
     }
 
 
     public function tutor_request(Request $request){
-
+        $now = Carbon::now();
         $formData = [
           'fname'=>$request->fname,
             'lname'=>$request->lname,
             'phone'=>$request->phone,
             'email'=>$request->email,
             'description'=>$request->description,
-            'grade'=>json_encode($request->level_grade['grades'])
+            'grade'=>json_encode($request->level_grade['grades']),
+            'rate'=>$request->rate,
+            'area'=>$request->area,
+            'created_at'=>$now,
+            'updated_at'=>$now
         ];
 
+
         $status = DB::table('tutor_requests')->insert($formData);
+        $tutor_request_id = DB::getPdo()->lastInsertId();
+
+        $data = array();
+
+        $grades = $request->level_grade['grades'];
+        for($iterator = 0;$iterator < count($grades);$iterator ++){
+            $data[$iterator] = [
+                'tutor_request_id'=>$tutor_request_id,
+                'grade'=>$grades[$iterator],
+                'subjects'=>json_encode($request->subjects[$iterator]),
+                'created_at'=>$now,
+                'updated_at'=>$now
+            ];
+
+
+        }
+
+        DB::table('tutor_request_students')->insert($data);
         return redirect()->back()->with('success','Request Disptached successfully');
 
     }

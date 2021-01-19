@@ -31,6 +31,11 @@ class HomeController extends Controller
         return view('pages.faqs.index',compact('faqs','categories'));
     }
 
+    public function aboutus(Request $request){
+        return view('pages.aboutus.aboutus');
+    }
+
+
     public function contact(Request $request){
 
 
@@ -57,6 +62,7 @@ class HomeController extends Controller
 
     public function tutionrates(Request $request){
 
-        return view('pages.tution_rates.index');
+        $levels = Level::with('grades')->get();
+        return view('pages.tution_rates.index',compact('levels'));
     }
 }

@@ -53,6 +53,7 @@
                             <li><a  href="">Tuition Assignments</a></li>
 
                             <li><a href="blog.html">Blog</a></li>
+                            <li><a href="{{route('site.aboutus')}}">About us</a> </li>
                             <li><a href="{{route('site.contact')}}">Contact</a></li>
                         </ul>
 

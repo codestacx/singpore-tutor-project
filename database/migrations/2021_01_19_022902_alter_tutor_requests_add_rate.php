@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTutorRequest extends Migration
+class AlterTutorRequestsAddRate extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterTutorRequest extends Migration
      */
     public function up()
     {
-        Schema::table('', function (Blueprint $table) {
-            $table->integer('grade')->change()->type('json');
-            $table->text('description');
+        Schema::table('tutor_requests', function (Blueprint $table) {
+            $table->string('rate')->nullable(true);
+            $table->string('area')->nullable(true);
         });
     }
 
@@ -27,8 +27,8 @@ class AlterTutorRequest extends Migration
     public function down()
     {
         Schema::table('tutor_requests', function (Blueprint $table) {
-            $table->json('grade')->change()->type('integer');
-            $table->dropColumn('description');
+            $table->dropColumn('rate');
+            $table->dropColumn('area');
         });
     }
 }

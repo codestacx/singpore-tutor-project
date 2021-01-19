@@ -26,6 +26,7 @@ Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('',[HomeController::class,'index'])->name('home');
     Route::get('faqs',[HomeController::class,'faqs'])->name('faqs');
+    Route::get('about-us',[HomeController::class,'aboutus'])->name('aboutus');
     Route::match(['get','post'],'contact',[HomeController::class,'contact'])->name('contact');
     Route::match(['get','post'],'tutor/register',[AuthController::class,'register'])->name('tutor.register');
 
@@ -41,7 +42,7 @@ Route::prefix('/')->name('site.')->group(function(){
 
 Route::prefix('dashboard')
     ->name('tutor.')->middleware('tutor')->group(function(){
-        Route::get('',[TutorController::class,'index'])->name('dashboard');
+        Route::get('',[TPC::class,'index'])->name('dashboard');
 
         Route::match(['get','post'],'tutor/basic-info',[TPC::class,'updateBasicInformation'])->name('profile.basic_info');
         Route::match(['get','post'],'tutor/education-info',[TPC::class,'updateEducationInformation'])->name('profile.education_info');
@@ -51,8 +52,8 @@ Route::prefix('dashboard')
         Route::match(['get','post'],'tutor/preferences',[TPC::class,'updatePreferences'])->name('profile.preference_info');
         Route::match(['get','post'],'tutor/documents',[TPC::class,'updateDocuments'])->name('profile.document_info');
         Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
-
         Route::match(['get','post'],'account-privacy/{action?}',[TPC::class,'account_privacy'])->name('account.privacy');
+        Route::get('tutor/notifications',[TPC::class,'notifications'])->name('notifications');
 
         Route::get('logout',[TutorController::class,'logout'])->name('logout');
 });
