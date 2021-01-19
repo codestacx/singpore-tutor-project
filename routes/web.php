@@ -21,12 +21,23 @@ use App\Http\Controllers\TutorController;
 
 use App\Http\Controllers\UpdateTutorProfileController as TPC;
 
+//Route::get('testing/',function (){
+//
+//    $params = http_build_query(array(
+//        "access_key" => "615d359dd13a4bd189a3523df6f3bd5e",
+//        "url" => "https://www.google.com.pk",
+//    ));
+//
+//    $image_data = file_get_contents("https://api.apiflash.com/v1/urltoimage?" . $params);
+//    file_put_contents("screenshot.jpeg", $image_data);
+//});
 
 Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('',[HomeController::class,'index'])->name('home');
     Route::get('faqs',[HomeController::class,'faqs'])->name('faqs');
     Route::get('about-us',[HomeController::class,'aboutus'])->name('aboutus');
+    Route::match(['get','post'],'tuition-assignments/{action?}',[HomeController::class,'tuition_assignments'])->name('tuition_assignments');
     Route::match(['get','post'],'contact',[HomeController::class,'contact'])->name('contact');
     Route::match(['get','post'],'tutor/register',[AuthController::class,'register'])->name('tutor.register');
 
@@ -58,12 +69,12 @@ Route::prefix('dashboard')
         Route::get('tutor/notifications',[TPC::class,'notifications'])->name('notifications');
 
 
-use Laravel\Socialite\Facades\Socialite;
-
-Route::get('/google',function(){
- $user = Socialite::driver('google')->stateless()->user();
- return view('auths.pages.register',compact('user'));
-});
+//use Laravel\Socialite\Facades\Socialite;
+//
+//Route::get('/google',function(){
+// $user = Socialite::driver('google')->stateless()->user();
+// return view('auths.pages.register',compact('user'));
+//});
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Level;
+use App\Models\Location;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
@@ -26,7 +27,6 @@ class HomeController extends Controller
     public function faqs(Request $request){
 
         $faqs = DB::table('faqs')->join('faqs_categories','faqs_categories.id','=','faqs.faq_cat_id')->get();
-
         $categories = DB::table('faqs_categories')->get();
         return view('pages.faqs.index',compact('faqs','categories'));
     }
@@ -39,10 +39,8 @@ class HomeController extends Controller
     public function contact(Request $request){
 
 
-
         if($request->method() == 'POST'){
             //create contact request & save in database
-
             DB::table('contacts')->insert(
                 [
                     'name'          =>  $request->input('c_name'),
@@ -54,7 +52,6 @@ class HomeController extends Controller
             );
 
             return redirect()->back()->with('success','Your request has been dispatched successfully');
-
         }
         return view('pages.contact.index');
     }
@@ -64,5 +61,31 @@ class HomeController extends Controller
 
         $levels = Level::with('grades')->get();
         return view('pages.tution_rates.index',compact('levels'));
+    }
+
+
+    public function tuition_assignments(Request $request,$action = null){
+
+        $templateData = [
+          'subjects'=>Subject::all(),
+          'levels'=>Level::with('grades')->get(),
+          'locations'=>Location::all()
+        ];
+
+
+        if($request->method() == 'POST'){
+
+            if($action == 'code'){
+                $code = $request->code;
+            }
+
+            $subject = $request->subject;
+            $level = $request->level;
+            $location = $request->location;
+
+            //otherwise subject based
+        }
+
+        return view('pages.assignments.index',$templateData);
     }
 }

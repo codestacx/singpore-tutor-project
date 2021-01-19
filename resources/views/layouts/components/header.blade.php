@@ -50,7 +50,7 @@
                             <li><a href="{{route('site.home')}}">Home</a></li>
                             <li><a href="{{route('site.tution_rates')}}">Tution Rates</a></li>
                             <li><a  href="{{route('site.faqs')}}">FAQ's</a></li>
-                            <li><a  href="">Tuition Assignments</a></li>
+                            <li><a  href="{{route('site.tuition_assignments')}}">Tuition Assignments</a></li>
 
                             <li><a href="blog.html">Blog</a></li>
                             <li><a href="{{route('site.aboutus')}}">About us</a> </li>

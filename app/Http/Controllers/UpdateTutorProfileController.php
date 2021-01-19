@@ -175,10 +175,7 @@ class UpdateTutorProfileController extends Controller{
 
         $user = session('tutor_id');
 
-        $education = DB::table('education_infos')->where([
-            'user_id'=>$user
-        ])->first();
-
+        $education = DB::table('education_infos')->where(['user_id'=>$user])->first();
 
         $formData = [
             'user_id'=>$user,
@@ -504,7 +501,6 @@ class UpdateTutorProfileController extends Controller{
                 return redirect()->route('site.user.login')->with('error','You account has been deactvated successfully');
 
             }
-
 
 
         }
