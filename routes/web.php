@@ -50,44 +50,22 @@ Route::prefix('/')->name('site.')->group(function(){
 
 });
 
-Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
-
-
 Route::prefix('dashboard')
-    ->name('tutor.')->middleware('tutor')->group(function(){
-        Route::get('',[TPC::class,'index'])->name('dashboard');
+    ->name('tutor.')->middleware('tutor')->group(function() {
+        Route::get('', [TPC::class, 'index'])->name('dashboard');
 
-        Route::match(['get','post'],'tutor/basic-info',[TPC::class,'updateBasicInformation'])->name('profile.basic_info');
-        Route::match(['get','post'],'tutor/education-info',[TPC::class,'updateEducationInformation'])->name('profile.education_info');
-        Route::post('tutor/education-info/timeline',[TPC::class,'addNewEducationTimeline'])->name('profile.education_info.timeline');
-        Route::match(['get','post'],'tutor/experience-info/{action?}',[TPC::class,'updateExperienceInformation'])->name('profile.experience_info');
+        Route::match(['get', 'post'], 'tutor/basic-info', [TPC::class, 'updateBasicInformation'])->name('profile.basic_info');
+        Route::match(['get', 'post'], 'tutor/education-info', [TPC::class, 'updateEducationInformation'])->name('profile.education_info');
+        Route::post('tutor/education-info/timeline', [TPC::class, 'addNewEducationTimeline'])->name('profile.education_info.timeline');
+        Route::match(['get', 'post'], 'tutor/experience-info/{action?}', [TPC::class, 'updateExperienceInformation'])->name('profile.experience_info');
 
-        Route::match(['get','post'],'tutor/preferences',[TPC::class,'updatePreferences'])->name('profile.preference_info');
-        Route::match(['get','post'],'tutor/documents',[TPC::class,'updateDocuments'])->name('profile.document_info');
-        Route::match(['get','post'],'update-info',[TutorController::class,'update_info'])->name('update_info');
-        Route::match(['get','post'],'account-privacy/{action?}',[TPC::class,'account_privacy'])->name('account.privacy');
-        Route::get('tutor/notifications',[TPC::class,'notifications'])->name('notifications');
+        Route::match(['get', 'post'], 'tutor/preferences', [TPC::class, 'updatePreferences'])->name('profile.preference_info');
+        Route::match(['get', 'post'], 'tutor/documents', [TPC::class, 'updateDocuments'])->name('profile.document_info');
+        Route::match(['get', 'post'], 'update-info', [TutorController::class, 'update_info'])->name('update_info');
+        Route::match(['get', 'post'], 'account-privacy/{action?}', [TPC::class, 'account_privacy'])->name('account.privacy');
+        Route::get('tutor/notifications', [TPC::class, 'notifications'])->name('notifications');
 
-
-//use Laravel\Socialite\Facades\Socialite;
-//
-//Route::get('/google',function(){
-// $user = Socialite::driver('google')->stateless()->user();
-// return view('auths.pages.register',compact('user'));
-//});
-
-
-
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
-});
-
-
-
-Route::get('/update-info/load-card',[TutorController::class,'loadCard'])->name('load-card');
-        Route::get('logout',[TutorController::class,'logout'])->name('logout');
-});
-
+    });
 
 Route::get('/education/load-card',[TutorController::class,'loadCard'])->name('load-card');
 Route::get('/experience/getrow',[TutorController::class,'getAcademicExperienceRow'])->name('get-experience-row');
@@ -95,7 +73,7 @@ Route::get('/tutor-request/row',[HomeController::class,'getTutorRequestRow'])->n
 
 /* Admin Routes */
 Route::prefix('superadmin')->group(function(){
-    Route::get('/login',[AdminAuthController::class,'login'])->name('admin.login');
+    Route::match(['get', 'post'], '/login',[AdminAuthController::class,'login'])->name('admin.login');
 });
 Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(function(){
 
@@ -104,6 +82,11 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
     Route::match(['get','post'],'grades/{action?}/{grade?}',[AdminController::class,'grades'])->name('grades');
     Route::match(['get','post'],'levels/{action?}/{levels?}',[AdminController::class,'levels'])->name('levels');
     Route::match(['get','post'],'faqs/{action?}/{faq?}',[AdminController::class,'faqs'])->name('faqs');
+    Route::match(['get','post'],'subjects/{action?}/{subject?}',[AdminController::class,'subjects'])->name('subjects');
+    Route::match(['get','post'],'locations/{action?}/{location?}',[AdminController::class,'locations'])->name('locations');
+    Route::match(['get','post'],'instruments/{action?}/{instrument?}',[AdminController::class,'instruments'])->name('instruments');
+    Route::match(['get','post'],'races/{action?}/{race?}',[AdminController::class,'races'])->name('races');
+
 });
 
 

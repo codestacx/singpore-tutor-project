@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <!-- Page Header-->
             <header>
-                <h1 class="h3 display">Data Table            </h1>
+                <h1 class="h3 display">Data Table</h1>
             </header>
             <div class="card">
 

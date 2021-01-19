@@ -32,10 +32,10 @@ class AuthController extends Controller
                 'email'=>$email
             ])->first();
 
+
             $isDeactivated = DB::table('deactivates')->where([
                 'user_id'=>$user->id
             ])->count();
-
 
 
             if($user){

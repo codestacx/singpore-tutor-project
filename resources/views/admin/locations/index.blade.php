@@ -19,35 +19,26 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
-                            <h4>{{isset($grade) ? 'Update Grade':'Add Grade'}}</h4>
+                            <h4>{{isset($location) ? 'Update Location':'Add Location'}}</h4>
                         </div>
                         <?php generateFlashMessage(); ?>
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.grades')}}">
+                            <form method="post" action="{{route('admin.locations')}}">
                                 @csrf
-                                @isset($grade)
-                                    <input type="hidden" value="{{$grade->grade_id}}" name="grade"/>
+                                @isset($location)
+                                    <input type="hidden" value="{{$location->location_id}}" name="location"/>
                                 @endisset
                                 <div class="row">
                                     <div class="col">
-                                            <div class="form-group">
-                                                <label>Grade Title</label>
-                                                <input type="text" name="title" value="{{isset($grade) ? $grade->grade_title:''}}" placeholder="Grade Title" class="form-control">
-                                            </div>
-                                    </div>
-                                    <div class="col">
                                         <div class="form-group">
-                                            <label>Choose Level</label>
-                                            <select class="form-control" name="level">
-                                                @foreach($levels as $level)
-                                                    <option {{isset($grade) && $grade->level_id == $level->id ? 'selected':''}}  value="{{$level->id}}">{{$level->level_title}}</option>
-                                                @endforeach
-                                            </select>
+                                            <label>Location Title</label>
+                                            <input type="text" name="title" value="{{isset($location) ? $location->location_title:''}}" placeholder="Location Title" class="form-control">
                                         </div>
                                     </div>
+
                                     <div class="col">
                                         <div class="form-group" style="padding-top: 30px !important;">
-                                            <input type="submit" value="{{isset($grade) ? 'Update':'Submit'}}" class="btn btn-primary">
+                                            <input type="submit" value="{{isset($location) ? 'Update':'Submit'}}" class="btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
@@ -58,21 +49,21 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Title</th>
-                                        <th>Level</th>
+
                                         <td align="center">Remove </th>
                                         <td align="center">Update</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($grades as $grade)
+                                    @foreach($locations as $location)
                                         <tr>
-                                            <td>{{$grade->grade_id}}</td>
-                                            <td>{{$grade->grade_title}}</td>
-                                            <td>{{$grade->level_title}}</td>
+                                            <td>{{$location->location_id}}</td>
+                                            <td>{{$location->location_title}}</td>
 
-                                            <td align="center"><a href="{{route('admin.grades',['action'=>'delete','grade'=>$grade->grade_id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
-                                            <td align="center"><a href="{{route('admin.grades',['action'=>'update','grade'=>$grade->grade_id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
+
+                                            <td align="center"><a href="{{route('admin.locations',['action'=>'delete','location'=>$location->location_id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
+                                            <td align="center"><a href="{{route('admin.locations',['action'=>'update','location'=>$location->location_id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
 
                                         </tr>
                                     @endforeach

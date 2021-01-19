@@ -15,30 +15,18 @@
             <h5 class="sidenav-heading">Main</h5>
             <ul id="side-main-menu" class="side-menu list-unstyled">
                 <li><a href="index.html"> <i class="icon-home"></i>Home                             </a></li>
-                
-                <li><a href="#levels" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>Level </a>
-                    <ul id="levels" class="collapse list-unstyled ">
-                        <li><a href="{{route('admin.levels')}}">View Level </a></li>
-                        <li><a href="{{route('admin.levels',['action'=>'create'])}}">Add Level</a></li>
-
-                    </ul>
-                </li>
-                
-                <li><a href="#formsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>Grades </a>
-                    <ul id="formsDropdown" class="collapse list-unstyled ">
-                        <li><a href="{{route('admin.grades')}}">View Grades </a></li>
-                        <li><a href="{{route('admin.grades',['action'=>'create'])}}">Add Grade</a></li>
-
-                    </ul>
-                </li>
-
-                <li><a href="#faqs" aria-expanded="false" data-toggle="collapse"> <i class="icon-form"></i>FAQ's </a>
-                    <ul id="faqs" class="collapse list-unstyled ">
-                        <li><a href="{{route('admin.faqs')}}">View All </a></li>
-                        <li><a href="{{route('admin.faqs',['action'=>'create'])}}">Add FAQ</a></li>
 
 
-                
+
+
+                <li><a href="{{route('admin.levels')}}"> <i class="icon-home"></i>Levels </a></li>
+                <li><a href="{{route('admin.grades')}}"> <i class="icon-home"></i>Grades </a></li>
+                <li><a href="{{route('admin.faqs')}}"> <i class="icon-home"></i>FAQ's </a></li>
+                <li><a href="{{route('admin.subjects')}}"> <i class="icon-home"></i>Subjects </a></li>
+                <li><a href="{{route('admin.locations')}}"> <i class="icon-home"></i>Locations </a></li>
+                <li><a href="{{route('admin.instruments')}}"> <i class="icon-home"></i>Instruments </a></li>
+                <li><a href="{{route('admin.races')}}"> <i class="icon-home"></i>Races </a></li>
+
                 <li><a href="#chartsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bar-chart"></i>Charts </a>
                     <ul id="chartsDropdown" class="collapse list-unstyled ">
                         <li><a href="charts.html">Charts</a></li>
