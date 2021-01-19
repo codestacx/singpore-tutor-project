@@ -66,6 +66,35 @@ Route::get('/google',function(){
 });
 
 
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/google',function(){
+
+    //return 'love';
+ $user = Socialite::driver('google')->stateless()->user();
+ return view('auths.pages.register',compact('user'));
+
+ //  print_r($user);
+});
+
+// Route::get('/auth/callback', function () {
+//     return $user = Socialite::driver('google')->stateless()->user();
+
+//     // $user->token
+// });
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+
+
+
+Route::get('/testing',function(){
+    //   \Illuminate\Support\Facades\Mail::to('muhammadatif.pucit@gmail.com')->send(new  \App\Mail\EmailVerification('token'));
+        return view('auths.pages.login');
+    });
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -84,7 +113,7 @@ Route::get('/tutor-request/row',[HomeController::class,'getTutorRequestRow'])->n
 
 /* Admin Routes */
 Route::prefix('superadmin')->group(function(){
-    Route::get('/login',[AdminAuthController::class,'login'])->name('admin.login');
+    Route::match(['get', 'post'], '/login',[AdminAuthController::class,'login'])->name('admin.login');
 });
 Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(function(){
 
