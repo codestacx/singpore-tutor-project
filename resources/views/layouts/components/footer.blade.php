@@ -9,9 +9,9 @@
         <!-- Contact Info -->
         <div class="contact-info">
             <a href="#"><span>Phone:</span> +44 300 303 0266</a>
-            <a href="#"><span>Email:</span> info@clever.com</a>
+            <a href="#"><span>Email:</span> info@codestacx.com</a>
             <a href="#">
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This site is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Codestacx</a>
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This site is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://www.fiverr.com/codestacx">Codestacx</a>
                 </a>
 
         </div>
@@ -37,5 +37,5 @@
 <script src="{{asset('js/plugins/plugins.js')}}"></script>
 <!-- Active js -->
 <script src="{{asset('js/active.js')}}"></script>
-
+<script src="{{asset('assets/js/index.js')}}"></script>
 @yield('scripts')

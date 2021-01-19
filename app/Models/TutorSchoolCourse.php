@@ -10,6 +10,7 @@ class TutorSchoolCourse extends Model
     use HasFactory;
 
     protected $casts = [
-        'subjects_and_grades'=>'array'
+        'subjects_and_grades'=>'array',
+        'subjects_or_majors'=>'array'
     ];
 }

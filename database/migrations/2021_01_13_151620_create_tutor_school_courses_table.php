@@ -34,6 +34,7 @@ class CreateTutorSchoolCoursesTable extends Migration
 
             $table->json('subjects_and_grades')->nullable(true);
 
+
             $table->text('achievements')->nullable(true);
 
 

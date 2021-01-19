@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
+use App\Models\Level;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -9,9 +12,16 @@ use Carbon\Carbon;
 class HomeController extends Controller
 {
     public function index(Request $request){
-        return view('welcome');
+        $levels = Level::with('grades')->get();
+        $subjects = Subject::all();
+        return view('welcome',compact('levels','subjects'));
     }
 
+
+
+    public function getTutorRequestRow(Request $request){
+        return Helper::prepareTutorRequestRow();
+    }
 
     public function faqs(Request $request){
 
@@ -20,6 +30,11 @@ class HomeController extends Controller
         $categories = DB::table('faqs_categories')->get();
         return view('pages.faqs.index',compact('faqs','categories'));
     }
+
+    public function aboutus(Request $request){
+        return view('pages.aboutus.aboutus');
+    }
+
 
     public function contact(Request $request){
 
@@ -47,6 +62,7 @@ class HomeController extends Controller
 
     public function tutionrates(Request $request){
 
-        return view('pages.tution_rates.index');
+        $levels = Level::with('grades')->get();
+        return view('pages.tution_rates.index',compact('levels'));
     }
 }
