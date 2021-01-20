@@ -26,10 +26,15 @@ class AdminAuthController extends Controller
                 $request->session()->put('admin_authenticated',true);
                 $request->session()->put('admin_id',$user->id);
                 $request->session()->put('admin_name',$user->name);
-                return view('admin.welcome');
+                return redirect()->route('admin.home');
             }
             return redirect()->back()->with('error','Invalid Email');
         }
         return view('admin.auths.login');
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        return redirect()->route('admin.home');
     }
 }

@@ -32,9 +32,12 @@
         <div class="row">
             <div class="col-sm">
                 <div class="signup-form">
-                    <h5 style="color: #2cdd9b"> View Available Assignments </h5>
+
                 </div>
                 <div class="">
+                    <div style="text-align: center">
+                        <h6>View Available Assignments</h6>
+                    </div>
                     <div class="card" style="width: 450px;margin: auto;background: darkcyan;color: white;border-radius: 10px;padding: 10px;">
                         <div class="card-body">
                             <form class="form" method="post" action="">

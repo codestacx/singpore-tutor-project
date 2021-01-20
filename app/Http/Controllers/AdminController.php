@@ -13,6 +13,7 @@ use App\Models\Rate;
 use App\Models\SchoolType;
 use App\Models\StudentCategory;
 use App\Models\Subject;
+use App\Models\TutorRequest;
 use App\Models\TutorTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -675,7 +676,44 @@ class AdminController extends Controller
     }
 
 
+    public function tutor_requests(Request $request, $id = null ){
 
+        if(!is_null($id)){
+            $tutor_request = DB::table('tutor_requests')->where('tutor_request_id',$id)->first();
+           // dd(Subject::where('subject_id',2)->first());
+
+            $subjects = Subject::all();
+            $grades = Grade::all();
+            $requests = DB::table('tutor_request_students')
+                ->join('grades','tutor_request_students.grade','=','grades.grade_id')
+                ->where([
+                    'tutor_request_id'=>$tutor_request->tutor_request_id
+                ])->get();
+
+            foreach ($requests as &$req){
+                $subj = json_decode($req->subjects);
+                $req->subject_names = array_map(function ($sub){
+                    return Subject::where('subject_id',$sub)->value('subject_title');
+                },$subj);
+
+            }
+
+
+            return view('admin.requests.view_details',['request'=>$tutor_request,'requests'=>$requests]);
+        }
+
+        $requests = DB::table('tutor_requests')->get();
+        return view('admin.requests.index',compact('requests'));
+    }
+
+
+    public function tution_assignments(Request $request){
+
+        if($request->method() == 'POST'){
+            dd($request->all());
+        }
+
+    }
 
 
 }

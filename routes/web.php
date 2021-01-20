@@ -50,20 +50,19 @@ Route::prefix('/')->name('site.')->group(function(){
 
 });
 
-Route::prefix('dashboard')
-    ->name('tutor.')->middleware('tutor')->group(function() {
+Route::prefix('dashboard')->name('tutor.')->middleware('tutor')->group(function() {
         Route::get('', [TPC::class, 'index'])->name('dashboard');
 
         Route::match(['get', 'post'], 'tutor/basic-info', [TPC::class, 'updateBasicInformation'])->name('profile.basic_info');
         Route::match(['get', 'post'], 'tutor/education-info', [TPC::class, 'updateEducationInformation'])->name('profile.education_info');
         Route::post('tutor/education-info/timeline', [TPC::class, 'addNewEducationTimeline'])->name('profile.education_info.timeline');
         Route::match(['get', 'post'], 'tutor/experience-info/{action?}', [TPC::class, 'updateExperienceInformation'])->name('profile.experience_info');
-
         Route::match(['get', 'post'], 'tutor/preferences', [TPC::class, 'updatePreferences'])->name('profile.preference_info');
         Route::match(['get', 'post'], 'tutor/documents', [TPC::class, 'updateDocuments'])->name('profile.document_info');
         Route::match(['get', 'post'], 'update-info', [TutorController::class, 'update_info'])->name('update_info');
         Route::match(['get', 'post'], 'account-privacy/{action?}', [TPC::class, 'account_privacy'])->name('account.privacy');
         Route::get('tutor/notifications', [TPC::class, 'notifications'])->name('notifications');
+        Route::get('logout',[TutorController::class,'logout'])->name('logout');
 
     });
 
@@ -100,8 +99,11 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
     Route::match(['get','post'],'categories/{action?}/{type?}',[AdminController::class,'tutor_types'])->name('tutor_types');
     Route::match(['get','post'],'rates/{action?}/{rate?}',[AdminController::class,'rates'])->name('rates');
 
+    Route::get('tutor/request/{id?}',[AdminController::class,'tutor_requests'])->name('tutor_requests');
 
+    Route::match(['get','post'],'tution-assignments',[AdminController::class,'tution_assignments'])->name('tution_assignments');
 
+    Route::get('logout',[AdminAuthController::class,'logout'])->name('logout');
 });
 
 

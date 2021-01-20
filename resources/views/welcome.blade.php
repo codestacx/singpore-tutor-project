@@ -24,7 +24,7 @@
     <!-- services ends here-->
 
     <!-- include tution rates -->
-    @include('partials.tutionrates')
+    @include('partials.tutionrates',['rates'=>$rates])
     <!-- end tution rates -->
 
 

@@ -13,12 +13,8 @@
             <th>Ex/Current MOE Teachers</th>
         </tr>
         <tbody>
-           <tr>
-               <th id="level"> Primary </th>
-               <td> 10202</td>
-               <td> 10202</td>
-               <td> 10202</td>
-           </tr>
+
+
            <tr>
                <th id="level_"> Primary </th>
                <td> 10202</td>
