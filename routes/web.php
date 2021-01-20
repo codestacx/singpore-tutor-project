@@ -75,17 +75,28 @@ Route::get('/tutor-request/row',[HomeController::class,'getTutorRequestRow'])->n
 Route::prefix('superadmin')->group(function(){
     Route::match(['get', 'post'], '/login',[AdminAuthController::class,'login'])->name('admin.login');
 });
+
+
+
 Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(function(){
 
     Route::get('',[AdminController::class,'welcome'])->name('home');
+
 
     Route::match(['get','post'],'grades/{action?}/{grade?}',[AdminController::class,'grades'])->name('grades');
     Route::match(['get','post'],'levels/{action?}/{levels?}',[AdminController::class,'levels'])->name('levels');
     Route::match(['get','post'],'faqs/{action?}/{faq?}',[AdminController::class,'faqs'])->name('faqs');
     Route::match(['get','post'],'subjects/{action?}/{subject?}',[AdminController::class,'subjects'])->name('subjects');
     Route::match(['get','post'],'locations/{action?}/{location?}',[AdminController::class,'locations'])->name('locations');
+    Route::match(['get','post'],'places/{action?}/{place?}',[AdminController::class,'places'])->name('places');
+    Route::match(['get','post'],'citizenships/{action?}/{citizenship?}',[AdminController::class,'citizenships'])->name('citizenships');
+
     Route::match(['get','post'],'instruments/{action?}/{instrument?}',[AdminController::class,'instruments'])->name('instruments');
     Route::match(['get','post'],'races/{action?}/{race?}',[AdminController::class,'races'])->name('races');
+    Route::match(['get','post'],'schools/{action?}/{school?}',[AdminController::class,'schools'])->name('schools');
+
+    Route::match(['get','post'],'categories/students/{action?}/{category?}',[AdminController::class,'students'])->name('categories.students');
+    Route::match(['get','post'],'categories/tutors/{action?}/{category?}',[AdminController::class,'moetutors'])->name('categories.tutors');
 
 });
 

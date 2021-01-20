@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Citizenship;
 use App\Models\Grade;
 use App\Models\Instrument;
 use App\Models\Level;
 use App\Models\Location;
+use App\Models\MoeTutorSpecification;
 use App\Models\Race;
+use App\Models\SchoolType;
+use App\Models\StudentCategory;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -213,7 +217,7 @@ class AdminController extends Controller
     public function locations(Request $request, $action = null, $location = null){
         $table = DB::table('locations');
 
-        $locations = Location::all();
+        $locations = Location::with('places')->get();
 
         if($request->method() == 'POST'){
 
@@ -340,6 +344,237 @@ class AdminController extends Controller
         }
 
         return view('admin.races.index',compact('races'));
+
+    }
+
+
+    public function places(Request $request, $action = null, $place = null){
+
+        $table = DB::table('places');
+        $locations = Location::all();
+
+        $places = $table->join('locations','locations.location_id','=','places.location')->get();
+
+        if($request->method() == 'POST'){
+            $formData = [
+                'place'=>$request->title,
+                'location'=>$request->location
+            ];
+            if(isset($request->place)){
+                $table->where('id',$request->place)->update($formData);
+                return redirect()->route('admin.places')->with('success','Place updated Successfully');
+            }
+            $table->insert($formData);
+            return redirect()->route('admin.places')->with('success','Place Added Successfully');
+        }
+        if(!is_null($place)){
+
+            if($action == 'delete'){
+                //delete place
+                $table->where('id',$place)->delete();
+                return redirect()->back()->with('success','Place Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update place & save
+                $place = $table->where('id',$place)->first();
+                return view('admin.places.index',compact('places','place','locations'));
+            }
+
+        }
+        return view('admin.places.index',compact('places','locations'));
+
+    }
+
+
+    public function schools(Request $request, $action = null, $school = null){
+        $table = DB::table('school_types');
+
+        $schools = SchoolType::all();
+
+        if($request->method() == 'POST'){
+
+
+            $formData = ['type'=>$request->type];
+
+
+
+            if(isset($request->school)){
+
+                $table->where('id',$request->school)->update($formData);
+                return redirect()->route('admin.schools')->with('success','School updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.schools')->with('success','School Added Successfully');
+
+
+        }
+
+
+        if(!is_null($school)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('id',$school)->delete();
+                return redirect()->back()->with('success','School Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $school = $table->where('id',$school)->first();
+
+
+                return view('admin.schools.index',compact('school','schools'));
+            }
+
+        }
+
+        return view('admin.schools.index',compact('schools'));
+
+    }
+
+
+    public function citizenships(Request $request, $action = null, $citizenship = null){
+        $table = DB::table('citizenships');
+
+        $citizenships = Citizenship::all();
+
+        if($request->method() == 'POST'){
+
+
+            $formData = ['name'=>$request->name];
+
+
+
+            if(isset($request->citizenship)){
+
+                $table->where('id',$request->citizenship)->update($formData);
+                return redirect()->route('admin.citizenships')->with('success','Citizenship updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.citizenships')->with('success','Citizenship Added Successfully');
+
+
+        }
+
+
+        if(!is_null($citizenship)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('id',$citizenship)->delete();
+                return redirect()->back()->with('success','Citizenship Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $citizenship = $table->where('id',$citizenship)->first();
+
+
+                return view('admin.citizenship.index',compact('citizenship','citizenships'));
+            }
+
+        }
+
+        return view('admin.citizenship.index',compact('citizenships'));
+
+    }
+
+    public function students(Request $request, $action = null, $category = null){
+        $table = DB::table('student_categories');
+
+        $categories = StudentCategory::all();
+
+        if($request->method() == 'POST'){
+
+
+            $formData = ['category'=>$request->title];
+
+
+
+            if(isset($request->category)){
+
+                $table->where('student_categories_id',$request->category)->update($formData);
+                return redirect()->route('admin.categories.students')->with('success','Category updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.categories.students')->with('success','Category Added Successfully');
+
+
+        }
+
+
+        if(!is_null($category)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('student_categories_id',$category)->delete();
+                return redirect()->back()->with('success','Category Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $category = $table->where('student_categories_id',$category)->first();
+
+                return view('admin.categories.students.index',compact('category','categories'));
+            }
+
+        }
+
+        return view('admin.categories.students.index',compact('categories'));
+
+    }
+
+    public function moetutors(Request $request, $action = null, $category = null){
+        $table = DB::table('moe_tutor_specifications');
+
+        $categories = MoeTutorSpecification::all();
+
+        if($request->method() == 'POST'){
+
+
+            $formData = ['specification'=>$request->specification];
+
+
+
+            if(isset($request->category)){
+
+                $table->where('id',$request->category)->update($formData);
+                return redirect()->route('admin.categories.tutors')->with('success','Category updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.categories.tutors')->with('success','Category Added Successfully');
+
+
+        }
+
+
+        if(!is_null($category)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('id',$category)->delete();
+                return redirect()->back()->with('success','Category Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $category = $table->where('id',$category)->first();
+
+                return view('admin.categories.tutors.index',compact('category','categories'));
+            }
+
+        }
+
+        return view('admin.categories.tutors.index',compact('categories'));
 
     }
 }

@@ -10,6 +10,6 @@
 @include('admin.layouts.header')
 <!-- Counts Section -->
     @yield('content')
-{{-- @include('admin.layouts.footer') --}}
+ @include('admin.layouts.footer')
 </body>
 </html>

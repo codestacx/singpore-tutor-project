@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
-@section('title','Grades')
+@section('title','Citizenship')
 @section('content')
     <div class="breadcrumb-holder">
         <div class="container-fluid">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Forms       </li>
+                <li class="breadcrumb-item active">Citizenships       </li>
             </ul>
         </div>
     </div>
@@ -19,26 +19,26 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
-                            <h4>{{isset($location) ? 'Update Location':'Add Location'}}</h4>
+                            <h4>{{isset($citizenship) ? 'Update Citizenship':'Add Citizenship'}}</h4>
                         </div>
                         <?php generateFlashMessage(); ?>
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.locations')}}">
+                            <form method="post" action="{{route('admin.citizenships')}}">
                                 @csrf
-                                @isset($location)
-                                    <input type="hidden" value="{{$location->location_id}}" name="location"/>
+                                @isset($citizenship)
+                                    <input type="hidden" value="{{$citizenship->id}}" name="citizenship"/>
                                 @endisset
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Location Title</label>
-                                            <input type="text" name="title" value="{{isset($location) ? $location->location_title:''}}" placeholder="Location Title" class="form-control">
+                                            <label>Citizenship </label>
+                                            <input type="text" name="name" value="{{isset($citizenship) ? $citizenship->name:''}}" placeholder="Citizenship " class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col">
                                         <div class="form-group" style="padding-top: 30px !important;">
-                                            <input type="submit" value="{{isset($location) ? 'Update':'Submit'}}" class="btn btn-primary">
+                                            <input type="submit" value="{{isset($citizenship) ? 'Update':'Submit'}}" class="btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Title</th>
-                                        <th>Total Places</th>
 
                                         <td align="center">Remove </th>
                                         <td align="center">Update</th>
@@ -57,13 +56,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($locations as $location)
+                                    @foreach($citizenships as $citizenship)
                                         <tr>
-                                            <td>{{$location->location_id}}</td>
-                                            <td>{{$location->location_title}}</td>
-                                            <td>{{count($location->places)}}</td>
-                                            <td align="center"><a href="{{route('admin.locations',['action'=>'delete','location'=>$location->location_id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
-                                            <td align="center"><a href="{{route('admin.locations',['action'=>'update','location'=>$location->location_id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
+                                            <td>{{$citizenship->id}}</td>
+                                            <td>{{$citizenship->name}}</td>
+
+
+                                            <td align="center"><a href="{{route('admin.citizenships',['action'=>'delete','citizenship'=>$citizenship->id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
+                                            <td align="center"><a href="{{route('admin.citizenships',['action'=>'update','citizenship'=>$citizenship->id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
 
                                         </tr>
                                     @endforeach

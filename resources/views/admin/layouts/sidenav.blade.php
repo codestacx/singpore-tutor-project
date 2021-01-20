@@ -14,19 +14,31 @@
         <div class="main-menu">
             <h5 class="sidenav-heading">Main</h5>
             <ul id="side-main-menu" class="side-menu list-unstyled">
-                <li><a href="index.html"> <i class="icon-home"></i>Home                             </a></li>
+                <li><a href="index.html"> <i class="icon-home"></i>Home</a></li>
 
 
 
 
                 <li><a href="{{route('admin.levels')}}"> <i class="icon-home"></i>Levels </a></li>
                 <li><a href="{{route('admin.grades')}}"> <i class="icon-home"></i>Grades </a></li>
-                <li><a href="{{route('admin.faqs')}}"> <i class="icon-home"></i>FAQ's </a></li>
                 <li><a href="{{route('admin.subjects')}}"> <i class="icon-home"></i>Subjects </a></li>
+                <li><a href="{{route('admin.schools')}}"> <i class="icon-home"></i>Schools </a></li>
+                <li><a href="{{route('admin.faqs')}}"> <i class="icon-home"></i>FAQ's </a></li>
+
                 <li><a href="{{route('admin.locations')}}"> <i class="icon-home"></i>Locations </a></li>
+                <li><a href="{{route('admin.places')}}"> <i class="icon-home"></i>Places </a></li>
+
+                <li><a href="{{route('admin.citizenships')}}"> <i class="icon-home"></i>Citizenships </a></li>
+
                 <li><a href="{{route('admin.instruments')}}"> <i class="icon-home"></i>Instruments </a></li>
                 <li><a href="{{route('admin.races')}}"> <i class="icon-home"></i>Races </a></li>
 
+                <li><a href="#tablesDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>Categories </a>
+                    <ul id="tablesDropdown" class="collapse list-unstyled ">
+                        <li><a href="{{route('admin.categories.students')}}">Students</a></li>
+                        <li><a href="{{route('admin.categories.tutors')}}">MOE Teachers</a></li>
+                    </ul>
+                </li>
                 <li><a href="#chartsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bar-chart"></i>Charts </a>
                     <ul id="chartsDropdown" class="collapse list-unstyled ">
                         <li><a href="charts.html">Charts</a></li>

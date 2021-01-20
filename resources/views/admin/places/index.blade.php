@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Grades')
+@section('title','Places')
 @section('content')
     <div class="breadcrumb-holder">
         <div class="container-fluid">
@@ -19,26 +19,35 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
-                            <h4>{{isset($location) ? 'Update Location':'Add Location'}}</h4>
+                            <h4>{{isset($place) ? 'Update Place':'Add Place'}}</h4>
                         </div>
                         <?php generateFlashMessage(); ?>
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.locations')}}">
+                            <form method="post" action="{{route('admin.places')}}">
                                 @csrf
-                                @isset($location)
-                                    <input type="hidden" value="{{$location->location_id}}" name="location"/>
+                                @isset($place)
+                                    <input type="hidden" value="{{$place->id}}" name="place"/>
                                 @endisset
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Location Title</label>
-                                            <input type="text" name="title" value="{{isset($location) ? $location->location_title:''}}" placeholder="Location Title" class="form-control">
+                                            <label>Place Title</label>
+                                            <input type="text" name="title" value="{{isset($place) ? $place->place:''}}" placeholder="Place Title" class="form-control">
                                         </div>
                                     </div>
-
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Choose Level</label>
+                                            <select class="form-control" name="location">
+                                                @foreach($locations as $location)
+                                                    <option {{isset($place) && $place->location == $location->id ? 'selected':''}}  value="{{$location->location_id}}">{{$location->location_title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col">
                                         <div class="form-group" style="padding-top: 30px !important;">
-                                            <input type="submit" value="{{isset($location) ? 'Update':'Submit'}}" class="btn btn-primary">
+                                            <input type="submit" value="{{isset($place) ? 'Update':'Submit'}}" class="btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
@@ -48,22 +57,22 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Title</th>
-                                        <th>Total Places</th>
-
+                                        <th>Place</th>
+                                        <th>Location</th>
                                         <td align="center">Remove </th>
                                         <td align="center">Update</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($locations as $location)
+                                    @foreach($places as $place)
                                         <tr>
-                                            <td>{{$location->location_id}}</td>
-                                            <td>{{$location->location_title}}</td>
-                                            <td>{{count($location->places)}}</td>
-                                            <td align="center"><a href="{{route('admin.locations',['action'=>'delete','location'=>$location->location_id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
-                                            <td align="center"><a href="{{route('admin.locations',['action'=>'update','location'=>$location->location_id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
+                                            <td>{{$place->id}}</td>
+                                            <td>{{$place->place}}</td>
+                                            <td>{{$place->location_title}}</td>
+
+                                            <td align="center"><a href="{{route('admin.places',['action'=>'delete','place'=>$place->id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-trash"></i> </a> </td>
+                                            <td align="center"><a href="{{route('admin.places',['action'=>'update','place'=>$place->id])}}"><i  style="cursor: pointer" class="fa fa-edit"></i> </a> </td>
 
                                         </tr>
                                     @endforeach
