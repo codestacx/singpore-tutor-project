@@ -5,16 +5,16 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center">
             <!-- User Info-->
             <div class="sidenav-header-inner text-center"><a href="pages-profile.html"><img src="img/avatar-7.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                <h2 class="h5">Nathan Andrews</h2><span>Web Developer</span>
+                <h2 class="h5">{{session('admin_name')}}</h2><span>Administrator</span>
             </div>
             <!-- Small Brand information, appears on minimized sidebar-->
             <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
-            <h5 class="sidenav-heading">Main</h5>
+
             <ul id="side-main-menu" class="side-menu list-unstyled">
-                <li><a href="index.html"> <i class="icon-home"></i>Home</a></li>
+                <li><a href="{{route('admin.home')}}"> <i class="icon-home"></i>Home</a></li>
 
 
 
