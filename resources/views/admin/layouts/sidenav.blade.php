@@ -4,7 +4,7 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
             <!-- User Info-->
-            <div class="sidenav-header-inner text-center"><a href="pages-profile.html"><img src="img/avatar-7.jpg" alt="person" class="img-fluid rounded-circle"></a>
+            <div class="sidenav-header-inner text-center"><a href="{{route('admin.home')}}"><img style="width: 90px;height: 90px" src="{{asset('admin/img/admin.jpg')}}" alt="person" class="img-fluid rounded-circle"></a>
                 <h2 class="h5">{{session('admin_name')}}</h2><span>Administrator</span>
             </div>
             <!-- Small Brand information, appears on minimized sidebar-->
@@ -39,6 +39,10 @@
                         <li><a href="{{route('admin.categories.tutors')}}">MOE Teachers</a></li>
                     </ul>
                 </li>
+
+                <li><a href="{{route('admin.tutor_types')}}"> <i class="icon-home"></i>Tutor Types </a></li>
+                <li><a href="{{route('admin.rates')}}"> <i class="icon-home"></i>Tutor Rates </a></li>
+
                 <li><a href="#chartsDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-bar-chart"></i>Charts </a>
                     <ul id="chartsDropdown" class="collapse list-unstyled ">
                         <li><a href="charts.html">Charts</a></li>

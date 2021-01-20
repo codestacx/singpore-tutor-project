@@ -96,7 +96,11 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
     Route::match(['get','post'],'schools/{action?}/{school?}',[AdminController::class,'schools'])->name('schools');
 
     Route::match(['get','post'],'categories/students/{action?}/{category?}',[AdminController::class,'students'])->name('categories.students');
-    Route::match(['get','post'],'categories/tutors/{action?}/{category?}',[AdminController::class,'moetutors'])->name('categories.tutors');
+    Route::match(['get','post'],'categories/moeteacher/{action?}/{category?}',[AdminController::class,'moetutors'])->name('categories.tutors');
+    Route::match(['get','post'],'categories/{action?}/{type?}',[AdminController::class,'tutor_types'])->name('tutor_types');
+    Route::match(['get','post'],'rates/{action?}/{rate?}',[AdminController::class,'rates'])->name('rates');
+
+
 
 });
 

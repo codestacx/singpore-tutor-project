@@ -9,9 +9,11 @@ use App\Models\Level;
 use App\Models\Location;
 use App\Models\MoeTutorSpecification;
 use App\Models\Race;
+use App\Models\Rate;
 use App\Models\SchoolType;
 use App\Models\StudentCategory;
 use App\Models\Subject;
+use App\Models\TutorTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -577,4 +579,103 @@ class AdminController extends Controller
         return view('admin.categories.tutors.index',compact('categories'));
 
     }
+
+    public function tutor_types(Request $request, $action = null, $type = null){
+        $table = DB::table('tutor_types');
+
+        $types = TutorTypes::all();
+
+        if($request->method() == 'POST'){
+
+
+            $formData = ['type'=>$request->title];
+
+
+
+            if(isset($request->type)){
+
+                $table->where('id',$request->type)->update($formData);
+                return redirect()->route('admin.tutor_types')->with('success','Tutor Type updated Successfully');
+            }
+
+            $table->insert($formData);
+            return redirect()->route('admin.tutor_types')->with('success','Tutor Type Added Successfully');
+
+
+        }
+
+
+        if(!is_null($type)){
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('id',$type)->delete();
+                return redirect()->back()->with('success','Tutor Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $type = $table->where('id',$type)->first();
+
+
+                return view('admin.tutor-types.index',compact('type','types'));
+            }
+
+        }
+
+        return view('admin.tutor-types.index',compact('types'));
+
+    }
+
+    public function rates(Request $request, $action = null, $rate = null){
+
+        $table = DB::table('rates');
+        $rates = Rate::with(['grades','categories'])->get();
+        $categories = TutorTypes::all();
+        $grades = Grade::all();
+
+
+
+        //$rates = $table->join('levels','levels.id','=','grades.level_id')->get();
+
+        if($request->method() == 'POST'){
+            $formData = [
+
+                'rate'=>$request->title,
+                'grade'=>$request->grade,
+                'category'=>$request->category
+            ];
+
+            if(isset($request->rate)){
+                $table->where('rate_id',$request->rate)->update($formData);
+                return redirect()->route('admin.rates')->with('success','Rate updated Successfully');
+            }
+            $table->insert($formData);
+            return redirect()->route('admin.rates')->with('success','Rate Added Successfully');
+        }
+        if(!is_null($rate)){
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('rate_id',$rate)->delete();
+                return redirect()->back()->with('success','Rate Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $rate = $table->where('rate_id',$rate)->first();
+
+                return view('admin.rates.index',compact('rates','rate','categories','grades'));
+            }
+
+        }
+        return view('admin.rates.index',compact('rates','categories','grades'));
+
+    }
+
+
+
+
+
 }
