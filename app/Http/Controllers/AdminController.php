@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Citizenship;
 use App\Models\Grade;
 use App\Models\Instrument;
@@ -680,10 +681,12 @@ class AdminController extends Controller
 
         if(!is_null($id)){
             $tutor_request = DB::table('tutor_requests')->where('tutor_request_id',$id)->first();
-           // dd(Subject::where('subject_id',2)->first());
-
             $subjects = Subject::all();
             $grades = Grade::all();
+            $locations = Location::with('places')->get();
+
+
+
             $requests = DB::table('tutor_request_students')
                 ->join('grades','tutor_request_students.grade','=','grades.grade_id')
                 ->where([
@@ -698,8 +701,9 @@ class AdminController extends Controller
 
             }
 
-
-            return view('admin.requests.view_details',['request'=>$tutor_request,'requests'=>$requests]);
+            $code = generateUniqueCode();
+            $assignment = Assignment::where('request_id',$id)->count();
+            return view('admin.requests.view_details',['request'=>$tutor_request,'requests'=>$requests,'code'=>$code,'status'=>$assignment>0 ? true:false,'locations'=>$locations]);
         }
 
         $requests = DB::table('tutor_requests')->get();
@@ -707,12 +711,66 @@ class AdminController extends Controller
     }
 
 
-    public function tution_assignments(Request $request){
+    public function tution_assignments(Request $request, $action = null, $assignment = null){
+
+
+
+        $table = DB::table('assignments');
+        $assignments =Assignment::with(['info','request'])->get();
+        $locations = Location::with('places')->get();
+
+
+
+        //$assignments = $table->join('levels','levels.id','=','grades.level_id')->get();
 
         if($request->method() == 'POST'){
-            dd($request->all());
-        }
+            $formData = [
 
+
+                'active'=>$request->status,
+                'category'=>$request->category,
+                'description'=>$request->description,
+                'location'=>$request->location
+
+            ];
+
+
+
+
+            if(isset($request->assignment)){
+                $formData['updated_at'] = Carbon::now();
+                $table->where('assignment_id',$request->assignment)->update($formData);
+                return redirect()->route('admin.tution_assignments')->with('success','Assignment updated Successfully');
+            }
+
+            $formData['created_at'] = Carbon::now();
+            $formData['updated_at'] = Carbon::now();
+            $formData['request_id'] = $request->request_id;
+            $formData['code']  = $request->code;
+            $table->insert($formData);
+            return redirect()->route('admin.tution_assignments')->with('success','Assignment Created Successfully');
+
+
+        }
+        if(!is_null($assignment)){
+
+
+
+            if($action == 'delete'){
+                //delete grade
+                $table->where('assignment_id',$assignment)->delete();
+                return redirect()->back()->with('success','Assignment Removed Successfully');
+            }
+
+            if($action == 'update'){
+                //update grade & save
+                $assignment = $table->where('assignment_id',$assignment)->first();
+
+
+                return view('admin.assignments.index',compact('assignment','assignments','locations'));
+            }
+        }
+        return view('admin.assignments.index',compact('assignments','locations'));
     }
 
 

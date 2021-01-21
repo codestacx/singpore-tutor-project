@@ -1,14 +1,23 @@
 <?php
 
 use \Illuminate\Support\Facades\Session;
-function populateRoutes($routes){
-    foreach ($routes as $name=>$route){
-        ?>
-            <script>
-                config['<?=$name?>'] = '<?=$route?>'
-            </script>
-        <?php
+function generateUniqueCode(){
+    $codes  = \App\Models\Assignment::all()->pluck('code')->toArray();
+
+    $ccode = strtoupper(\Illuminate\Support\Str::random(10));
+
+    if(count($codes) == 0){
+        return $ccode;
     }
+    while (true && count($codes) > 0){
+
+        if(!in_array($ccode,$codes)){
+            return $ccode;
+        }
+        $ccode = strtoupper(\Illuminate\Support\Str::random(10));
+    }
+
+
 }
 function uploadFile($files,$path){
     $path = ltrim($path,'/');
@@ -52,6 +61,20 @@ function getFormDataObject($request){
 
     return $formData;
 
+}
+
+
+function getBadgeClass($type){
+    switch ($type){
+        case 'Urgent':
+            return ' <span class="badge badge-danger">'.$type.'</span>';
+        case 'Regular':
+            return ' <span class="badge badge-primary">'.$type.'</span>';
+        case 'Featured':
+            return ' <span class="badge badge-warning">'.$type.'</span>';
+        default:
+            return ' <span class="badge badge-info">'.$type.'</span>';
+    }
 }
 ?>
 

@@ -35,13 +35,12 @@
 
                 </div>
                 <div class="">
-                    <div style="text-align: center">
-                        <h6>View Available Assignments</h6>
-                    </div>
-                    <div class="card" style="width: 450px;margin: auto;background: darkcyan;color: white;border-radius: 10px;padding: 10px;">
-                        <div class="card-body">
-                            <form class="form" method="post" action="">
 
+                    <div class="card" style="width: 350px;margin: auto;background: beige;color: black;border-radius: 10px;padding: 10px;margin-top: 20px">
+                        <div class="card-body">
+                            <form class="form" method="post" action="{{route('site.tuition_assignments')}}">
+
+                                @csrf
                                 <div class="form-group">
                                     <label>Subject</label>
                                     <select class="form-control form-control-sm" name="subject">
@@ -68,7 +67,10 @@
                                     <select class="form-control form-control-sm" name="location">
                                         <option disabled>Choose Location</option>
                                         @foreach($locations as $location)
-                                            <option value="{{$location->location_id}}">{{$location->location_title}}</option>
+                                            <option disabled style="color: #2cdd9b">{{$location->location_title}}</option>
+                                            @foreach($location->places as $place)
+                                                <option value="{{$place->id}}">{{$place->place}}</option>
+                                            @endforeach
                                         @endforeach
                                     </select>
                                 </div>
@@ -78,7 +80,8 @@
                                 </div>
                             </form>
                             <div style="color: deepskyblue" class="or-seperator"><b>or </b></div>
-                            <form class="form">
+                            <form class="form" method="post" action="{{route('site.tuition_assignments')}}">
+                               @csrf
                                 <div class="form-group" style="text-align: center">
                                     <small> search for an Assignment</small>
                                 </div>
@@ -146,22 +149,56 @@
                     <tr>
                         <th>Date</th>
                         <th>ID</th>
+
                         <th>Requirements</th>
                         <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col-2">19-Jan-21</td>
-                        <td class="col-2">A72638859CO</td>
-                        <td class="col-6">Home tuition for University of Melbourne, Degree Intermediate Microeconomics (ECON20002) at Sutton Place, Farrer Road, bus 7 48 75 77 93 105 106 123 153 165 174 186 855 961, 10min to Farrer Road MRT
-                            ❗ Urgent
-                            Schedule: Once per week, 1.5 hrs
-                            Short-Term - Reduced Commission.
-                            Rate: Pls quote </td>
-                        <td>Open & Available.
-                            Apply here.</td>
-                    </tr>
+                    @foreach($assignments as $assignment)
+
+                        <tr>
+                            <td class="col-2">{{\Carbon\Carbon::parse($assignment->created_at)->toFormattedDateString()}}</td>
+                            <td class="col-2">{{$assignment->code}}</td>
+                            <td class="col-6">
+                                    @php echo getBadgeClass($assignment->category) @endphp
+                                <br/>
+                                {{$assignment->description}}
+                                </td>
+                            <td>
+                                @if (!session('tutor_logged'))
+                                    @if($assignment->active == 1)
+                                        Open & Available.
+                                        <a href="" class="btn btn-warning btn-sm">
+                                            Apply here.</a>
+                                    @else
+                                        Not Available
+                                    @endif
+                                @else
+                                    @if( !$assignment->applied)
+                                    <p>Apply here if you're keen:</p>
+                                    <form method="post" action="{{route('site.tuition_assignments',['action'=>'application'])}}">
+                                       @csrf
+                                        <textarea style="height: 185px;width: 300px;" class="form-control" placeholder="Your rate ? Your available slots ? " name="details"></textarea>
+
+                                        <div class="form-group">
+                                            <br/>
+                                            <input type="hidden" name="assignment_id" value="{{$assignment->assignment_id}}"/>
+                                            <input type="submit" class="btn btn-primary btn-sm" value="Apply"/>
+                                        </div>
+                                    </form>
+                                        @else
+                                        <span class="badge badge-primary">Already applied</span>
+                                        @endif
+
+
+
+
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+
                     </tbody>
                 </table>
             </div>

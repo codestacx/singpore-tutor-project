@@ -99,9 +99,10 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
     Route::match(['get','post'],'categories/{action?}/{type?}',[AdminController::class,'tutor_types'])->name('tutor_types');
     Route::match(['get','post'],'rates/{action?}/{rate?}',[AdminController::class,'rates'])->name('rates');
 
-    Route::get('tutor/request/{id?}',[AdminController::class,'tutor_requests'])->name('tutor_requests');
+    Route::get('requests/{id?}',[AdminController::class,'tutor_requests'])->name('tutor_requests');
 
-    Route::match(['get','post'],'tution-assignments',[AdminController::class,'tution_assignments'])->name('tution_assignments');
+    Route::match(['get','post'],'tution-assignments/{action?}/{assignment?}',[AdminController::class,'tution_assignments'])->name('tution_assignments');
+
 
     Route::get('logout',[AdminAuthController::class,'logout'])->name('logout');
 });

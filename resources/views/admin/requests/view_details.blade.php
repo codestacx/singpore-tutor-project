@@ -28,7 +28,7 @@
                                 <th><i class="fa fa-envelope fa-1x" style="color: deepskyblue"></i> </th>
                                 <th><i class="fa fa-phone" style="color: #2cdd9b"></i></th>
 
-                                <td align="center">Create Assignment </th>
+                                <td> Status </td>
 
 
                             </tr>
@@ -44,7 +44,9 @@
                                     <td>{{$request->phone}}</td>
 
 
-                                    <td align="center"><a href="{{route('admin.tutor_requests',['id'=>$request->tutor_request_id])}}"><i  style="color: #b21f2d;cursor:pointer;" class="fa fa-arrow">&rarr;</i> </a> </td>
+                                    <td><span style="border-radius: 10px;padding: 5px" class="{{$status ? 'badge badge-success':'badge badge-primary'}}">{{$status ? 'Created':'Pending'}}</span> </td>
+
+
                                 </tr>
 
 
@@ -61,20 +63,24 @@
                             </ul>
                             <div class="row">
 
+                              <div class="form-group">
+                                  <input type="hidden" name="request_id"  value="{{$request->tutor_request_id}}"/>
+                              </div>
                             </div>
                             <div class="row">
                                 <div class="form-row col-12">
-                                    <div class="col-6">
+                                    <div class="col">
                                         <div class="form-group">
                                             <label>Choose Status</label>
-                                            <select class="form-control" name="active_status">
+                                            <select class="form-control" name="status">
                                                 <option value="1">Active</option>
                                                 <option value="0">Review</option>
+                                                <option value="-1">Closed</option>
 
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col">
                                         <div class="form-group">
                                             <label>Choose Category</label>
                                             <select class="form-control" name="category">
@@ -85,9 +91,33 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-row col-12">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Choose Location</label>
+                                            <select class="form-control" name="location">
+                                              @foreach($locations as $location)
+                                                  <option disabled style="color: deepskyblue">
+                                                      {{$location->location_title}}
+                                                  </option>
+                                                  @foreach($location->places as $place)
+                                                      <option <?php isset($request)  && $request->location == $place->id ? 'selected':''  ?> value="{{$place->id}}">{{$place->place}}</option>
+                                                    @endforeach
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Code</label>
+                                            <input type="text" name="code" readonly class="form-control" value="{{$code}}"/>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                     <label>Detailed Requirements</label>
-                                    <textarea  class="form-control" name="requirements"></textarea>
+                                    <textarea  class="form-control" name="description"></textarea>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <div class="form-group" style="padding-top: 30px !important;">
