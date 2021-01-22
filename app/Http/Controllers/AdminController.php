@@ -9,6 +9,8 @@ use App\Models\Instrument;
 use App\Models\Level;
 use App\Models\Location;
 use App\Models\MoeTutorSpecification;
+use App\Models\Place;
+use App\Models\Qualification;
 use App\Models\Race;
 use App\Models\Rate;
 use App\Models\SchoolType;
@@ -16,6 +18,7 @@ use App\Models\StudentCategory;
 use App\Models\Subject;
 use App\Models\TutorRequest;
 use App\Models\TutorTypes;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -25,6 +28,62 @@ class AdminController extends Controller
         return view('admin.welcome');
     }
 
+
+    public function tutors(Request $request, $id = null){
+
+        if($id){
+
+            $tutors = User::with([
+                'basicinfo',
+                'education_info',
+                'education_info_courses',
+                'academic_info',
+                'music_info',
+                'preference_info',
+                'students_records',
+                'documents_info'
+            ])->where([
+                'role_id'=>1,
+                'id'=>$id
+            ])->first();
+
+            if($tutors->education_info->category == "Full Time Student"){
+                $tutors->education_info->sub_category = StudentCategory::where([
+                    'student_categories_id'=>$tutors->education_info->sub_category
+                ])->first()->category;
+
+            }
+
+            if($tutors->education_info->category == "MOE School Teacher"){
+                $tutors->education_info->sub_category = MoeTutorSpecification::where([
+                    'id'=>$tutors->education_info->sub_category
+                ])->first()->specification;
+            }
+
+            $tutors->education_info->highest_qualification = Qualification::where('qu_id', $tutors->education_info->highest_qualification)
+                ->first()->qualification;
+
+            foreach ($tutors->education_info_courses as $course){
+                $course->school = $course->school_level;
+                $course->school_level = Level::where('id',$course->school_level)->first()->level_title;
+
+
+            }
+
+
+            foreach ($tutors->students_records as $record){
+                $record->level =  Level::where('id',$record->level)->first()->level_title;
+                $record->grade = Grade::where('grade_id',$record->grade)->first()->grade_title;
+                $record->subject = Subject::where('subject_id',$record->subject)->first()->subject_title;
+            }
+
+            $places = Place::all();
+           return view('admin.tutors.details',['tutor'=>$tutors,'places'=>$places]);
+
+        }
+        $tutors = User::with('basicinfo')->where(['role_id'=>1])->get();
+        return view('admin.tutors.index',compact('tutors'));
+    }
     public function levels(Request $request, $action = null, $level = null){
 
         $table = DB::table('levels')->orderBy('id','DESC');

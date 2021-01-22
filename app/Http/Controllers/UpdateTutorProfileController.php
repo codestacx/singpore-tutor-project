@@ -297,7 +297,7 @@ class UpdateTutorProfileController extends Controller{
                         'subject'=>json_encode($request->subjects[$iterator]),
                         'school'=>$request->school[$iterator],
                         'years_taught'=>$request->years_taught[$iterator],
-                        'last_taught'=>$request->last_taught
+                        'last_taught'=>$request->last_taught[$iterator]
                     ];
 
                 }

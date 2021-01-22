@@ -19,6 +19,18 @@ function generateUniqueCode(){
 
 
 }
+
+function convertSubjectsJSONto($json){
+
+    ob_start();
+    ?>
+    <?php foreach (json_decode($json) as $item): ?>
+        <p><i class="fa fa-check" style="color: #2cdd9b"><?php echo \App\Models\Subject::where('subject_id',$item)->first()->subject_title; ?></i> </p>
+    <?php
+        endforeach;
+        echo ob_get_clean();
+}
+
 function uploadFile($files,$path){
     $path = ltrim($path,'/');
     $uploads = array();
@@ -75,6 +87,27 @@ function getBadgeClass($type){
         default:
             return ' <span class="badge badge-info">'.$type.'</span>';
     }
+}
+
+
+function getLocationAndPlace($place_id,$places){
+
+    foreach($places as $place){
+        if($place_id == $place->id ){
+            $location = \App\Models\Location::where('location_id',$place->location)->first()->location_title;
+            ob_start();
+            ?>
+            <tr>
+                <td><?php echo $place->place ?></td>
+                <td><?php echo $location ; ?></td>
+            </tr>
+            <?php
+
+            return ob_get_clean();
+
+        }
+    }
+
 }
 ?>
 

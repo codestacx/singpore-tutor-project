@@ -17,6 +17,7 @@
                 <li><a href="{{route('admin.home')}}"> <i class="icon-home"></i>Home</a></li>
 
 
+                <li><a href="{{route('admin.tutors')}}"> <i class="icon-home"></i>Tutors</a></li>
                 <li><a href="{{route('admin.tutor_requests')}}"> <i class="icon-home"></i>Tutor Requests</a></li>
 
                 <li><a href="{{route('admin.tution_assignments')}}"> <i class="icon-home"></i>Assignments</a></li>

@@ -82,6 +82,7 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
     Route::get('',[AdminController::class,'welcome'])->name('home');
 
 
+    Route::get('tutors/{id?}',[AdminController::class,'tutors'])->name('tutors');
     Route::match(['get','post'],'grades/{action?}/{grade?}',[AdminController::class,'grades'])->name('grades');
     Route::match(['get','post'],'levels/{action?}/{levels?}',[AdminController::class,'levels'])->name('levels');
     Route::match(['get','post'],'faqs/{action?}/{faq?}',[AdminController::class,'faqs'])->name('faqs');
