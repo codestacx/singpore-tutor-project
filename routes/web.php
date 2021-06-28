@@ -20,18 +20,6 @@ use \App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\TutorController;
 
 use App\Http\Controllers\UpdateTutorProfileController as TPC;
-
-//Route::get('testing/',function (){
-//
-//    $params = http_build_query(array(
-//        "access_key" => "615d359dd13a4bd189a3523df6f3bd5e",
-//        "url" => "https://www.google.com.pk",
-//    ));
-//
-//    $image_data = file_get_contents("https://api.apiflash.com/v1/urltoimage?" . $params);
-//    file_put_contents("screenshot.jpeg", $image_data);
-//});
-
 Route::prefix('/')->name('site.')->group(function(){
 
     Route::get('',[HomeController::class,'index'])->name('home');
@@ -50,7 +38,9 @@ Route::prefix('/')->name('site.')->group(function(){
 
 });
 
-Route::prefix('dashboard')->name('tutor.')->middleware('tutor')->group(function() {
+Route::prefix('dashboard')->name('tutor.')
+    ->middleware('tutor')
+    ->group(function() {
         Route::get('', [TPC::class, 'index'])->name('dashboard');
 
         Route::match(['get', 'post'], 'tutor/basic-info', [TPC::class, 'updateBasicInformation'])->name('profile.basic_info');
@@ -104,6 +94,8 @@ Route::prefix('superadmin')->middleware('admin_guard')->name('admin.')->group(fu
 
     Route::match(['get','post'],'tution-assignments/{action?}/{assignment?}',[AdminController::class,'tution_assignments'])->name('tution_assignments');
 
+    Route::post('tutor/profile/approve/{id}',[AdminController::class,'approve_profile'])->name('tutor.profile_approved');
+    Route::get('files/download/{tutor}/{file}',[AdminController::class,'download'])->name('file.download');
 
     Route::get('logout',[AdminAuthController::class,'logout'])->name('logout');
 });

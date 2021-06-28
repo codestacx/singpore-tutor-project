@@ -8,6 +8,7 @@
           <div id="googleMap"></div>
     </div>
 
+
     <!-- ##### Contact Area Start ##### -->
     <section class="contact-area">
         <div class="container">
@@ -27,7 +28,7 @@
                             </li>
                             <li>
                                 <h6><i class="fa fa-envelope" aria-hidden="true"></i> Email</h6>
-                                <h6>info@clever.com</h6>
+                                <h6>info@codestacx.com</h6>
                             </li>
                             <li>
                                 <h6><i class="fa fa-map-pin" aria-hidden="true"></i> Address</h6>

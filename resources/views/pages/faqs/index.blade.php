@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title','Site | FAQs')
+<!-- import modal at the top -->
+@include('layouts.components.modal',['levels'=>\App\Models\Level::all(),'subjects'=> \App\Models\Subject::all()])
+<!-- modal ends here -->
 @section('content')
 
     <!-- ##### Breadcumb Area Start ##### -->
@@ -14,7 +17,9 @@
         </nav>
     </div>
     <!-- ##### Breadcumb Area End ##### -->
-
+    <!-- slider starts here -->
+    @include('layouts.components.slider')
+    <!-- slider ends here -->
     <!-- ##### Courses Content Start ##### -->
     <div class="single-course-content section-padding-100">
         <div class="container">

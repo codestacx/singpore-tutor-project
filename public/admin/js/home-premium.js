@@ -8,7 +8,7 @@ $(function () {
         }
     }
     Messenger().post({
-        message: 'Hey, how are you?<br>Welcome to the Material Admin Premium template by Bootstrapious.',
+        message: 'Hey, how are you?<br>Welcome to the Admin Panel',
         type: 'success'
     });
 });

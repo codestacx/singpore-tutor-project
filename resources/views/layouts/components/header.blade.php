@@ -28,7 +28,7 @@
             <nav class="classy-navbar justify-content-between" id="cleverNav">
 
                 <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="{{asset('img/core-img/logo.png')}}" alt=""></a>
+                <a class="nav-brand" href="index.html"><img src="{{asset('elearn.png')}}" style="width: 200px" alt=""></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
@@ -52,7 +52,7 @@
                             <li><a  href="{{route('site.faqs')}}">FAQ's</a></li>
                             <li><a  href="{{route('site.tuition_assignments')}}">Tuition Assignments</a></li>
 
-                            <li><a href="blog.html">Blog</a></li>
+{{--                            <li><a href="blog.html">Blog</a></li>--}}
                             <li><a href="{{route('site.aboutus')}}">About us</a> </li>
                             <li><a href="{{route('site.contact')}}">Contact</a></li>
                         </ul>

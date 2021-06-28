@@ -107,8 +107,10 @@
             </ul>
         </div>
     </div>
+    @if($tutor->profile_updated == 1)
     <div class="container emp-profile">
-        <form method="post">
+        <form method="post" action="{{route('admin.tutor.profile_approved',['id'=>$tutor->id])}}">
+            @csrf
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -142,7 +144,10 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Approve"/>
+
+
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="{{$tutor->profile_approved == 0 ? 'Approve':'Reject'}}"/>
+
                 </div>
             </div>
             <div class="row">
@@ -329,8 +334,6 @@
         </form>
 
     </div>
-
-
     <div class="row">
 
         <div class="col-lg-12">
@@ -454,9 +457,6 @@
                                 <th>Instrument</th>
                                 <th>Practical Level</th>
                                 <th>Achievement</th>
-
-
-
                             </tr>
                             </thead>
                             <tbody>
@@ -635,7 +635,7 @@
                 <div class="card-body">
 
                     <div class="table-responsive">
-                        <table id="datatable1" style="width: 120%;" class="table table-hover">
+                        <table id="datatable1" style="width: 100%;" class="table table-hover">
                             <thead style="background: #E1B42B;color: white">
                             <tr>
                                 <th>Location</th>
@@ -677,6 +677,47 @@
                            @endforeach
                             </tbody>
 
+                            <thead style="background: #00b3ee;color: white">
+                            <tr>
+                                <th>#</th>
+                                <th>Level</th>
+                                <th>Rate/hr</th>
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Lower Primary</td>
+                                    <td> {{$tutor->preference_info->lower_primary_rate}} $</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Upper Primary</td>
+                                    <td> {{$tutor->preference_info->upper_primary_rate}} $</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Lower Secondary</td>
+                                    <td> {{$tutor->preference_info->lower_secondary_rate}} $</td>
+                                </tr>
+
+                                <tr>
+                                    <td>4</td>
+                                    <td>Upper Secondary</td>
+                                    <td> {{$tutor->preference_info->uper_secondary_rate}} $</td>
+                                </tr>
+
+                                <tr>
+                                    <td>5</td>
+                                    <td>Junior College</td>
+                                    <td> {{$tutor->preference_info->jc_rate}} $</td>
+                                </tr>
+
+                            </tbody>
 
                         </table>
                     </div>
@@ -685,6 +726,107 @@
         </div>
 
 
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    Documents
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="datatable1" style="width: 100%;" class="table table-hover">
+                            <thead style="background: #2cdd9b;color: white">
+                            <tr>
+                                <th></th>
+                                <th>Document</th>
+                                <th>Download</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            @foreach($tutor->documents_info->certificates as $document)
+                              <tr>
+                                  <td></td>
+                                  <td>
+                                      {{$document}}
+                                  </td>
+                                  <td>
+                                      <a href="{{route('admin.file.download',['tutor'=>$tutor->name,'file'=>$document])}}" >
+                                          <button class="btn"><i class="fa fa-download"></i> Download File</button>
+                                      </a>
+
+                                  </td>
+                              </tr>
+
+                            @endforeach
+                            @foreach($tutor->documents_info->supported_documents as $document)
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        {{$document}}
+                                    </td>
+                                    <td>
+                                        <a href="{{route('admin.file.download',['tutor'=>$tutor->name,'file'=>$document])}}" >
+                                            <button class="btn"><i class="fa fa-download"></i> Download File</button>
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+                            @endforeach
+                            <tr>
+                                <td></td>
+                                <td>{{$tutor->documents_info->proof_citizenship}}</td>
+                                <td>
+                                    <a href="{{route('admin.file.download',['tutor'=>$tutor->name,'file'=>$tutor->documents_info->proof_citizenship])}}" >
+                                        <button class="btn"><i class="fa fa-download"></i> Download File</button>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>{{$tutor->documents_info->recent_photo}}</td>
+                                <td>
+                                    <a href="{{route('admin.file.download',['tutor'=>$tutor->name,'file'=>$tutor->documents_info->recent_photo])}}" >
+                                        <button class="btn"><i class="fa fa-download"></i> Download File</button>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>{{$tutor->documents_info->photo_id}}</td>
+                                <td>
+                                    <a href="{{route('admin.file.download',['tutor'=>$tutor->name,'file'=>$tutor->documents_info->photo_id])}}" >
+                                        <button class="btn"><i class="fa fa-download"></i> Download File</button>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            </tbody>
+
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+    @else
+        <div class="container">
+            <div class="alert alert-danger">
+                <br/><br/>
+                Profile is not yet completed
+            </div>
+        </div>
+    @endif
 @endsection
 

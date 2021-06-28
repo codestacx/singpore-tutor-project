@@ -109,6 +109,18 @@ function getLocationAndPlace($place_id,$places){
     }
 
 }
+
+ function getDownload($file,$filename)
+{
+    //PDF file is stored under project/public/download/info.pdf
+
+
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+
+    return Response::download($file, 'filename.pdf', $headers);
+}
 ?>
 
 

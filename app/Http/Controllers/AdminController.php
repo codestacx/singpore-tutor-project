@@ -19,6 +19,7 @@ use App\Models\Subject;
 use App\Models\TutorRequest;
 use App\Models\TutorTypes;
 use App\Models\User;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -28,7 +29,18 @@ class AdminController extends Controller
         return view('admin.welcome');
     }
 
+    public function approve_profile(Response $response,$id){
+        $tutor = User::find($id);
+        User::where('id',$id)->update(['profile_approved'=>$tutor->profile_approved == 0 ? 1 :0]);
+        return redirect()->route('admin.tutors')->with('success','Profile Status Altered Successfully');
+    }
 
+
+    public function download(Request $request,$tutor,$file){
+
+        $path = public_path('tutor/'.$tutor.'/documents/'.$file);
+        return response()->download($path);
+    }
     public function tutors(Request $request, $id = null){
 
         if($id){
